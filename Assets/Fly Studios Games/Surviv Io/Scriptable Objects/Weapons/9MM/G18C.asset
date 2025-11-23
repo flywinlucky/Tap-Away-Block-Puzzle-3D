@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: G18C
   weaponSpriteIcon: {fileID: 21300000, guid: e121bf56b68b8cf47bebcf07185e87a3, type: 3}
   weapon_Color: {r: 0.9490196, g: 0.64705884, b: 0, a: 1}
+  weaponPrefab: {fileID: 6591599970482634348, guid: 4fe8fb04d4cc2ad4ca0bf02855758eb8, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1
