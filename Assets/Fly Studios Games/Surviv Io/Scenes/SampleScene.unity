@@ -692,7 +692,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &92372073
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1023,7 +1037,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &117170096
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1171,7 +1199,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &120236589
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1341,7 +1383,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &134365902
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1479,7 +1535,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &138684410
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3093,7 +3163,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &303821347
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3371,7 +3455,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &333480805
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3509,7 +3607,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &349381796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3734,7 +3846,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &365414509
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3882,7 +4008,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &375210847
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4398,7 +4538,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &400002839
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4750,7 +4904,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &476619339
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4893,7 +5061,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &484469903
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5361,7 +5543,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &527732538
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5668,7 +5864,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &569496766
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -6300,7 +6510,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &626342319
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7058,7 +7282,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &670132459
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7318,7 +7556,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &713258637
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7631,7 +7883,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &764258052
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7773,15 +8039,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f14af5f234b1544797f8b10b91ea4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 5
   shakeDuration: 0.15
   shakeStrength: {x: 0.15, y: 0.15, z: 0}
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots:
-  - {fileID: 4803374122690042658, guid: 4ba2ba69b6f7d7b4eb9c80e2ee5b5070, type: 3}
-  - {fileID: 1368834902747691933, guid: bd299ca938aa1c34d8a8420531047f08, type: 3}
+  dropPoints:
+  - loot: {fileID: 4803374122690042658, guid: 4ba2ba69b6f7d7b4eb9c80e2ee5b5070, type: 3}
+    dropChance: 50
+  - loot: {fileID: 581750519569543780, guid: fb7245a4d3af69f4ba161525230eac32, type: 3}
+    dropChance: 50
+  - loot: {fileID: 6800950226956316993, guid: 2426679b78a9ee746b57c761e8967b38, type: 3}
+    dropChance: 50
+  - loot: {fileID: 1368834902747691933, guid: bd299ca938aa1c34d8a8420531047f08, type: 3}
+    dropChance: 50
+  - loot: {fileID: 5897349167985707988, guid: d4b4b3b9b6d3c3e42a13080df3f4e0a2, type: 3}
+    dropChance: 50
+  - loot: {fileID: 7744849561055592760, guid: 8af3d2aec9249914b808244f6b56deb5, type: 3}
+    dropChance: 50
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 3
+  uniqueItems: 1
 --- !u!58 &797924339
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8077,7 +8357,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &847642949
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8293,7 +8587,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &861671727
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8624,7 +8932,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &873572726
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9008,7 +9330,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &934067075
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9156,7 +9492,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &943098917
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -9550,7 +9900,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1016834287
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10273,7 +10637,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1114477031
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -10995,7 +11373,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1154563037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11263,7 +11655,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!1 &1173708202
 GameObject:
   m_ObjectHideFlags: 0
@@ -11302,7 +11708,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1173708204
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12347,7 +12767,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1236285380
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12575,7 +13009,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1239618780
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13337,7 +13785,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1293731903
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13568,7 +14030,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1352387557
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -13782,7 +14258,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1376207606
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14006,7 +14496,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1380508458
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14417,7 +14921,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1395587466
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14702,7 +15220,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1415116698
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14840,7 +15372,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1433033605
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15139,7 +15685,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1501318105
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -15423,7 +15983,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1520680456
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -15830,7 +16404,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1586399250
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16122,7 +16710,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1599675486
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -16478,7 +17080,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1612152042
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16992,7 +17608,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1649048316
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -17559,7 +18189,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1714957420
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17790,7 +18434,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1727051276
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18159,7 +18817,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1786145138
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18409,7 +19081,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1805774143
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -18789,7 +19475,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1843458742
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18937,7 +19637,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1857851592
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19279,7 +19993,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1865165722
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19910,7 +20638,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1910298544
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20048,7 +20790,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &1918749404
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20272,7 +21028,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1924443963
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20493,7 +21263,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &1952292741
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20774,7 +21558,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2005378752
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21438,7 +22236,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &2026141796
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -21587,7 +22399,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2040853424
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21735,7 +22561,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2041076028
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21883,7 +22723,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2054974170
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22031,7 +22885,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2073260082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22179,7 +23047,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2083644084
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22594,7 +23476,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2115609403
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22764,7 +23660,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!58 &2118751453
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -22963,7 +23873,21 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  loots: []
+  dropPoints:
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 100
+  minItemsToDrop: 1
+  maxItemsToDrop: 2
+  uniqueItems: 1
 --- !u!61 &2125445838
 BoxCollider2D:
   m_ObjectHideFlags: 0

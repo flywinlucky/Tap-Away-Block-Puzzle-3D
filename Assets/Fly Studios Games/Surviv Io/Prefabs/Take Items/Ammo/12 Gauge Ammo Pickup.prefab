@@ -216,11 +216,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableAnimationOnEnable: 1
-  disperseRadius: 2.5
-  jumpPower: 1
+  disperseRadius: 3
+  jumpPower: 1.5
   jumpDuration: 0.5
-  jumpCount: 1
-  randomDelayMax: 0.25
+  jumpCount: 0
+  randomDelayMax: 0
   jumpEase: 6
   scalePop: 1
   popScale: 1
