@@ -18,6 +18,7 @@ public class WeaponControler : MonoBehaviour
 	private int _reserveAmmo = 0;
 	private float _nextFireTime = 0f;
 	private bool _isReloading = false;
+	private GameObject _equippedVisual; // instanța vizuală a armei echipate
 
 	// public acces pentru UI sau alte sisteme
 	public WeaponData CurrentWeapon => _weapon;
@@ -46,6 +47,54 @@ public class WeaponControler : MonoBehaviour
 
 		if (weaponRootPosition != null)
 			weaponRootPosition.gameObject.SetActive(!enable);
+
+		if (enable)
+		{
+			// distrugem vizualul armei când intrăm în modul melee
+			DestroyEquippedVisual();
+			// opțional: curățăm muzzle (nu este necesar pentru melee)
+			muzzle = null;
+		}
+	}
+
+	// Helper: distruge instanța vizuală curentă
+	private void DestroyEquippedVisual()
+	{
+		if (_equippedVisual != null)
+		{
+			Destroy(_equippedVisual);
+			_equippedVisual = null;
+		}
+	}
+
+	// Helper: spawnează vizualul armei sub weaponRootPosition și setează rotația locală (0,0,-90)
+	private void SpawnWeaponVisual()
+	{
+		// curățăm orice vizual anterior
+		DestroyEquippedVisual();
+
+		if (weaponRootPosition == null || _weapon == null || _weapon.weaponPrefab == null)
+			return;
+
+		_equippedVisual = Instantiate(_weapon.weaponPrefab, weaponRootPosition);
+		_equippedVisual.transform.localPosition = Vector3.zero;
+		_equippedVisual.transform.localRotation = Quaternion.Euler(0f, 0f, -90f);
+		_equippedVisual.transform.localScale = Vector3.one;
+
+		// în lipsa unei asignări externe, încercăm să deducem muzzle din prefab
+		// 1) copil numit "Muzzle"
+		var found = _equippedVisual.transform.Find("Muzzle");
+		if (found != null) muzzle = found;
+
+		// 2) componentă WeaponSpawnBulletPoint din prefab (fallback)
+		if (muzzle == null)
+		{
+			var spawner = _equippedVisual.GetComponentInChildren<WeaponSpawnBulletPoint>();
+			if (spawner != null && spawner.weaponBulletSpawn != null)
+			{
+				muzzle = spawner.weaponBulletSpawn;
+			}
+		}
 	}
 
 	// Echipăm o armă (încărcăm magazinul și rezervă)
@@ -64,6 +113,9 @@ public class WeaponControler : MonoBehaviour
 		_reserveAmmo = Mathf.Clamp(_weapon.startingReserveAmmo - _currentMagazine, 0, _weapon.maxReserveAmmo);
 		_nextFireTime = 0f;
 		_isReloading = false;
+
+		// spawn vizualul armei (rotație locală z=-90)
+		SpawnWeaponVisual();
 	}
 
 	// OVERLOAD: echipăm arma cu muniție explicită (folosită de UI inventory la switch)
@@ -81,6 +133,9 @@ public class WeaponControler : MonoBehaviour
 		_reserveAmmo = Mathf.Clamp(reserve, 0, _weapon.maxReserveAmmo);
 		_nextFireTime = 0f;
 		_isReloading = false;
+
+		// spawn vizualul armei (rotație locală z=-90)
+		SpawnWeaponVisual();
 	}
 
 	// Fire folosește datele din WeaponData; dacă ammo 0 nu trage

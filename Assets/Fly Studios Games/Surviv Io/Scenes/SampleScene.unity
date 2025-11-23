@@ -8148,7 +8148,7 @@ MonoBehaviour:
   velocitySmoothTime: 0.08
   acceleration: 40
   deceleration: 40
-  weaponRootPosition: {fileID: 1250429733}
+  weaponRootPosition: {fileID: 1217789621}
   weaponController: {fileID: 1039426373}
   holdToFire: 1
   isSwiming: {fileID: 446699456}
@@ -10293,7 +10293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1250429733
 Transform:
   m_ObjectHideFlags: 0

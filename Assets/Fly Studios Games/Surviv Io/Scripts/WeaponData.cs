@@ -8,6 +8,7 @@ public class WeaponData : ScriptableObject
 	[Header("Visual")]
 	public Sprite weaponSpriteIcon;
 	public Color weapon_Color = Color.white;
+	public GameObject weaponPrefab; // prefab-ul vizual al armei (instanțiat la equip)
 
 	[Header("Projectile")]
 	public GameObject bulletPrefab;
