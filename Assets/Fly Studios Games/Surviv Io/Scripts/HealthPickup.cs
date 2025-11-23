@@ -4,25 +4,51 @@ public class HealthPickup : MonoBehaviour
 {
 	public float amount;
 
-	private void OnTriggerEnter2D(Collider2D other)
+	private PlayerUI _currentPlayerUI;
+
+	private void OnTriggerEnter2D(Collider2D other) { ShowPrompt(other.gameObject); }
+	private void OnTriggerStay2D(Collider2D other) { if (Input.GetKeyDown(KeyCode.F)) ApplyPickup(other.gameObject); }
+	private void OnTriggerExit2D(Collider2D other) { HidePrompt(other.gameObject); }
+
+	private void OnTriggerEnter(Collider other) { ShowPrompt(other.gameObject); }
+	private void OnTriggerStay(Collider other) { if (Input.GetKeyDown(KeyCode.F)) ApplyPickup(other.gameObject); }
+	private void OnTriggerExit(Collider other) { HidePrompt(other.gameObject); }
+
+	private void OnDisable()
 	{
-		TryApplyPickup(other.gameObject);
+		if (_currentPlayerUI != null)
+		{
+			_currentPlayerUI.HideFtoSellect();
+			_currentPlayerUI = null;
+		}
 	}
 
-	private void OnTriggerEnter(Collider other)
+	private void ShowPrompt(GameObject other)
 	{
-		TryApplyPickup(other.gameObject);
+		if (other == null) return;
+		var playerUI = other.GetComponentInChildren<PlayerUI>();
+		if (playerUI == null) return;
+
+		playerUI.ShowFtoSellect($"Health +{amount}");
+		_currentPlayerUI = playerUI;
 	}
 
-	private void TryApplyPickup(GameObject other)
+	private void HidePrompt(GameObject other)
+	{
+		var ui = other != null ? other.GetComponentInChildren<PlayerUI>() : _currentPlayerUI;
+		if (ui != null) ui.HideFtoSellect();
+		if (ui == _currentPlayerUI) _currentPlayerUI = null;
+	}
+
+	private void ApplyPickup(GameObject other)
 	{
 		if (other == null) return;
 		var ph = other.GetComponentInChildren<PlayerHealth>();
+		var ui = other.GetComponentInChildren<PlayerUI>();
 		if (ph == null) return;
 
 		ph.Heal(amount);
-
-		// efecte vizuale / sunet pot fi adăugate aici
+		if (ui != null) ui.HideFtoSellect();
 		Destroy(gameObject);
 	}
 }
