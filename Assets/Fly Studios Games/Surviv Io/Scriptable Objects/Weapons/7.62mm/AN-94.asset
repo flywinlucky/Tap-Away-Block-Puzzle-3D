@@ -25,7 +25,7 @@ MonoBehaviour:
   reloadTime: 2.35
   fireRate: 0.24
   damage: 17
-  range: 40
+  range: 300
   automatic: 0
   maxReserveAmmo: 250
   startingReserveAmmo: 120
