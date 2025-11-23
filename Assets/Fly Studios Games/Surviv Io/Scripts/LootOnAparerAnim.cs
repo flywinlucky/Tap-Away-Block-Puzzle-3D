@@ -22,7 +22,7 @@ public class LootOnAparerAnim : MonoBehaviour
 
     void OnEnable()
     {
-        //AnimateItem();
+        AnimateItem();
     }   
 
     private void AnimateItem()

@@ -501,8 +501,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDistance: 1.5
   attackInterval: 1
-  speedRange: {x: 2.2, y: 3.6}
-  accelRange: {x: 8, y: 14}
+  speedRange: {x: 1, y: 4}
+  accelRange: {x: 3, y: 14}
   angularSpeedRange: {x: 110, y: 220}
   pathUpdateIntervalRange: {x: 0.35, y: 0.9}
   staggerChance: 0.08
@@ -540,7 +540,31 @@ MonoBehaviour:
     dropChance: 50
   - loot: {fileID: 1368834902747691933, guid: bd299ca938aa1c34d8a8420531047f08, type: 3}
     dropChance: 50
-  dropChancePercent: 50
+  - loot: {fileID: 4246196868038949898, guid: f7d66a38e96912a4e8079a4e2b16ba8e, type: 3}
+    dropChance: 35
+  - loot: {fileID: 3924023499356873703, guid: e43433a832a6ec14c9b0f513cdd70cbd, type: 3}
+    dropChance: 15
+  - loot: {fileID: 7519696681368067483, guid: 57bb9be94a6f72043895dcbcb50f3536, type: 3}
+    dropChance: 10
+  - loot: {fileID: 5179473887446450198, guid: 7db741592c9ddd849b0f51546a12b6f6, type: 3}
+    dropChance: 5
+  - loot: {fileID: 7811536799092909832, guid: 9092347fff5481f46ba4dcbd9ebf6f20, type: 3}
+    dropChance: 35
+  - loot: {fileID: 5469680345180702114, guid: dd6d6ae90b754c947bd4313310d8dee6, type: 3}
+    dropChance: 15
+  - loot: {fileID: 3771061087911443101, guid: 8eb00f497f554774f8dda6ec4f19ee5c, type: 3}
+    dropChance: 10
+  - loot: {fileID: 1261990234687898234, guid: 625988376ffa20e42ab8376d61f34baa, type: 3}
+    dropChance: 5
+  - loot: {fileID: 8189550061833491261, guid: 4c619ffd097a45a4b8830cc978334c41, type: 3}
+    dropChance: 5
+  - loot: {fileID: 29005415660039173, guid: a66589369da264e42966e4ea507ed078, type: 3}
+    dropChance: 5
+  - loot: {fileID: 1893462148848150694, guid: 09d6750014ee2b640b84db1a7cbcc917, type: 3}
+    dropChance: 5
+  - loot: {fileID: 0}
+    dropChance: 0
+  dropChancePercent: 80
   minItemsToDrop: 1
   maxItemsToDrop: 2
   uniqueItems: 1
