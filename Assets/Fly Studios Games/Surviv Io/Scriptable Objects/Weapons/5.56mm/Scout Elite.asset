@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Scout Elite
   weaponSpriteIcon: {fileID: 21300000, guid: 2b3a85abf8116ab419bb4099e5cfed0f, type: 3}
   weapon_Color: {r: 0.011764706, g: 0.5882353, b: 0, a: 1}
+  weaponPrefab: {fileID: 3270096118351214954, guid: 717f9600cb0f85d4294309be1440618b, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1
