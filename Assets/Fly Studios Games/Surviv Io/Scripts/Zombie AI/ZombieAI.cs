@@ -24,6 +24,10 @@ public class ZombieAI : MonoBehaviour
     public float staggerSpeedMultiplier = 0.55f;
     public float lungeSpeedMultiplier = 1.75f;
 
+    public Animator isSwiming;
+    [Header("Swimming")]
+    public float swimmingSpeed = 2.5f;
+
     private NavMeshAgent _agent;
     private Transform _player;
     private float _nextAttackTime;
@@ -33,6 +37,9 @@ public class ZombieAI : MonoBehaviour
     private float _pathInterval;
     private float _baseSpeed;
     private Coroutine _varianceRoutine;
+
+    private bool _inWater = false;
+    private float _prevSpeed; // speed before entering water
 
     void Start()
     {
@@ -60,6 +67,8 @@ public class ZombieAI : MonoBehaviour
         _agent.angularSpeed = Random.Range(angularSpeedRange.x, angularSpeedRange.y);
 
         _baseSpeed = _agent.speed;
+        // If currently in water keep swim speed
+        if (_inWater) _agent.speed = swimmingSpeed;
         _pathInterval = Random.Range(pathUpdateIntervalRange.x, pathUpdateIntervalRange.y);
         _nextPathUpdateTime = Time.time + Random.Range(0f, _pathInterval); // Desync first update
 
@@ -72,22 +81,25 @@ public class ZombieAI : MonoBehaviour
         // Periodically trigger stagger or lunge, then restore speed
         while (true)
         {
-            float roll = Random.value;
-            if (roll < staggerChance)
+            // Skip speed variance while swimming
+            if (!_inWater)
             {
-                float dur = Random.Range(staggerDurationRange.x, staggerDurationRange.y);
-                _agent.speed = _baseSpeed * staggerSpeedMultiplier;
-                yield return new WaitForSeconds(dur);
-                _agent.speed = _baseSpeed;
+                float roll = Random.value;
+                if (roll < staggerChance)
+                {
+                    float dur = Random.Range(staggerDurationRange.x, staggerDurationRange.y);
+                    _agent.speed = _baseSpeed * staggerSpeedMultiplier;
+                    yield return new WaitForSeconds(dur);
+                    if (!_inWater) _agent.speed = _baseSpeed;
+                }
+                else if (roll < staggerChance + lungeChance)
+                {
+                    float dur = Random.Range(lungeDurationRange.x, lungeDurationRange.y);
+                    _agent.speed = _baseSpeed * lungeSpeedMultiplier;
+                    yield return new WaitForSeconds(dur);
+                    if (!_inWater) _agent.speed = _baseSpeed;
+                }
             }
-            else if (roll < staggerChance + lungeChance)
-            {
-                float dur = Random.Range(lungeDurationRange.x, lungeDurationRange.y);
-                _agent.speed = _baseSpeed * lungeSpeedMultiplier;
-                yield return new WaitForSeconds(dur);
-                _agent.speed = _baseSpeed;
-            }
-            // Idle interval until next variance chance (random to avoid sync)
             yield return new WaitForSeconds(Random.Range(0.6f, 1.4f));
         }
     }
@@ -188,5 +200,39 @@ public class ZombieAI : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, _targetPosition);
         Gizmos.DrawSphere(_targetPosition, 0.2f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other != null && other.CompareTag("Water")) EnterWater();
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other != null && other.CompareTag("Water")) ExitWater();
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other != null && other.CompareTag("Water")) EnterWater();
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other != null && other.CompareTag("Water")) ExitWater();
+    }
+
+    private void EnterWater()
+    {
+        if (_inWater) return;
+        _inWater = true;
+        _prevSpeed = _agent != null ? _agent.speed : swimmingSpeed;
+        if (_agent != null) _agent.speed = swimmingSpeed;
+        if (isSwiming != null) isSwiming.SetBool("isSwiming", true);
+    }
+
+    private void ExitWater()
+    {
+        if (!_inWater) return;
+        _inWater = false;
+        if (_agent != null) _agent.speed = _prevSpeed > 0f ? _prevSpeed : _baseSpeed;
+        if (isSwiming != null) isSwiming.SetBool("isSwiming", false);
     }
 }

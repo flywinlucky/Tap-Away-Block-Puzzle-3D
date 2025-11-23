@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     public Transform weaponRootPosition;
     public WeaponControler weaponController;
     public bool holdToFire = true; // ține apăsat pentru foc continuu
-
+    public Animator isSwiming;
     // intern
     private Rigidbody2D _rb2;
     private Vector2 _inputDir = Vector2.zero;
@@ -42,6 +42,13 @@ public class Player : MonoBehaviour
     public Ease recoilEase = Ease.OutQuad;
     public int recoilVibrato = 0;
     private Sequence _recoilSequence; // was Tween _recoilTween
+
+    [Header("Swimming")]
+    [Tooltip("Viteza de deplasare în apă.")]
+    public float swimmingSpeed = 2.5f;
+
+    private bool _inWater = false;
+    private float _prevMoveSpeed;
 
     void Start()
     {
@@ -208,5 +215,58 @@ public class Player : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, worldPos);
+    }
+
+    // Water enter/exit for 2D physics
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other != null && other.CompareTag("Water"))
+            EnterWater();
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other != null && other.CompareTag("Water"))
+            ExitWater();
+    }
+
+    // Water enter/exit for 3D physics (in case of 3D colliders)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other != null && other.CompareTag("Water"))
+            EnterWater();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other != null && other.CompareTag("Water"))
+            ExitWater();
+    }
+
+    private void EnterWater()
+    {
+        if (_inWater) return;
+        _inWater = true;
+
+        // cache current speed and apply swim speed
+        _prevMoveSpeed = moveSpeed;
+        moveSpeed = swimmingSpeed;
+
+        // animator bool
+        if (isSwiming != null)
+            isSwiming.SetBool("isSwiming", true);
+    }
+
+    private void ExitWater()
+    {
+        if (!_inWater) return;
+        _inWater = false;
+
+        // restore speed
+        moveSpeed = _prevMoveSpeed;
+
+        // animator bool
+        if (isSwiming != null)
+            isSwiming.SetBool("isSwiming", false);
     }
 }

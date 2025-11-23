@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: M249
   m_EditorClassIdentifier: 
   weaponName: M249
-  weaponSpriteIcon: {fileID: 21300000, guid: a9893382f3105414b9f54795368b3a15, type: 3}
+  weaponSpriteIcon: {fileID: 21300000, guid: 69dc329f7bf1efa49960c9b6953f812f, type: 3}
   weapon_Color: {r: 0.011764706, g: 0.5882353, b: 0, a: 1}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
