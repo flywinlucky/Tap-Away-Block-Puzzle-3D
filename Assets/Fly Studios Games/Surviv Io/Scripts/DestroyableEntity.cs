@@ -1,25 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class DestroyableEntity : MonoBehaviour
 {
 	[Header("Health")]
-	private float maxHealth = 100f;
-	private float _currentHealth;
+	public float health = 100;
+	[Tooltip("Duration of the shake in seconds.")]
+	public float shakeDuration = 0.15f;
+	[Tooltip("Shake strength on each axis (Z usually 0 for 2D).")]
+	public Vector3 shakeStrength = new Vector3(0.15f, 0.15f, 0f);
+	[Tooltip("How much will the shake vibrate.")]
+	public int shakeVibrato = 18;
+	[Range(0f, 180f)]
+	public float shakeRandomness = 90f;
+	[Tooltip("If true the shake will smoothly fade out.")]
+	public bool shakeFadeOut = true;
 
-	[Header("Hit Visual")]
-	[Tooltip("Procentaj (0-1) cu cât se micșorează scale-ul curent la fiecare hit (ex: 0.2 = -20%).")]
-	[Range(0f, 0.9f)]
-	public float scaleReduction = 0.2f;
-
-	[Tooltip("Scale minim permis pentru a evita valori foarte mici sau negative.")]
-	public float minScale = 0.05f;
-
-	void Start()
-	{
-		_currentHealth = maxHealth;
-	}
+	private Tween _shakeTween;
 
 	// Called when a Bullet hits this entity
 	public virtual void OnHitByBullet(Bullet bullet)
@@ -28,28 +27,36 @@ public class DestroyableEntity : MonoBehaviour
 		TakeDamage(bullet.GetDamage());
 	}
 
-	// Aplica damage și micșorează scale-ul curent multiplicativ; distruge când health <= 0
+	// Apply damage; play shake feedback; destroy when health <= 0
 	public void TakeDamage(float amount)
 	{
 		if (amount <= 0f) return;
 
-		_currentHealth -= amount;
-		_currentHealth = Mathf.Max(0f, _currentHealth);
+		health = Mathf.Max(0f, health - amount);
 
-		// Aplicăm reducerea scale-ului în funcție de scaleReduction pornind de la scale-ul curent
-		float factor = Mathf.Clamp01(1f - scaleReduction);
-		Vector3 newScale = transform.localScale * factor;
+		PlayHitFeedback();
 
-		// Clamp pe fiecare componentă la minScale
-		newScale.x = Mathf.Max(newScale.x, minScale);
-		newScale.y = Mathf.Max(newScale.y, minScale);
-		newScale.z = Mathf.Max(newScale.z, minScale);
-
-		transform.localScale = newScale;
-
-		if (_currentHealth <= 0f)
+		if (health <= 0f)
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	// Modular feedback (override in subclasses if needed)
+	protected virtual void PlayHitFeedback()
+	{
+		if (transform == null) return;
+
+		if (_shakeTween != null && _shakeTween.IsActive())
+			_shakeTween.Kill();
+
+		_shakeTween = transform.DOShakePosition(
+			shakeDuration,
+			shakeStrength,
+			shakeVibrato,
+			shakeRandomness,
+			snapping: false,
+			fadeOut: shakeFadeOut
+		);
 	}
 }
