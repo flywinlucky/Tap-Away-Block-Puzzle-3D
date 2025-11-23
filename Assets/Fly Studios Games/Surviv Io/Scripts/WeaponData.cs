@@ -10,6 +10,11 @@ public class WeaponData : ScriptableObject
 	public Color weapon_Color = Color.white;
 	public GameObject weaponPrefab; // prefab-ul vizual al armei (instanțiat la equip)
 
+	[Header("Audio")]
+	public AudioClip weapon_fire_sound;
+	public AudioClip weapon_reload_sound;
+	public AudioClip weapon_switch_sound; // sunet la echipare (switch)
+
 	[Header("Projectile")]
 	public GameObject bulletPrefab;
 	public float bulletSpeed = 15f;

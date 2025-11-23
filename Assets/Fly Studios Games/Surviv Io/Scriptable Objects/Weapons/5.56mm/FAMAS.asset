@@ -16,13 +16,16 @@ MonoBehaviour:
   weaponSpriteIcon: {fileID: 21300000, guid: 5d6f7184e2b623c46894be26fdb5834e, type: 3}
   weapon_Color: {r: 0.011764706, g: 0.5882353, b: 0, a: 1}
   weaponPrefab: {fileID: 117369792448681073, guid: 8e052517c656f6047aa16ed23475a7cb, type: 3}
+  weapon_fire_sound: {fileID: 8300000, guid: 9b58a958ae5ced1469e46f675eeb78a7, type: 3}
+  weapon_reload_sound: {fileID: 8300000, guid: d5a0db123e54a7c4187cdea3c3f0d715, type: 3}
+  weapon_switch_sound: {fileID: 8300000, guid: 0229069bbbb7f0148a041a11850489d9, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1
   range: 40
-  fireRate: 0.2
+  fireRate: 0.03
   automatic: 0
   magazineSize: 30
   maxReserveAmmo: 250
   startingReserveAmmo: 30
-  reloadTime: 1.2
+  reloadTime: 3

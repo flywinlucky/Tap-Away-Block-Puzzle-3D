@@ -18,7 +18,8 @@ public class WeaponControler : MonoBehaviour
 	private int _reserveAmmo = 0;
 	private float _nextFireTime = 0f;
 	private bool _isReloading = false;
-	private GameObject _equippedVisual; // instanța vizuală a armei echipate
+	private GameObject _equippedVisual;
+	private AudioSource _weaponAudioSource;
 
 	// public acces pentru UI sau alte sisteme
 	public WeaponData CurrentWeapon => _weapon;
@@ -81,6 +82,16 @@ public class WeaponControler : MonoBehaviour
 		_equippedVisual.transform.localRotation = Quaternion.Euler(0f, 0f, -90f);
 		_equippedVisual.transform.localScale = Vector3.one;
 
+		_weaponAudioSource = _equippedVisual.GetComponent<AudioSource>();
+		if (_weaponAudioSource == null)
+		{
+			_weaponAudioSource = GetComponent<AudioSource>();
+			if (_weaponAudioSource == null)
+				_weaponAudioSource = gameObject.AddComponent<AudioSource>();
+		}
+		_weaponAudioSource.playOnAwake = false;
+		_weaponAudioSource.loop = false;
+
 		// în lipsa unei asignări externe, încercăm să deducem muzzle din prefab
 		// 1) copil numit "Muzzle"
 		var found = _equippedVisual.transform.Find("Muzzle");
@@ -95,6 +106,12 @@ public class WeaponControler : MonoBehaviour
 				muzzle = spawner.weaponBulletSpawn;
 			}
 		}
+	}
+
+	private void PlayWeaponSwitchSound()
+	{
+		if (_weapon != null && _weapon.weapon_switch_sound != null && _weaponAudioSource != null)
+			_weaponAudioSource.PlayOneShot(_weapon.weapon_switch_sound);
 	}
 
 	// Echipăm o armă (încărcăm magazinul și rezervă)
@@ -116,6 +133,7 @@ public class WeaponControler : MonoBehaviour
 
 		// spawn vizualul armei (rotație locală z=-90)
 		SpawnWeaponVisual();
+		PlayWeaponSwitchSound(); // nou
 	}
 
 	// OVERLOAD: echipăm arma cu muniție explicită (folosită de UI inventory la switch)
@@ -136,6 +154,7 @@ public class WeaponControler : MonoBehaviour
 
 		// spawn vizualul armei (rotație locală z=-90)
 		SpawnWeaponVisual();
+		PlayWeaponSwitchSound(); // nou
 	}
 
 	// Fire folosește datele din WeaponData; dacă ammo 0 nu trage
@@ -178,6 +197,10 @@ public class WeaponControler : MonoBehaviour
 
 		_currentMagazine = Mathf.Max(0, _currentMagazine - 1);
 
+		// Play fire sound (only if shot consumed ammo)
+		if (_weapon.weapon_fire_sound != null && _weaponAudioSource != null)
+			_weaponAudioSource.PlayOneShot(_weapon.weapon_fire_sound);
+
 		// auto-reload dacă magazinul a ajuns la 0 după împușcare și există rezervă
 		if (_currentMagazine <= 0 && _reserveAmmo > 0)
 		{
@@ -195,6 +218,10 @@ public class WeaponControler : MonoBehaviour
 
 		int needed = _weapon.magazineSize - _currentMagazine;
 		int toLoad = Mathf.Min(needed, _reserveAmmo);
+
+		// Play reload sound at start
+		if (_weapon.weapon_reload_sound != null && _weaponAudioSource != null)
+			_weaponAudioSource.PlayOneShot(_weapon.weapon_reload_sound);
 
 		// dacă nu există timp de reload -> instant
 		if (_weapon.reloadTime <= 0f)
