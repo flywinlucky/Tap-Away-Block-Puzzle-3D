@@ -3455,17 +3455,7 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  dropPoints:
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
+  dropPoints: []
   dropChancePercent: 100
   minItemsToDrop: 1
   maxItemsToDrop: 2
@@ -10637,17 +10627,7 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  dropPoints:
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
+  dropPoints: []
   dropChancePercent: 100
   minItemsToDrop: 1
   maxItemsToDrop: 2
@@ -14030,17 +14010,7 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  dropPoints:
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
+  dropPoints: []
   dropChancePercent: 100
   minItemsToDrop: 1
   maxItemsToDrop: 2
@@ -14496,17 +14466,7 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  dropPoints:
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
+  dropPoints: []
   dropChancePercent: 100
   minItemsToDrop: 1
   maxItemsToDrop: 2
@@ -15983,17 +15943,7 @@ MonoBehaviour:
   shakeVibrato: 18
   shakeRandomness: 90
   shakeFadeOut: 1
-  dropPoints:
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
-  - loot: {fileID: 0}
-    dropChance: 0
+  dropPoints: []
   dropChancePercent: 100
   minItemsToDrop: 1
   maxItemsToDrop: 2

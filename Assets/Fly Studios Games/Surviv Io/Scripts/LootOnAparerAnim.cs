@@ -7,11 +7,11 @@ public class LootOnAparerAnim : MonoBehaviour
 {
     public bool enableAnimationOnEnable;
     [Header("Dispersal Settings")]
-    public float disperseRadius = 1.5f;
-    public float jumpPower = 0.6f;
-    public float jumpDuration = 0.6f;
-    public int jumpCount = 1;
-    public float randomDelayMax = 0.25f;
+    public float disperseRadius = 3f;
+    public float jumpPower = 1.5f;
+    public float jumpDuration = 0.5f;
+    public int jumpCount = 0;
+    public float randomDelayMax = 0f;
     public Ease jumpEase = Ease.OutQuad;
     [Header("Optional")]
     public bool scalePop = true;
@@ -23,7 +23,6 @@ public class LootOnAparerAnim : MonoBehaviour
     void OnEnable()
     {
         if (!enableAnimationOnEnable) return;
-        if (!Application.isPlaying) return;
 
         _centerPos = transform.position;
 
@@ -43,17 +42,5 @@ public class LootOnAparerAnim : MonoBehaviour
         seq.AppendInterval(delay);
         seq.Append(transform.DOJump(target, jumpPower, jumpCount, jumpDuration).SetEase(jumpEase));
         seq.Join(transform.DORotate(new Vector3(0f, 0f, Random.Range(-180f, 180f)), jumpDuration, RotateMode.FastBeyond360));
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    }   
 }

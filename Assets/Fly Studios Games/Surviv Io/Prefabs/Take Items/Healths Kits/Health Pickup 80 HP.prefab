@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8581165416599102934}
   - component: {fileID: 8581165416599102935}
   - component: {fileID: 8581165416599102932}
+  - component: {fileID: -9041009673763480303}
   m_Layer: 0
   m_Name: Health Pickup 80 HP
   m_TagString: Untagged
@@ -63,6 +64,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 80
+--- !u!114 &-9041009673763480303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581165416599102933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43142995094144b468299d89d0bc643a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAnimationOnEnable: 1
+  disperseRadius: 3
+  jumpPower: 1.5
+  jumpDuration: 0.5
+  jumpCount: 0
+  randomDelayMax: 0
+  jumpEase: 6
+  scalePop: 1
+  popScale: 1
+  popDuration: 0.25
 --- !u!1 &8581165417668958160
 GameObject:
   m_ObjectHideFlags: 0
