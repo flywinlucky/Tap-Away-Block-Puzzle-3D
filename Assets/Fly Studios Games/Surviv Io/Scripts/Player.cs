@@ -47,6 +47,15 @@ public class Player : MonoBehaviour
     [Tooltip("Viteza de deplasare în apă.")]
     public float swimmingSpeed = 2.5f;
 
+    [Header("Audio")]
+    [Tooltip("Intervalul fix între pași (s).")]
+    public float footstepInterval = 0.4f;
+    [Tooltip("Viteză minimă pentru a reda pași.")]
+    public float minMoveSpeedForStep = 0.05f;
+
+    private AudioManager _audio;
+    private float _stepTimer = 0f;
+
     private bool _inWater = false;
     private float _prevMoveSpeed;
 
@@ -67,6 +76,7 @@ public class Player : MonoBehaviour
             _weaponInitialZ = e.z;
             _weaponInitialLocalPos = weaponRootPosition.localPosition; // cache local start
         }
+        _audio = FindObjectOfType<AudioManager>();
     }
 
     void Update()
@@ -116,6 +126,8 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
                 weaponController.Reload();
         }
+
+        HandleFootsteps();
     }
 
     void HandleInput()
@@ -268,5 +280,33 @@ public class Player : MonoBehaviour
         // animator bool
         if (isSwiming != null)
             isSwiming.SetBool("isSwiming", false);
+    }
+
+    private void HandleFootsteps()
+    {
+        float speed = 0f;
+        if (_rb2 != null) speed = _rb2.velocity.magnitude;
+        else speed = _currentVelocity.magnitude;
+
+        bool moving = speed > minMoveSpeedForStep && (_inputDir.sqrMagnitude > 0.001f);
+
+        if (moving)
+        {
+            _stepTimer -= Time.deltaTime;
+            if (_stepTimer <= 0f)
+            {
+                if (_audio == null) _audio = FindObjectOfType<AudioManager>();
+                if (_audio != null)
+                {
+                    if (_inWater) _audio.PlayWaterFootstep();
+                    else _audio.PlayFootstep();
+                }
+                _stepTimer = Mathf.Max(0.05f, footstepInterval);
+            }
+        }
+        else
+        {
+            _stepTimer = 0f;
+        }
     }
 }

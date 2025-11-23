@@ -18,8 +18,23 @@ public class AudioManager : MonoBehaviour
 	public const string MusicPrefKey = "MusicEnabled";
 	public const string SoundPrefKey = "SoundEnabled";
 
+	[Header("Footstep SFX")]
+	[Tooltip("Clipuri de pași (uscat).")]
+	public List<AudioClip> footstepClips = new List<AudioClip>();
+	[Tooltip("Clipuri de pași în apă.")]
+	public List<AudioClip> waterFootstepClips = new List<AudioClip>();
+	[Range(0f, 1f)] public float footstepVolume = 1f;
+	private AudioSource _footstepSource;
+
 	private void Start()
 	{
+		// Asigurăm o sursă pentru pași pe acest GameObject
+		_footstepSource = GetComponent<AudioSource>();
+		if (_footstepSource == null) _footstepSource = gameObject.AddComponent<AudioSource>();
+		_footstepSource.playOnAwake = false;
+		_footstepSource.loop = false;
+		_footstepSource.spatialBlend = 0f;
+
 		// Opțional: inițializăm din PlayerPrefs dacă nu setăm din exterior
 		_musicEnabled = PlayerPrefs.GetInt(MusicPrefKey, 1) == 1;
 		_soundEnabled = PlayerPrefs.GetInt(SoundPrefKey, 1) == 1;
@@ -68,6 +83,34 @@ public class AudioManager : MonoBehaviour
 			return;
 		}
 		blockClickSource.PlayOneShot(clip);
+	}
+
+	// Redă un pas (uscat) folosind AudioSource-ul local și un clip aleator din listă.
+	public void PlayFootstep()
+	{
+		if (!_soundEnabled) return;
+		if (footstepClips == null || footstepClips.Count == 0) return;
+		if (_footstepSource == null) _footstepSource = GetComponent<AudioSource>();
+		if (_footstepSource == null) return;
+
+		AudioClip clip = footstepClips[Random.Range(0, footstepClips.Count)];
+		if (clip == null) return;
+
+		_footstepSource.PlayOneShot(clip, footstepVolume);
+	}
+
+	// Redă un pas în apă.
+	public void PlayWaterFootstep()
+	{
+		if (!_soundEnabled) return;
+		if (waterFootstepClips == null || waterFootstepClips.Count == 0) return;
+		if (_footstepSource == null) _footstepSource = GetComponent<AudioSource>();
+		if (_footstepSource == null) return;
+
+		AudioClip clip = waterFootstepClips[Random.Range(0, waterFootstepClips.Count)];
+		if (clip == null) return;
+
+		_footstepSource.PlayOneShot(clip, footstepVolume);
 	}
 
 	// Setări enable/disable apelate din SettingsManager
@@ -140,7 +183,11 @@ public class AudioManager : MonoBehaviour
 
 	private void ApplySoundState()
 	{
-		if (blockClickSource == null) return;
-		blockClickSource.mute = !_soundEnabled;
+		if (blockClickSource != null)
+			blockClickSource.mute = !_soundEnabled;
+
+		// mute/unmute sursa de pași
+		if (_footstepSource != null)
+			_footstepSource.mute = !_soundEnabled;
 	}
 }
