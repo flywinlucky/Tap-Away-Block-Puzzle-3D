@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f14af5f234b1544797f8b10b91ea4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
+  health: 20
   shakeDuration: 0.15
   shakeStrength: {x: 0.15, y: 0.15, z: 0}
   shakeVibrato: 18

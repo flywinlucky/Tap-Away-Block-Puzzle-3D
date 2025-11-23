@@ -22,10 +22,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   magazineSize: 30
-  reloadTime: 1.2
-  fireRate: 0.2
-  damage: 1
-  range: 40
+  reloadTime: 2.2
+  fireRate: 0.055
+  damage: 10.75
+  range: 120
   automatic: 0
   maxReserveAmmo: 250
   startingReserveAmmo: 120
