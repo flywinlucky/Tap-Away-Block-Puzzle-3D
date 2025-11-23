@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4803374122690042670}
   - component: {fileID: 4803374122690042671}
   - component: {fileID: 4803374122690042656}
+  - component: {fileID: 1915222817174108720}
   m_Layer: 0
   m_Name: 5.56mm Ammo Pickup
   m_TagString: Untagged
@@ -202,3 +203,25 @@ MonoBehaviour:
   bulletAmmoData: {fileID: 11400000, guid: 4ffed83c32de8f240aae79db64462a70, type: 2}
   item_color: {fileID: 4803374122690042670}
   ammo_icon: {fileID: 4803374121939167228}
+--- !u!114 &1915222817174108720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803374122690042658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43142995094144b468299d89d0bc643a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAnimationOnEnable: 1
+  disperseRadius: 2.5
+  jumpPower: 1
+  jumpDuration: 0.5
+  jumpCount: 1
+  randomDelayMax: 0.25
+  jumpEase: 6
+  scalePop: 1
+  popScale: 1
+  popDuration: 0.25

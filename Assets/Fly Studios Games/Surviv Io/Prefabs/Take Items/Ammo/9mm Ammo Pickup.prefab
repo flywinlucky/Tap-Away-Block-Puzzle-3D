@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6800950226956316997}
   - component: {fileID: 6800950226956316996}
   - component: {fileID: 6800950226956316999}
+  - component: {fileID: 65114743335791673}
   m_Layer: 0
   m_Name: 9mm Ammo Pickup
   m_TagString: Untagged
@@ -202,3 +203,25 @@ MonoBehaviour:
   bulletAmmoData: {fileID: 11400000, guid: 8995a3e33c4d7984f91b0f8cc4701b5f, type: 2}
   item_color: {fileID: 6800950226956316997}
   ammo_icon: {fileID: 6800950226726537679}
+--- !u!114 &65114743335791673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6800950226956316993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43142995094144b468299d89d0bc643a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAnimationOnEnable: 1
+  disperseRadius: 2.5
+  jumpPower: 1
+  jumpDuration: 0.5
+  jumpCount: 1
+  randomDelayMax: 0.25
+  jumpEase: 6
+  scalePop: 1
+  popScale: 1
+  popDuration: 0.25

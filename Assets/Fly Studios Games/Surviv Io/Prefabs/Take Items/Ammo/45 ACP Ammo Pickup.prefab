@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5897349167985707984}
   - component: {fileID: 5897349167985707987}
   - component: {fileID: 5897349167985707986}
+  - component: {fileID: 2981104151717257579}
   m_Layer: 0
   m_Name: 45 ACP Ammo Pickup
   m_TagString: Untagged
@@ -118,6 +119,28 @@ MonoBehaviour:
   bulletAmmoData: {fileID: 11400000, guid: a43d7ec2f9fc52d4486b18baf62e380f, type: 2}
   item_color: {fileID: 5897349167985707984}
   ammo_icon: {fileID: 5897349168071621665}
+--- !u!114 &2981104151717257579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5897349167985707988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43142995094144b468299d89d0bc643a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAnimationOnEnable: 1
+  disperseRadius: 2.5
+  jumpPower: 1
+  jumpDuration: 0.5
+  jumpCount: 1
+  randomDelayMax: 0.25
+  jumpEase: 6
+  scalePop: 1
+  popScale: 1
+  popDuration: 0.25
 --- !u!1 &5897349168071621667
 GameObject:
   m_ObjectHideFlags: 0

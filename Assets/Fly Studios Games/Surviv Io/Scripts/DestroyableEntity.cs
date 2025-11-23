@@ -17,7 +17,9 @@ public class DestroyableEntity : MonoBehaviour
 	public float shakeRandomness = 90f;
 	[Tooltip("If true the shake will smoothly fade out.")]
 	public bool shakeFadeOut = true;
-
+[Space]
+	[Tooltip("Droop Loot")]
+	public List<GameObject> loots;
 	private Tween _shakeTween;
 
 	// Called when a Bullet hits this entity
@@ -38,7 +40,30 @@ public class DestroyableEntity : MonoBehaviour
 
 		if (health <= 0f)
 		{
+			TrySpawnLoot(); // spawn drops before destroy
 			Destroy(gameObject);
+		}
+	}
+
+	// Instantiates all prefabs from 'loots' (if any) around current position
+	private void TrySpawnLoot()
+	{
+		if (loots == null || loots.Count == 0) return;
+
+		Vector3 basePos = transform.position;
+		for (int i = 0; i < loots.Count; i++)
+		{
+			var prefab = loots[i];
+			if (prefab == null) continue;
+
+			// small jitter to avoid perfect overlap
+			Vector2 jitter = Random.insideUnitCircle * 0.2f;
+			var inst = Instantiate(prefab, basePos + new Vector3(jitter.x, jitter.y, 0f), Quaternion.identity);
+
+			// optional gentle impulse if the spawned item has Rigidbody2D
+			var rb2 = inst.GetComponent<Rigidbody2D>();
+			if (rb2 != null)
+				rb2.AddForce(Random.insideUnitCircle.normalized * Random.Range(0.5f, 1.5f), ForceMode2D.Impulse);
 		}
 	}
 

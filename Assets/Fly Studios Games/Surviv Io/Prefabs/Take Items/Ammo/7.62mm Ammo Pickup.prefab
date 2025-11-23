@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 581750519569543803}
   - component: {fileID: 581750519569543802}
   - component: {fileID: 581750519569543781}
+  - component: {fileID: -1839320647223634822}
   m_Layer: 0
   m_Name: 7.62mm Ammo Pickup
   m_TagString: Untagged
@@ -118,6 +119,28 @@ MonoBehaviour:
   bulletAmmoData: {fileID: 11400000, guid: 0f575507b068fa045b442dfcb627bd95, type: 2}
   item_color: {fileID: 581750519569543803}
   ammo_icon: {fileID: 581750519846344515}
+--- !u!114 &-1839320647223634822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581750519569543780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43142995094144b468299d89d0bc643a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAnimationOnEnable: 1
+  disperseRadius: 2.5
+  jumpPower: 1
+  jumpDuration: 0.5
+  jumpCount: 1
+  randomDelayMax: 0.25
+  jumpEase: 6
+  scalePop: 1
+  popScale: 1
+  popDuration: 0.25
 --- !u!1 &581750519846344514
 GameObject:
   m_ObjectHideFlags: 0
