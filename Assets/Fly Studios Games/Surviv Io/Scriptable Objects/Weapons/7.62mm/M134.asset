@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: M134
   weaponSpriteIcon: {fileID: 21300000, guid: 4a8399dafb63c2a45a3aab164d3ec611, type: 3}
   weapon_Color: {r: 0, g: 0.38039216, b: 0.9490196, a: 1}
+  weaponPrefab: {fileID: 6697838646288413413, guid: 7ea3d6715df7ebe46a1a29d29e551e47, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1

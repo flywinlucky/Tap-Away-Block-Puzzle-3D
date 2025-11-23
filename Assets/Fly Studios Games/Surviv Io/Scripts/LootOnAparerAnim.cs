@@ -22,6 +22,11 @@ public class LootOnAparerAnim : MonoBehaviour
 
     void OnEnable()
     {
+        //AnimateItem();
+    }   
+
+    private void AnimateItem()
+    {
         if (!enableAnimationOnEnable) return;
 
         _centerPos = transform.position;
@@ -42,5 +47,5 @@ public class LootOnAparerAnim : MonoBehaviour
         seq.AppendInterval(delay);
         seq.Append(transform.DOJump(target, jumpPower, jumpCount, jumpDuration).SetEase(jumpEase));
         seq.Join(transform.DORotate(new Vector3(0f, 0f, Random.Range(-180f, 180f)), jumpDuration, RotateMode.FastBeyond360));
-    }   
+    }
 }

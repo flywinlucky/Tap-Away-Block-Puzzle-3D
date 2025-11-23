@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: BLR 81
   weaponSpriteIcon: {fileID: 21300000, guid: 3b5c113eeb9d3524c84144b9fbc61d14, type: 3}
   weapon_Color: {r: 0, g: 0.38039216, b: 0.9490196, a: 1}
+  weaponPrefab: {fileID: 5248654890580711863, guid: bfc4696a6b0778f469f1d45730787a4d, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1

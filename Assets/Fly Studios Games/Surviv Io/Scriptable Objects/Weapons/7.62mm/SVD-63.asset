@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: SVD-63
   weaponSpriteIcon: {fileID: 21300000, guid: 06a87d62fcad7a043954cd41b9e4c2fe, type: 3}
   weapon_Color: {r: 0, g: 0.38039216, b: 0.9490196, a: 1}
+  weaponPrefab: {fileID: 8865634568970334637, guid: f9d295c0075c1c74ca58c2f092d073c8, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1

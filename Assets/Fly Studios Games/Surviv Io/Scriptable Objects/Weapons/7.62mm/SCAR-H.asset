@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: SCAR-H
   weaponSpriteIcon: {fileID: 21300000, guid: 987152a754e20344c87ea04816b9619e, type: 3}
   weapon_Color: {r: 0, g: 0.38039216, b: 0.9490196, a: 1}
+  weaponPrefab: {fileID: 4083825749753680153, guid: 60c245f798526c749a227719d5c0bd62, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1
