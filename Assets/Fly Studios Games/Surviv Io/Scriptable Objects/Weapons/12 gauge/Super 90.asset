@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: Super 90
   weaponSpriteIcon: {fileID: 21300000, guid: da1fbb7e1b1b6dd46b9a8c9aae107194, type: 3}
   weapon_Color: {r: 0.9490196, g: 0, b: 0, a: 1}
+  weaponPrefab: {fileID: 3827773704588558558, guid: 1e53adcc573e66543b7bcacd128d2266, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1

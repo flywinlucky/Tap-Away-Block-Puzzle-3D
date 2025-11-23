@@ -15,6 +15,7 @@ MonoBehaviour:
   weaponName: M870
   weaponSpriteIcon: {fileID: 21300000, guid: 4879c078048c7524c8adde76b41784a5, type: 3}
   weapon_Color: {r: 0.9490196, g: 0, b: 0, a: 1}
+  weaponPrefab: {fileID: 1572144090573941576, guid: b7c5cc231590f2e469c7214ede1c5979, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1
