@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 5.56mm
   m_EditorClassIdentifier: 
   ammoName: 5.56mm
-  ammoCount: 100
-  ammoIcon: {fileID: 21300000, guid: c94c1dc2d2efcc74b91fe269c0b70178, type: 3}
+  ammoCount: 60
+  ammoIcon: {fileID: 21300000, guid: 46824c7c4a509054da586e723ad24b5f, type: 3}
   ammoColor: {r: 0.011764706, g: 0.5882353, b: 0, a: 1}
   compatibleWeapons: []

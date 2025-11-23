@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e620d613dd134644a2b33621923430d, type: 3}
-  m_Name: 308 Subsonic
+  m_Name: 338 Subsonic
   m_EditorClassIdentifier: 
-  ammoName: 308 Subsonic
-  ammoCount: 100
-  ammoIcon: {fileID: 21300000, guid: c94c1dc2d2efcc74b91fe269c0b70178, type: 3}
-  ammoColor: {r: 0.8469283, g: 0, b: 0.9411765, a: 1}
+  ammoName: 338 Subsonic
+  ammoCount: 60
+  ammoIcon: {fileID: 21300000, guid: aaac5581c9b03db47974ccac97c3fe0d, type: 3}
+  ammoColor: {r: 0.09019608, g: 0.16078432, b: 0, a: 1}
   compatibleWeapons: []

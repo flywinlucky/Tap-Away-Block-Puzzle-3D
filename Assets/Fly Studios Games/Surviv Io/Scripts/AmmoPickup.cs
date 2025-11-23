@@ -16,7 +16,7 @@ public class AmmoPickup : MonoBehaviour
 		if (bulletAmmoData != null)
 		{
 			if (ammo_icon != null) ammo_icon.sprite = bulletAmmoData.ammoIcon;
-			if (item_color != null) item_color.color = bulletAmmoData.ammoColor;
+			//if (item_color != null) item_color.color = bulletAmmoData.ammoColor;
 		}
 	}
 

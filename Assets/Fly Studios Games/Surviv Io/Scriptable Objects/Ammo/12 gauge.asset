@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 12 gauge
   m_EditorClassIdentifier: 
   ammoName: 12 gauge
-  ammoCount: 100
-  ammoIcon: {fileID: 21300000, guid: 6ad2083c5fb8fb144bce797daa246443, type: 3}
+  ammoCount: 60
+  ammoIcon: {fileID: 21300000, guid: 132dcfbf581d3594a88e206ed6cafa6c, type: 3}
   ammoColor: {r: 0.9490196, g: 0, b: 0, a: 1}
   compatibleWeapons: []
