@@ -16,6 +16,9 @@ MonoBehaviour:
   weaponSpriteIcon: {fileID: 21300000, guid: ac27e9205bdea394494cb81427c1a5a1, type: 3}
   weapon_Color: {r: 0.9490196, g: 0.64705884, b: 0, a: 1}
   weaponPrefab: {fileID: 8060458029035322219, guid: 4d4e9853d23e411479577963f048c70d, type: 3}
+  weapon_fire_sound: {fileID: 8300000, guid: 84836517600699148aa82e3a347e6a8e, type: 3}
+  weapon_reload_sound: {fileID: 8300000, guid: 9de28fbb83deda343ae3c9f7888a8b52, type: 3}
+  weapon_switch_sound: {fileID: 8300000, guid: 0229069bbbb7f0148a041a11850489d9, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
   bulletSpeed: 30
   damage: 1
