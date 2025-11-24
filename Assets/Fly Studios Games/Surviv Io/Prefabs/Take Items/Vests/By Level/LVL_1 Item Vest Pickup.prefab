@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7811536799092909829}
   - component: {fileID: 7811536799092909834}
   - component: {fileID: 7811536799092909831}
+  - component: {fileID: -3837128641753365761}
   m_Layer: 0
   m_Name: LVL_1 Item Vest Pickup
   m_TagString: Untagged
@@ -118,6 +119,28 @@ MonoBehaviour:
   equipmentData: {fileID: 11400000, guid: a3c6ef802fbe9e544a1eaa36cff39eba, type: 2}
   item_color: {fileID: 7811536799092909829}
   armor_icon: {fileID: 7811536799516738089}
+--- !u!114 &-3837128641753365761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7811536799092909832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43142995094144b468299d89d0bc643a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableAnimationOnEnable: 1
+  disperseRadius: 3
+  jumpPower: 1.5
+  jumpDuration: 0.5
+  jumpCount: 0
+  randomDelayMax: 0
+  jumpEase: 6
+  scalePop: 1
+  popScale: 1
+  popDuration: 0.25
 --- !u!1 &7811536799516738095
 GameObject:
   m_ObjectHideFlags: 0

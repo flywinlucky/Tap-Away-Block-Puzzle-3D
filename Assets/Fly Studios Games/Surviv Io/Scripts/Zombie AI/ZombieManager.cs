@@ -36,6 +36,8 @@ public class ZombieManager : MonoBehaviour
 
     // Lista cu toți zombii activi din scenă
     public List<ZombieAI> activeZombies = new List<ZombieAI>();
+[Space]
+    public BoxCollider2D safeAreaSpawn;
 
     // Per-zombie angle noise cache to keep their slot feel persistent
     private Dictionary<ZombieAI, float> _angleNoise = new Dictionary<ZombieAI, float>();
@@ -81,6 +83,9 @@ public class ZombieManager : MonoBehaviour
             float dist = spawnDistance * (0.75f + Random.value * 0.5f);
             Vector3 desired = player.transform.position + (Vector3)(rndDir * dist);
 
+            // NEW: clamp to safe area before navmesh sampling
+            desired = ConstrainToSafeArea(desired);
+
             Vector3 spawnPos = SafeSpawnPosition(desired);
 
             // Creăm zombiul
@@ -100,11 +105,14 @@ public class ZombieManager : MonoBehaviour
     // Safe NavMesh spawn sampling
     Vector3 SafeSpawnPosition(Vector3 desired)
     {
+        desired = ConstrainToSafeArea(desired); // ensure inside before sampling
+
         NavMeshHit hit;
         // Try desired first with jitter attempts
         for (int attempt = 0; attempt < navSampleMaxAttempts; attempt++)
         {
             Vector3 probe = desired + (Vector3)Random.insideUnitCircle * navSampleRadius;
+            probe = ConstrainToSafeArea(probe); // clamp jitter inside area
             if (NavMesh.SamplePosition(probe, out hit, navSampleRadius, NavMesh.AllAreas))
                 return hit.position;
         }
@@ -112,6 +120,16 @@ public class ZombieManager : MonoBehaviour
         if (NavMesh.SamplePosition(desired, out hit, navSampleRadius, NavMesh.AllAreas))
             return hit.position;
         return desired; // Last resort
+    }
+
+    // NEW: clamps a position to safeAreaSpawn bounds (if set)
+    private Vector3 ConstrainToSafeArea(Vector3 pos)
+    {
+        if (safeAreaSpawn == null) return pos;
+        Bounds b = safeAreaSpawn.bounds;
+        pos.x = Mathf.Clamp(pos.x, b.min.x, b.max.x);
+        pos.y = Mathf.Clamp(pos.y, b.min.y, b.max.y);
+        return pos;
     }
 
     // Corutina care rulează infinit și le spune zombilor unde să meargă
