@@ -42,7 +42,16 @@ public class DestroyableEntity : MonoBehaviour
 	[Tooltip("Sunet redat când entitatea moare.")]
 	public AudioClip deathSound;
 
+	[Header("Death Animation")]
+	[Tooltip("Dacă este activ, entitatea va face scale-out înainte să fie distrusă.")]
+	public bool useDeathScaleAnimation = true;
+	[Tooltip("Durata animației de moarte (scale-out).")]
+	public float deathScaleDuration = 0.2f;
+	[Tooltip("Easing pentru animația de moarte.")]
+	public Ease deathScaleEase = Ease.InBack;
+
 	private Tween _shakeTween;
+	private bool _isDying = false;
 
 	// Called when a Bullet hits this entity
 	public virtual void OnHitByBullet(Bullet bullet)
@@ -55,6 +64,7 @@ public class DestroyableEntity : MonoBehaviour
 	public void TakeDamage(float amount)
 	{
 		if (amount <= 0f) return;
+		if (_isDying) return;
 
 		health = Mathf.Max(0f, health - amount);
 
@@ -66,9 +76,10 @@ public class DestroyableEntity : MonoBehaviour
 
 		if (health <= 0f)
 		{
+			_isDying = true;
 			PlayDeathSound();
-			TrySpawnLoot(); // spawn drops before destroy
-			Destroy(gameObject);
+			TrySpawnLoot(); // spawn drops before visual death animation
+			StartDeathAnimation();
 		}
 	}
 
@@ -156,6 +167,38 @@ public class DestroyableEntity : MonoBehaviour
 			snapping: false,
 			fadeOut: shakeFadeOut
 		);
+	}
+
+	private void StartDeathAnimation()
+	{
+		// oprim shake-ul curent dacă există
+		if (_shakeTween != null && _shakeTween.IsActive())
+		{
+			_shakeTween.Kill();
+			_shakeTween = null;
+		}
+
+		// dezactivăm coliziunea și fizica în timpul morții
+		var cols2D = GetComponentsInChildren<Collider2D>(true);
+		for (int i = 0; i < cols2D.Length; i++) cols2D[i].enabled = false;
+		var cols3D = GetComponentsInChildren<Collider>(true);
+		for (int i = 0; i < cols3D.Length; i++) cols3D[i].enabled = false;
+
+		var rb2d = GetComponent<Rigidbody2D>();
+		if (rb2d != null) rb2d.simulated = false;
+		var rb3d = GetComponent<Rigidbody>();
+		if (rb3d != null) rb3d.isKinematic = true;
+
+		if (!useDeathScaleAnimation || deathScaleDuration <= 0f)
+		{
+			Destroy(gameObject);
+			return;
+		}
+
+		// scale-out apoi distrugere
+		transform.DOScale(Vector3.zero, deathScaleDuration)
+			.SetEase(deathScaleEase)
+			.OnComplete(() => Destroy(gameObject));
 	}
 
 	private void PlayHitSound()

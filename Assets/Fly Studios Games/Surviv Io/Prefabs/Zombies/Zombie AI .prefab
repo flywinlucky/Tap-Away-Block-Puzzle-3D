@@ -75,6 +75,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   useBothHandsForScan: 0
+  hitSound: {fileID: 0}
 --- !u!1 &1335309258114536108
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f14af5f234b1544797f8b10b91ea4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 20
   shakeDuration: 0.15
   shakeStrength: {x: 0.15, y: 0.15, z: 0}
   shakeVibrato: 18
@@ -562,12 +563,55 @@ MonoBehaviour:
     dropChance: 5
   - loot: {fileID: 1893462148848150694, guid: 09d6750014ee2b640b84db1a7cbcc917, type: 3}
     dropChance: 5
-  - loot: {fileID: 0}
-    dropChance: 0
-  dropChancePercent: 80
+  - loot: {fileID: 1616791533258014836, guid: 351a656822505b744bd369b9063adb34, type: 3}
+    dropChance: 5
+  - loot: {fileID: 4270498670861992490, guid: 5f0881313204db7449b9a0642f9d16c3, type: 3}
+    dropChance: 5
+  - loot: {fileID: 7359828878712376367, guid: 32c2cd2ca8ddd1e4db38ffdf029c99bc, type: 3}
+    dropChance: 5
+  - loot: {fileID: 7760823089104285967, guid: 9b7bbfa4d2bd2b14492c4be0fcd2f082, type: 3}
+    dropChance: 5
+  - loot: {fileID: 7563365144214377407, guid: a78239c3f173d9c44bad4a43bf1dd783, type: 3}
+    dropChance: 5
+  - loot: {fileID: 5812160974335722342, guid: aa56d0546121f0d46a753945406fd9de, type: 3}
+    dropChance: 5
+  - loot: {fileID: 1073042342018701713, guid: bff365c50d02605429de0c88f1ab9101, type: 3}
+    dropChance: 5
+  - loot: {fileID: 6892785993811741895, guid: dc26c32e14d402f41b2a08c975aa3d76, type: 3}
+    dropChance: 5
+  - loot: {fileID: 8203824240872103556, guid: b4c3146cf72b1a6439fa64870f627590, type: 3}
+    dropChance: 5
+  - loot: {fileID: 3099838930457719468, guid: b3341bd1758fba6429d3640d960e1e93, type: 3}
+    dropChance: 5
+  - loot: {fileID: 5934599139563535888, guid: 7a2d515a09773434e907a048c74fb94d, type: 3}
+    dropChance: 5
+  - loot: {fileID: 2233802049666363157, guid: 9456b091dc286aa429bd33027efad2c0, type: 3}
+    dropChance: 5
+  - loot: {fileID: 217585722416533058, guid: 84279b20e40a73a49b5b86bdf0502901, type: 3}
+    dropChance: 5
+  - loot: {fileID: 1107003905721746957, guid: 4e26d333df9e5244ca4bf340f26389ba, type: 3}
+    dropChance: 5
+  - loot: {fileID: 575159534637379969, guid: 94f2268026a776747893bf3d950bd1c1, type: 3}
+    dropChance: 5
+  - loot: {fileID: 435505924593427388, guid: 68253b5e3e809d5449ca263c04d56233, type: 3}
+    dropChance: 5
+  - loot: {fileID: 3665937819485610957, guid: 9853fff100f55b545b54ba243258f8a8, type: 3}
+    dropChance: 5
+  - loot: {fileID: 4047779020588945181, guid: ea68012e96e09f14fabbe8bcad28ecea, type: 3}
+    dropChance: 5
+  - loot: {fileID: 8650159015918713721, guid: fd5aea6a7f7736142bb7ec30b3383a7d, type: 3}
+    dropChance: 5
+  - loot: {fileID: 3471290755857791140, guid: e9d8f9b431d625a469b236f881d326f2, type: 3}
+    dropChance: 5
+  dropChancePercent: 40
   minItemsToDrop: 1
   maxItemsToDrop: 2
   uniqueItems: 1
+  hitSound: {fileID: 8300000, guid: bdaf8e110a3486b44b9b39569d748e53, type: 3}
+  deathSound: {fileID: 8300000, guid: fd75fd373376f0c4e84231a03a511c2d, type: 3}
+  useDeathScaleAnimation: 1
+  deathScaleDuration: 0.2
+  deathScaleEase: 26
 --- !u!195 &1335309259063538241
 NavMeshAgent:
   m_ObjectHideFlags: 0

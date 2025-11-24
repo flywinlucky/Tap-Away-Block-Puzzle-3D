@@ -24,7 +24,7 @@ MonoBehaviour:
   magazineSize: 30
   reloadTime: 1.2
   fireRate: 0.2
-  damage: 1
+  damage: 17
   range: 40
   automatic: 0
   maxReserveAmmo: 250
