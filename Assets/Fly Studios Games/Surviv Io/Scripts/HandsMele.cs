@@ -22,6 +22,9 @@ public class HandsMele : MonoBehaviour
     [Tooltip("Dacă true, folosește atât LeftHandPosition cât și RightHandPosition pentru scan.")]
     public bool useBothHandsForScan = false;
 
+    [Header("Audio")]
+    public AudioClip hitSound;
+
     private float _nextAttackTime = 0f;
     private bool _attackActive = false;
     private HashSet<DestroyableEntity> _hitThisAttack = new HashSet<DestroyableEntity>();
@@ -76,6 +79,8 @@ public class HandsMele : MonoBehaviour
 
         // Închidem fereastra de hit după activeHitDuration
         Invoke(nameof(EndAttackWindow), activeHitDuration);
+
+               PlayHitSound();
     }
 
     private IEnumerator ScanDuringActiveWindow()
@@ -143,6 +148,16 @@ public class HandsMele : MonoBehaviour
 
         dest.TakeDamage(meleeDamage);
         _hitThisAttack.Add(dest);
+        PlayHitSound();
+    }
+
+    private void PlayHitSound()
+    {
+        if (hitSound == null) return;
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.Play2DSound(hitSound);
+        else
+            AudioSource.PlayClipAtPoint(hitSound, Vector3.zero);
     }
 
     public void EnableHands(bool enable)
