@@ -3,6 +3,7 @@ using UnityEngine;
 public class HealthPickup : MonoBehaviour
 {
 	public float amount;
+	public AudioClip health_pickup_sound; // sunet redat la colectare
 
 	private PlayerUI _currentPlayerUI;
 
@@ -48,6 +49,16 @@ public class HealthPickup : MonoBehaviour
 		if (ph == null) return;
 
 		ph.Heal(amount);
+
+		// play pickup sound
+		if (health_pickup_sound != null)
+		{
+			if (AudioManager.Instance != null)
+				AudioManager.Instance.Play2DSound(health_pickup_sound);
+			else
+				AudioSource.PlayClipAtPoint(health_pickup_sound, Vector3.zero);
+		}
+
 		if (ui != null) ui.HideFtoSellect();
 		Destroy(gameObject);
 	}
