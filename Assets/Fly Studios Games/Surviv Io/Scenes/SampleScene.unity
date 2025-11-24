@@ -2416,6 +2416,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6667620331154596601, guid: cd711423418b9724fa46709a0f423484, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 90e7e57aa5b3aeb43a2f5fc7530fd442, type: 3}
+    - target: {fileID: 6667620331154596601, guid: cd711423418b9724fa46709a0f423484, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f21b57c78ab58e44a328cbcfcf09bf6, type: 3}
     - target: {fileID: 6667620331154596607, guid: cd711423418b9724fa46709a0f423484, type: 3}
       propertyPath: m_Name
       value: Tree (10)
@@ -3935,6 +3943,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 61.627
       objectReference: {fileID: 0}
+    - target: {fileID: 4667602672890636056, guid: c28ebeb1335b62d49996173d0cdb06a1, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 1616893d57b0f07478207f8fd3bd6c9b, type: 3}
+    - target: {fileID: 4667602672890636056, guid: c28ebeb1335b62d49996173d0cdb06a1, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5c4ffb8bba48ad748b9e00fe9fd8b011, type: 3}
     - target: {fileID: 4667602672890636057, guid: c28ebeb1335b62d49996173d0cdb06a1, type: 3}
       propertyPath: m_Name
       value: Rock (3)

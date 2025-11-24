@@ -36,6 +36,12 @@ public class DestroyableEntity : MonoBehaviour
 	public int maxItemsToDrop = 2;
 	public bool uniqueItems = true;
 
+	[Header("Audio")]
+	[Tooltip("Sunet redat când entitatea primește damage (non-lethal).")]
+	public AudioClip hitSound;
+	[Tooltip("Sunet redat când entitatea moare.")]
+	public AudioClip deathSound;
+
 	private Tween _shakeTween;
 
 	// Called when a Bullet hits this entity
@@ -52,10 +58,15 @@ public class DestroyableEntity : MonoBehaviour
 
 		health = Mathf.Max(0f, health - amount);
 
+		// Sunet de lovitură doar dacă entitatea rămâne în viață
+		if (health > 0f)
+			PlayHitSound();
+
 		PlayHitFeedback();
 
 		if (health <= 0f)
 		{
+			PlayDeathSound();
 			TrySpawnLoot(); // spawn drops before destroy
 			Destroy(gameObject);
 		}
@@ -145,5 +156,23 @@ public class DestroyableEntity : MonoBehaviour
 			snapping: false,
 			fadeOut: shakeFadeOut
 		);
+	}
+
+	private void PlayHitSound()
+	{
+		if (hitSound == null) return;
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.Play2DSound(hitSound);
+		else
+			AudioSource.PlayClipAtPoint(hitSound, Vector3.zero);
+	}
+
+	private void PlayDeathSound()
+	{
+		if (deathSound == null) return;
+		if (AudioManager.Instance != null)
+			AudioManager.Instance.Play2DSound(deathSound);
+		else
+			AudioSource.PlayClipAtPoint(deathSound, Vector3.zero);
 	}
 }

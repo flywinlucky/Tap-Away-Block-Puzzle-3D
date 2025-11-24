@@ -174,3 +174,5 @@ MonoBehaviour:
   minItemsToDrop: 1
   maxItemsToDrop: 5
   uniqueItems: 1
+  hitSound: {fileID: 8300000, guid: 68234f96bc0fc954f9b24586ae20fa06, type: 3}
+  deathSound: {fileID: 8300000, guid: 5d75419bfc360f143a80da9c31d74e68, type: 3}

@@ -126,6 +126,8 @@ MonoBehaviour:
   minItemsToDrop: 1
   maxItemsToDrop: 2
   uniqueItems: 1
+  hitSound: {fileID: 8300000, guid: a1f6dd0badf5c074fa9ad2b9f22d4baa, type: 3}
+  deathSound: {fileID: 8300000, guid: 5d75419bfc360f143a80da9c31d74e68, type: 3}
 --- !u!61 &9044538240650621995
 BoxCollider2D:
   m_ObjectHideFlags: 0

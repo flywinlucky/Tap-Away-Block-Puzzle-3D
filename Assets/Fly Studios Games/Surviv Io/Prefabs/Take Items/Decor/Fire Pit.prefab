@@ -143,6 +143,8 @@ MonoBehaviour:
   minItemsToDrop: 1
   maxItemsToDrop: 2
   uniqueItems: 1
+  hitSound: {fileID: 8300000, guid: 00873b174d895644d8d8c472bb8a52fc, type: 3}
+  deathSound: {fileID: 8300000, guid: b681a55cff7f04d4884c49a64bcade53, type: 3}
 --- !u!50 &3220373315816967129
 Rigidbody2D:
   serializedVersion: 4
