@@ -17,3 +17,4 @@ MonoBehaviour:
   ammoIcon: {fileID: 21300000, guid: 704d31746a3deb14d93699979a81805d, type: 3}
   ammoColor: {r: 0.9490197, g: 0.64705884, b: 0, a: 1}
   compatibleWeapons: []
+  ammo_pickup_sound: {fileID: 8300000, guid: 7a4816f53fff3d1458848ab5f8e641af, type: 3}

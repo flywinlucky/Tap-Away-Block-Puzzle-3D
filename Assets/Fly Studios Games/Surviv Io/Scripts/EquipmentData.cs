@@ -16,4 +16,5 @@ public class EquipmentData : ScriptableObject
     public int equipmentLevel;            // Level of the equipment
     public float damageReduction;         // Damage reduction provided by the equipment
     public Color equipament_Color;
+    public AudioClip equipment_pickup_sound; // Sound played on pickup
 }

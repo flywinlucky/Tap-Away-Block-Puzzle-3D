@@ -16,6 +16,9 @@ public class BulletAmmoData : ScriptableObject
     [Tooltip("Lista de arme compatibile. Dacă e goală => compatibil cu orice armă.")]
     public List<WeaponData> compatibleWeapons = new List<WeaponData>();
 
+    [Header("Audio")]
+    public AudioClip ammo_pickup_sound; // sunet la pickup
+
     public bool IsCompatible(WeaponData weapon)
     {
         if (weapon == null) return false;

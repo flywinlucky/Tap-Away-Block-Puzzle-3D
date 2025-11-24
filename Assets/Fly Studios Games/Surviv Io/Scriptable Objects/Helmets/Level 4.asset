@@ -18,3 +18,4 @@ MonoBehaviour:
   equipmentLevel: 4
   damageReduction: 21
   equipament_Color: {r: 0.9529412, g: 0.23137255, b: 0.47058824, a: 1}
+  equipment_pickup_sound: {fileID: 8300000, guid: bc102a3d338ecab41891ca731efe808e, type: 3}

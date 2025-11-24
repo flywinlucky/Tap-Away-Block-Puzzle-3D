@@ -23,8 +23,15 @@ public class AudioManager : MonoBehaviour
 	public List<AudioClip> footstepClips = new List<AudioClip>();
 	[Tooltip("Clipuri de pași în apă.")]
 	public List<AudioClip> waterFootstepClips = new List<AudioClip>();
-	[Range(0f, 1f)] public float footstepVolume = 1f;
 	private AudioSource _footstepSource;
+	private AudioSource _oneShot2DSource; // generic 2D one-shot
+
+	public static AudioManager Instance; // singleton
+
+	private void Awake()
+	{
+		Instance = this;
+	}
 
 	private void Start()
 	{
@@ -34,6 +41,13 @@ public class AudioManager : MonoBehaviour
 		_footstepSource.playOnAwake = false;
 		_footstepSource.loop = false;
 		_footstepSource.spatialBlend = 0f;
+		_footstepSource.volume = 1f; // full original volume
+
+		if (blockClickSource != null)
+		{
+			blockClickSource.spatialBlend = 0f;
+			blockClickSource.volume = 1f;
+		}
 
 		// Opțional: inițializăm din PlayerPrefs dacă nu setăm din exterior
 		_musicEnabled = PlayerPrefs.GetInt(MusicPrefKey, 1) == 1;
@@ -90,13 +104,10 @@ public class AudioManager : MonoBehaviour
 	{
 		if (!_soundEnabled) return;
 		if (footstepClips == null || footstepClips.Count == 0) return;
-		if (_footstepSource == null) _footstepSource = GetComponent<AudioSource>();
 		if (_footstepSource == null) return;
-
 		AudioClip clip = footstepClips[Random.Range(0, footstepClips.Count)];
 		if (clip == null) return;
-
-		_footstepSource.PlayOneShot(clip, footstepVolume);
+		_footstepSource.PlayOneShot(clip); // original volume
 	}
 
 	// Redă un pas în apă.
@@ -104,13 +115,24 @@ public class AudioManager : MonoBehaviour
 	{
 		if (!_soundEnabled) return;
 		if (waterFootstepClips == null || waterFootstepClips.Count == 0) return;
-		if (_footstepSource == null) _footstepSource = GetComponent<AudioSource>();
 		if (_footstepSource == null) return;
-
 		AudioClip clip = waterFootstepClips[Random.Range(0, waterFootstepClips.Count)];
 		if (clip == null) return;
+		_footstepSource.PlayOneShot(clip); // original volume
+	}
 
-		_footstepSource.PlayOneShot(clip, footstepVolume);
+	public void Play2DSound(AudioClip clip)
+	{
+		if (!_soundEnabled || clip == null) return;
+		if (_oneShot2DSource == null)
+		{
+			_oneShot2DSource = gameObject.AddComponent<AudioSource>();
+			_oneShot2DSource.playOnAwake = false;
+			_oneShot2DSource.loop = false;
+			_oneShot2DSource.spatialBlend = 0f;
+			_oneShot2DSource.volume = 1f;
+		}
+		_oneShot2DSource.PlayOneShot(clip); // full volume, no distance attenuation
 	}
 
 	// Setări enable/disable apelate din SettingsManager
@@ -185,9 +207,9 @@ public class AudioManager : MonoBehaviour
 	{
 		if (blockClickSource != null)
 			blockClickSource.mute = !_soundEnabled;
-
-		// mute/unmute sursa de pași
 		if (_footstepSource != null)
 			_footstepSource.mute = !_soundEnabled;
+		if (_oneShot2DSource != null)
+			_oneShot2DSource.mute = !_soundEnabled;
 	}
 }

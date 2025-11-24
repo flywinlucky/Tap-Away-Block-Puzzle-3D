@@ -91,6 +91,8 @@ public class WeaponControler : MonoBehaviour
 		}
 		_weaponAudioSource.playOnAwake = false;
 		_weaponAudioSource.loop = false;
+		_weaponAudioSource.spatialBlend = 0f; // 2D
+		_weaponAudioSource.volume = 1f;      // full original volume
 
 		// în lipsa unei asignări externe, încercăm să deducem muzzle din prefab
 		// 1) copil numit "Muzzle"

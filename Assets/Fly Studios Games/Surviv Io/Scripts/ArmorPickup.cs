@@ -92,10 +92,23 @@ public class ArmorPickup : MonoBehaviour
         // Replace the player's current armor with the new maximum armor
         playerHealth.SetArmor(equipmentData.damageReduction);
 
+        PlayPickupSound(); // moved into helper
+
         Debug.Log($"Armor pickup applied: {equipmentData.equipmentType}, Max Armor: {equipmentData.damageReduction}, Damage Reduction: {equipmentData.damageReduction}%");
 
         // ascunde promptul și distruge pickup-ul
         if (playerUI != null) playerUI.HideFtoSellect();
         Destroy(gameObject);
+    }
+
+    private void PlayPickupSound()
+    {
+        if (equipmentData != null && equipmentData.equipment_pickup_sound != null)
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.Play2DSound(equipmentData.equipment_pickup_sound);
+            else
+                AudioSource.PlayClipAtPoint(equipmentData.equipment_pickup_sound, Vector3.zero);
+        }
     }
 }

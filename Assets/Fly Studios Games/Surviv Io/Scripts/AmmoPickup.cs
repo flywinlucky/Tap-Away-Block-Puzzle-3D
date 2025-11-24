@@ -28,6 +28,38 @@ public class AmmoPickup : MonoBehaviour
 	private void OnTriggerStay(Collider other) { if (Input.GetKeyDown(KeyCode.F)) ApplyPickup(other.gameObject); }
 	private void OnTriggerExit(Collider other) { HidePrompt(other.gameObject); }
 
+	private void ApplyPickup(GameObject other)
+	{
+		if (other == null || bulletAmmoData == null) return;
+
+		var weaponUI = other.GetComponentInChildren<WeaponUI>();
+		var playerUI = other.GetComponentInChildren<PlayerUI>();
+		if (weaponUI == null)
+		{
+			Debug.Log("[AmmoPickup] Player WeaponUI missing; cannot store ammo.");
+			return;
+		}
+
+		// Colectăm ammo — WeaponUI va decide dacă se aplică pe arma curentă sau se stochează pending
+		weaponUI.CollectAmmo(bulletAmmoData);
+
+		PlayPickupSound(); // moved into helper
+
+		if (playerUI != null) playerUI.HideFtoSellect();
+		Destroy(gameObject);
+	}
+
+	private void PlayPickupSound()
+	{
+		if (bulletAmmoData != null && bulletAmmoData.ammo_pickup_sound != null)
+		{
+			if (AudioManager.Instance != null)
+				AudioManager.Instance.Play2DSound(bulletAmmoData.ammo_pickup_sound);
+			else
+				AudioSource.PlayClipAtPoint(bulletAmmoData.ammo_pickup_sound, Vector3.zero);
+		}
+	}
+
 	private void OnDisable()
 	{
 		if (_currentPlayerUI != null)
@@ -55,24 +87,5 @@ public class AmmoPickup : MonoBehaviour
 		var ui = other != null ? other.GetComponentInChildren<PlayerUI>() : _currentPlayerUI;
 		if (ui != null) ui.HideFtoSellect();
 		if (ui == _currentPlayerUI) _currentPlayerUI = null;
-	}
-
-	private void ApplyPickup(GameObject other)
-	{
-		if (other == null || bulletAmmoData == null) return;
-
-		var weaponUI = other.GetComponentInChildren<WeaponUI>();
-		var playerUI = other.GetComponentInChildren<PlayerUI>();
-		if (weaponUI == null)
-		{
-			Debug.Log("[AmmoPickup] Player WeaponUI missing; cannot store ammo.");
-			return;
-		}
-
-		// Colectăm ammo — WeaponUI va decide dacă se aplică pe arma curentă sau se stochează pending
-		weaponUI.CollectAmmo(bulletAmmoData);
-
-		if (playerUI != null) playerUI.HideFtoSellect();
-		Destroy(gameObject);
 	}
 }
