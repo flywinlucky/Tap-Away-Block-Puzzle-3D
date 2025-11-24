@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI; // Needed for NavMesh.SamplePosition
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class ZombieManager : MonoBehaviour
 {
@@ -10,6 +11,28 @@ public class ZombieManager : MonoBehaviour
     [Header("Referințe")]
     public Player player;
     public GameObject zombiePrefab;
+    [Space]
+    public Text WaveCountAndTimer;
+    // --- Wave System ---
+    private enum WavePhase { Preparation, Combat, Breather }
+    [Header("Wave Phases Durations")]
+    public float preparationDuration = 35f;
+    public float breatherDuration = 15f;
+    [Header("Spawn & Scaling")]
+    public int spawnCountIncrementPerWave = 3;
+    public float baseZombieHealth = 20f;
+    public float zombieHealthAddPerWave = 20f;
+    public float baseZombieAttackDamage = 5f;
+    public float zombieAttackAddPerWave = 2f;
+    [Tooltip("Health folosit OBLIGATORIU la primul val (ignora valoarea din baseZombieHealth dacă diferă).")]
+    public float firstWaveHealth = 20f;
+    [Tooltip("Durata maximă a fazei de luptă (dacă playerul nu termină mai repede).")]
+    public float maxCombatDuration = 80f;
+
+    private WavePhase _phase = WavePhase.Preparation;
+    private float _phaseEndTime;
+    private int _waveNumber = 1;
+    private bool _combatStarted = false;
 
     [Header("Setări Valuri (Waves)")]
     public int initialCount = 4;
@@ -42,8 +65,8 @@ public class ZombieManager : MonoBehaviour
     // Per-zombie angle noise cache to keep their slot feel persistent
     private Dictionary<ZombieAI, float> _angleNoise = new Dictionary<ZombieAI, float>();
 
+    // (legacy unused after refactor)
     private float _nextWaveTime;
-    private int _waveNumber = 1;
 
     void Awake()
     {
@@ -53,26 +76,118 @@ public class ZombieManager : MonoBehaviour
     void Start()
     {
         if (player == null) player = FindObjectOfType<Player>();
-        
-        // Pornim logica de poziționare tactică
         StartCoroutine(UpdateTacticsRoutine());
-        
-        // Pornim primul val
-        SpawnWave(initialCount);
+        // SpawnWave(initialCount); // REMOVED: nu mai spawnăm înainte de faza de pregătire
+        BeginPreparationPhase();      // wave 1 health aplicat când începe faza Combat
     }
 
     void Update()
     {
-        // Verificăm dacă toți zombii au murit
-        if (activeZombies.Count == 0 && Time.time > _nextWaveTime)
+        UpdateWaveSystem();
+    }
+
+    private void UpdateWaveSystem()
+    {
+        switch (_phase)
         {
-            _waveNumber++;
-            _nextWaveTime = Time.time + timeBetweenWaves;
-            // Creștem dificultatea
-            SpawnWave(initialCount + (_waveNumber * 2));
+            case WavePhase.Preparation:
+                UpdatePreparation();
+                break;
+            case WavePhase.Combat:
+                UpdateCombat();
+                break;
+            case WavePhase.Breather:
+                UpdateBreather();
+                break;
         }
     }
 
+    private void BeginPreparationPhase()
+    {
+        _phase = WavePhase.Preparation;
+        _combatStarted = false;
+        _phaseEndTime = Time.time + preparationDuration;
+        UpdateWaveText($"Wave {_waveNumber} incoming in: {Mathf.CeilToInt(preparationDuration)}s");
+    }
+
+    private void UpdatePreparation()
+    {
+        float remaining = _phaseEndTime - Time.time;
+        if (remaining > 0f)
+        {
+            UpdateWaveText($"Wave {_waveNumber} incoming in: {Mathf.CeilToInt(remaining)}s");
+        }
+        else
+        {
+            BeginCombatPhase();
+        }
+    }
+
+    private void BeginCombatPhase()
+    {
+        _phase = WavePhase.Combat;
+        _combatStarted = true;
+        _phaseEndTime = Time.time + maxCombatDuration;
+        SpawnWave(ComputeSpawnCountForWave(_waveNumber));
+        UpdateWaveText($"Wave {_waveNumber} started! Zombies: {activeZombies.Count}");
+    }
+
+    private void UpdateCombat()
+    {
+        // Update UI
+        UpdateWaveText($"Wave {_waveNumber} - Remaining: {activeZombies.Count}");
+        // Early finish
+        if (activeZombies.Count == 0)
+        {
+            BeginBreatherPhase();
+            return;
+        }
+        // Timeout
+        if (Time.time >= _phaseEndTime)
+        {
+            // Force end: clear leftover (optional)
+            BeginBreatherPhase();
+        }
+    }
+
+    private void BeginBreatherPhase()
+    {
+        _phase = WavePhase.Breather;
+        _phaseEndTime = Time.time + breatherDuration;
+        UpdateWaveText($"Breather: {Mathf.CeilToInt(breatherDuration)}s (Wave {_waveNumber} cleared)");
+    }
+
+    private void UpdateBreather()
+    {
+        float remaining = _phaseEndTime - Time.time;
+        if (remaining > 0f)
+        {
+            UpdateWaveText($"Breather {Mathf.CeilToInt(remaining)}s - Prepare (Next Wave {_waveNumber + 1})");
+        }
+        else
+        {
+            _waveNumber++;
+            BeginPreparationPhase();
+        }
+    }
+
+    private int ComputeSpawnCountForWave(int wave)
+    {
+        return Mathf.Max(1, initialCount + (wave - 1) * spawnCountIncrementPerWave);
+    }
+
+    private float ComputeZombieAttackDamage(int wave)
+    {
+        return baseZombieAttackDamage + (wave - 1) * zombieAttackAddPerWave;
+    }
+
+    private void UpdateWaveText(string msg)
+    {
+        if (WaveCountAndTimer != null)
+            WaveCountAndTimer.text = msg;
+    }
+
+    // Modified spawn logic to apply scaling and remove legacy wave trigger
     void SpawnWave(int count)
     {
         Debug.Log($"[ZombieManager] Spawning Wave {_waveNumber} with {count} zombies.");
@@ -81,7 +196,9 @@ public class ZombieManager : MonoBehaviour
             // Random radial direction with varied distance
             Vector2 rndDir = Random.insideUnitCircle.normalized;
             float dist = spawnDistance * (0.75f + Random.value * 0.5f);
-            Vector3 desired = player.transform.position + (Vector3)(rndDir * dist);
+            Vector3 desired = player != null
+                ? player.transform.position + (Vector3)(rndDir * dist)
+                : transform.position + (Vector3)(rndDir * dist);
 
             // NEW: clamp to safe area before navmesh sampling
             desired = ConstrainToSafeArea(desired);
@@ -98,6 +215,9 @@ public class ZombieManager : MonoBehaviour
                 // Cache persistent angle noise (small offset)
                 _angleNoise[ai] = Random.Range(-10f, 10f) * Mathf.Deg2Rad;
                 ai.InitializeVariance(); // Randomize movement characteristics
+
+                // ELIMINAT: dest.health = h; (ApplyWaveStats face deja asta)
+                ai.ApplyWaveStats(_waveNumber);
             }
         }
     }
@@ -195,5 +315,13 @@ public class ZombieManager : MonoBehaviour
             activeZombies.Remove(z);
         if (_angleNoise.ContainsKey(z))
             _angleNoise.Remove(z);
+
+        if (_phase == WavePhase.Combat && activeZombies.Count == 0)
+            BeginBreatherPhase();
+    }
+
+    public float GetCurrentWaveAttackDamage()
+    {
+        return ComputeZombieAttackDamage(_waveNumber);
     }
 }

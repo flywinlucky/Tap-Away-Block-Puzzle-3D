@@ -75,7 +75,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   useBothHandsForScan: 0
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: bdaf8e110a3486b44b9b39569d748e53, type: 3}
 --- !u!1 &1335309258114536108
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +514,8 @@ MonoBehaviour:
   lungeSpeedMultiplier: 1.75
   isSwiming: {fileID: 1335309259077269309}
   swimmingSpeed: 2
+  attackDamage: 5
+  currentWave: 1
 --- !u!114 &1335309259063538246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f14af5f234b1544797f8b10b91ea4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
+  health: 1
   shakeDuration: 0.15
   shakeStrength: {x: 0.15, y: 0.15, z: 0}
   shakeVibrato: 18

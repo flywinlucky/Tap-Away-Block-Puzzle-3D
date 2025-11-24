@@ -28,6 +28,11 @@ public class ZombieAI : MonoBehaviour
     [Header("Swimming")]
     public float swimmingSpeed = 2.5f;
 
+    [Header("Wave Scaling")]
+    public float attackDamage = 10f; // set by ZombieManager per wave
+    public int currentWave = 1;
+    public DestroyableEntity _destroyable; // referință la componentul de health
+
     private NavMeshAgent _agent;
     private Transform _player;
     private float _nextAttackTime;
@@ -41,6 +46,12 @@ public class ZombieAI : MonoBehaviour
     private bool _inWater = false;
     private float _prevSpeed; // speed before entering water
 
+    private void Awake()
+    {
+        // Cache DestroyableEntity early (Instantiate -> ApplyWaveStats happens before Start)
+        _destroyable = GetComponent<DestroyableEntity>();
+    }
+
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -52,6 +63,8 @@ public class ZombieAI : MonoBehaviour
         // NavMeshAgent este nativ 3D, așa că trebuie să îi interzicem să rotească axele X/Y
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
+
+        if (_destroyable == null) _destroyable = GetComponent<DestroyableEntity>();
 
         FindPlayer();
         // If manager did not call InitializeVariance yet (e.g. placed manually in scene)
@@ -169,15 +182,37 @@ public class ZombieAI : MonoBehaviour
         }
     }
 
+    public void ApplyWaveStats(int waveNumber)
+    {
+        currentWave = waveNumber;
+        attackDamage = waveNumber*10/1;
+        if (_destroyable == null)
+            _destroyable = GetComponent<DestroyableEntity>();
+        if (_destroyable != null)
+        {
+            _destroyable.health = 20 * currentWave;
+        }
+        else
+        {
+            Debug.LogWarning("[ZombieAI] DestroyableEntity missing on " + name);
+        }
+    }
+
     void TryAttack()
     {
         if (Time.time < _nextAttackTime) return;
-        
         _nextAttackTime = Time.time + attackInterval;
-        
-        Debug.Log($"[ZombieAi] Attacking Player! Time: {Time.time}");
-        // Aici vei adăuga logica reală de damage:
-        // if (_player != null) _player.GetComponent<PlayerHealth>().TakeDamage(10);
+        // Damage player if health component exists
+        if (_player != null)
+        {
+            var ph = _player.GetComponentInChildren<PlayerHealth>();
+            if (ph != null)
+            {
+                ph.TakeDamage(attackDamage);
+            }
+        }
+        // ...existing debug...
+        Debug.Log($"[ZombieAi] Attacked for {attackDamage} dmg (Wave). Time: {Time.time}");
     }
 
     // Când zombiul este distrus (moare), anunțăm Managerul să îl scoată din listă
