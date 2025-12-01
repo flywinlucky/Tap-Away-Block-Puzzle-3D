@@ -500,22 +500,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe9c3e5e159e3745be9c0b1f87dff9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopDistance: 1.5
+  stopDistance: 1
   attackInterval: 1
-  speedRange: {x: 1, y: 4}
-  accelRange: {x: 3, y: 14}
+  speedRange: {x: 1.5, y: 6}
+  accelRange: {x: 5, y: 18}
   angularSpeedRange: {x: 110, y: 220}
   pathUpdateIntervalRange: {x: 0.35, y: 0.9}
   staggerChance: 0.08
   lungeChance: 0.05
   staggerDurationRange: {x: 0.4, y: 1}
   lungeDurationRange: {x: 0.25, y: 0.45}
-  staggerSpeedMultiplier: 0.55
-  lungeSpeedMultiplier: 1.75
+  staggerSpeedMultiplier: 1.21
+  lungeSpeedMultiplier: 2.21
   isSwiming: {fileID: 1335309259077269309}
   swimmingSpeed: 2
-  attackDamage: 5
+  attackDamage: 10
   currentWave: 1
+  _destroyable: {fileID: 1335309259063538246}
 --- !u!114 &1335309259063538246
 MonoBehaviour:
   m_ObjectHideFlags: 0
