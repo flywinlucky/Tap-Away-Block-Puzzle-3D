@@ -85,6 +85,12 @@ public GameObject weaponCurrentAmoPanel;
 				SelectSlotIndex(9);
 			}
 		}
+
+		// NEW: Drop current selected weapon and switch to hands
+		if (Input.GetKeyDown(KeyCode.X))
+		{
+			DropSelectedWeapon();
+		}
 	}
 
 	private IEnumerator RefreshLoop()
@@ -235,8 +241,31 @@ public GameObject weaponCurrentAmoPanel;
 	private void SelectSlotIndex(int idx)
 	{
 		if (idx < 0 || idx >= _entries.Count) return;
+
 		var entry = _entries[idx];
-		if (entry == null || entry.data == null) return;
+
+		// If slot is empty -> switch to hands (unequip) and mark no selection
+		if (entry == null || entry.data == null)
+		{
+			// save current selected ammo back into its entry as before
+			if (_selectedIndex >= 0 && _selectedIndex < _entries.Count && weaponController != null)
+			{
+				var curEntry = _entries[_selectedIndex];
+				if (curEntry != null && curEntry.data != null && weaponController.CurrentWeapon == curEntry.data)
+				{
+					var info = weaponController.GetAmmoInfo();
+					curEntry.mag = info.mag;
+					curEntry.reserve = info.reserve;
+				}
+			}
+
+			// clear selection and equip hands
+			_selectedIndex = -1;
+			if (weaponController != null)
+				weaponController.EquipWeapon(null); // equips melee / hands
+			RefreshUI();
+			return;
+		}
 
 		// save current selected ammo back into its entry
 		if (_selectedIndex >= 0 && _selectedIndex < _entries.Count && weaponController != null)
@@ -258,7 +287,6 @@ public GameObject weaponCurrentAmoPanel;
 		// equip selected with stored ammo
 		if (weaponController != null)
 		{
-			// dacă am adăugat pending și arma era deja echipată, AddAmmo ar fi suficient; dar re-echipăm pentru siguranță:
 			weaponController.EquipWeapon(entry.data, entry.mag, entry.reserve);
 			if (addedFromPending > 0)
 			{
@@ -268,6 +296,45 @@ public GameObject weaponCurrentAmoPanel;
 			}
 			Debug.Log($"[WeaponUI] Selected slot {idx + 1}: '{entry.data.weaponName}' (mag={entry.mag}, reserve={entry.reserve}, +pending {addedFromPending}).");
 		}
+
+		RefreshUI();
+	}
+
+	// NEW: drop currently selected weapon (remove from inventory and equip hands)
+	private void DropSelectedWeapon()
+	{
+		// If no selected weapon -> ensure hands are active
+		if (_selectedIndex < 0 || _selectedIndex >= _entries.Count)
+		{
+			if (weaponController != null) weaponController.EquipWeapon(null);
+			_selectedIndex = -1;
+			RefreshUI();
+			return;
+		}
+
+		var entry = _entries[_selectedIndex];
+		if (entry == null || entry.data == null)
+		{
+			// empty slot -> just equip hands
+			if (weaponController != null) weaponController.EquipWeapon(null);
+			_selectedIndex = -1;
+			RefreshUI();
+			return;
+		}
+
+		// If weapon currently equipped -> unequip via EquipWeapon(null)
+		if (weaponController != null && weaponController.CurrentWeapon == entry.data)
+		{
+			weaponController.EquipWeapon(null);
+		}
+
+		// Remove from inventory
+		Debug.Log($"[WeaponUI] Dropped weapon '{entry.data.weaponName}' from slot {_selectedIndex + 1}.");
+		_entries[_selectedIndex] = null;
+
+		// After drop, switch to hands (no selected weapon)
+		_selectedIndex = -1;
+		if (weaponController != null) weaponController.EquipWeapon(null);
 
 		RefreshUI();
 	}
