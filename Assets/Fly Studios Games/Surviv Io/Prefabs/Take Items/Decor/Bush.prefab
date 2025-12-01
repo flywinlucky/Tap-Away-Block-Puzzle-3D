@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_Sprite: {fileID: 21300000, guid: df8d48f57dfb4d241b088aa4d51811a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -145,6 +145,9 @@ MonoBehaviour:
   uniqueItems: 1
   hitSound: {fileID: 8300000, guid: b63c116b592a9f54aa22af47ce64ac80, type: 3}
   deathSound: {fileID: 8300000, guid: 6dfa3e38ad7bf54448e02822de8a7c31, type: 3}
+  useDeathScaleAnimation: 1
+  deathScaleDuration: 0.2
+  deathScaleEase: 26
 --- !u!50 &6060462147000246931
 Rigidbody2D:
   serializedVersion: 4
