@@ -1838,7 +1838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &185163030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1861,6 +1861,7 @@ MonoBehaviour:
   zombieHealthAddPerWave: 20
   baseZombieAttackDamage: 5
   zombieAttackAddPerWave: 2
+  firstWaveHealth: 20
   maxCombatDuration: 80
   initialCount: 30
   spawnDistance: 120
@@ -5017,7 +5018,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.45490193, g: 0.96862745, b: 0.9169076, a: 0.8}
   m_FlipX: 0
@@ -6403,7 +6404,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 21
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.9686275, g: 0.7725491, b: 0.454902, a: 1}
   m_FlipX: 0
@@ -7879,7 +7880,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 16
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.9686275, g: 0.7725491, b: 0.454902, a: 1}
   m_FlipX: 0
@@ -13582,7 +13583,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -17858,6 +17859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1709894594}
+  - component: {fileID: 1709894595}
   m_Layer: 0
   m_Name: YG Initialize
   m_TagString: Untagged
@@ -17880,6 +17882,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1709894595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709894592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4902b9721e406874e93edc1b680ce703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1718403069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23269,6 +23283,22 @@ PrefabInstance:
     - target: {fileID: 2067570155934093441, guid: 0fc7c02ccc38ad448a3bed53abbe65f4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -15.156101
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136136190566788601, guid: 0fc7c02ccc38ad448a3bed53abbe65f4, type: 3}
+      propertyPath: default_Card_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136136190566788601, guid: 0fc7c02ccc38ad448a3bed53abbe65f4, type: 3}
+      propertyPath: selected_Card_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136136190566788601, guid: 0fc7c02ccc38ad448a3bed53abbe65f4, type: 3}
+      propertyPath: selected_Card_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136136190566788601, guid: 0fc7c02ccc38ad448a3bed53abbe65f4, type: 3}
+      propertyPath: selected_Card_Color.g
+      value: 0.59607846
       objectReference: {fileID: 0}
     - target: {fileID: 3485374371546988592, guid: 0fc7c02ccc38ad448a3bed53abbe65f4, type: 3}
       propertyPath: m_AnchoredPosition.x

@@ -9,17 +9,14 @@ public class WeaponIventorySlotUI : MonoBehaviour
     public Image weapon_Slot_Icon;
     public Text weapon_Slot_AllAmoCount;
     public Text weapon_Slot_Name;
+    [Space]
+    public Color default_Card_Color;
+    public Color selected_Card_Color;
+    private Image cardSlotImage;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        cardSlotImage = GetComponent<Image>();
     }
 
     // Refresh contents; selected can be used to add a small visual cue (optional)
@@ -39,9 +36,18 @@ public class WeaponIventorySlotUI : MonoBehaviour
         {
             weapon_Slot_Icon.gameObject.SetActive(hasWeapon);
             weapon_Slot_Icon.sprite = icon;
-            var c = weapon_Slot_Icon.color;
-            c.a = (selected && hasWeapon) ? 1f : 0.6f;
-            weapon_Slot_Icon.color = c;
+
+            // icon alpha only (keep icon colors neutral so sprite shows correctly)
+            float alpha = (selected && hasWeapon) ? 1f : 0.5f;
+            weapon_Slot_Icon.color = new Color(1f, 1f, 1f, alpha);
+
+            // Apply background (card) color based on selection
+            if (cardSlotImage != null)
+            {
+                Color bg = (selected && hasWeapon) ? selected_Card_Color : default_Card_Color;
+                bg.a = 0.5f; // keep background fully opaque (alpha controlled on icon)
+                cardSlotImage.color = bg;
+            }
         }
 
         if (weapon_Slot_AllAmoCount != null)

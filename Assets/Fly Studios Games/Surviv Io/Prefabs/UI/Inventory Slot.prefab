@@ -409,7 +409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1907a68de6c5e2f4993002112c8c9820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon_Slot_Icon: {fileID: 7098393736396548853}
   weapon_Slot_Index: {fileID: 8938247083054972357}
+  weapon_Slot_Icon: {fileID: 7098393736396548853}
   weapon_Slot_AllAmoCount: {fileID: 3897503469226363096}
   weapon_Slot_Name: {fileID: 8434916278337345467}
+  default_Card_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  selected_Card_Color: {r: 0, g: 0.59607846, b: 1, a: 0.5019608}
