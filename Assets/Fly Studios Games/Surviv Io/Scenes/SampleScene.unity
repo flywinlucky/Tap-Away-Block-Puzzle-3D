@@ -7519,7 +7519,7 @@ MonoBehaviour:
   LeftHandPosition: {fileID: 1507998897}
   RightHandPosition: {fileID: 298880802}
   handColider2D: {fileID: 613771820}
-  meleeDamage: 5
+  meleeDamage: 10
   attackCooldown: 0.35
   activeHitDuration: 0.12
   punchDistance: 0.15
