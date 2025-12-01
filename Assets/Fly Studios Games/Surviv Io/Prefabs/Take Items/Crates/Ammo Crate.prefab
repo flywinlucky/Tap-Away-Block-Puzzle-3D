@@ -139,13 +139,11 @@ MonoBehaviour:
   shakeFadeOut: 1
   dropPoints:
   - loot: {fileID: 4803374122690042658, guid: 4ba2ba69b6f7d7b4eb9c80e2ee5b5070, type: 3}
-    dropChance: 70
+    dropChance: 50
   - loot: {fileID: 581750519569543780, guid: fb7245a4d3af69f4ba161525230eac32, type: 3}
-    dropChance: 70
+    dropChance: 50
   - loot: {fileID: 6800950226956316993, guid: 2426679b78a9ee746b57c761e8967b38, type: 3}
-    dropChance: 70
-  - loot: {fileID: 1368834902747691933, guid: bd299ca938aa1c34d8a8420531047f08, type: 3}
-    dropChance: 70
+    dropChance: 30
   - loot: {fileID: 736881361856268245, guid: ce53de7bb43dfc649ac42514011fe0d2, type: 3}
     dropChance: 30
   - loot: {fileID: 406338143524972180, guid: c65ba9c2d6c5e6b4ebb6064050ec1236, type: 3}
@@ -154,9 +152,12 @@ MonoBehaviour:
     dropChance: 30
   - loot: {fileID: 6650053470691294884, guid: ce59588dbce351143aba95ceea6e7c7f, type: 3}
     dropChance: 30
-  dropChancePercent: 100
+  dropChancePercent: 70
   minItemsToDrop: 1
-  maxItemsToDrop: 5
+  maxItemsToDrop: 3
   uniqueItems: 1
   hitSound: {fileID: 8300000, guid: 5b053b9ece51ce943a2d41da73fe7059, type: 3}
   deathSound: {fileID: 8300000, guid: 5d75419bfc360f143a80da9c31d74e68, type: 3}
+  useDeathScaleAnimation: 1
+  deathScaleDuration: 0.2
+  deathScaleEase: 26
