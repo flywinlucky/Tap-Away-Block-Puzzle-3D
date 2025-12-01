@@ -215,7 +215,7 @@ public class Player : MonoBehaviour
             weaponRootPosition.localPosition = _weaponInitialLocalPos;
     }
 
-    void OnDrawGizmos()
+    /*void OnDrawGizmos()
     {
         if (cam == null)
             cam = Camera.main;
@@ -227,7 +227,7 @@ public class Player : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, worldPos);
-    }
+    }*/
 
     // Water enter/exit for 2D physics
     private void OnTriggerEnter2D(Collider2D other)

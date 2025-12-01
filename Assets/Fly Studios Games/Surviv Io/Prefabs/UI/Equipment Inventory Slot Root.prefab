@@ -133,6 +133,7 @@ MonoBehaviour:
   equipment_Icon_Image: {fileID: 8640236473978397163}
   equipment_level_Text: {fileID: 6945695901040516261}
   equipament_Gameobject: {fileID: 8640236474293596807}
+  icon: {fileID: 8640236473978397161}
 --- !u!1 &8640236473978397161
 GameObject:
   m_ObjectHideFlags: 0
