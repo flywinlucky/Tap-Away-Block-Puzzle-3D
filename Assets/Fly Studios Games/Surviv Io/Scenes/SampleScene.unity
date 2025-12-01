@@ -1810,7 +1810,7 @@ MonoBehaviour:
   spawnDistance: 100
   timeBetweenWaves: 20
   surroundRadius: 5
-  updateRate: 0.3
+  updateRate: 0.5
   breatheAmplitude: 0.58
   breatheSpeed: 0.5
   noiseScale: 3
@@ -22058,6 +22058,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8640236473978397161, guid: 3379db802ba59c149a90d3338887e095, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640236474293596807, guid: 3379db802ba59c149a90d3338887e095, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
