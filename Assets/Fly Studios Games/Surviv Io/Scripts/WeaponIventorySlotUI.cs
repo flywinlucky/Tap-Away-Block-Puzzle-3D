@@ -31,7 +31,7 @@ public class WeaponIventorySlotUI : MonoBehaviour
             weapon_Slot_Index.text = indexOneBased.ToString();
         }
 
-        // Toggle others based on weapon presence
+        // Toggle icon based on weapon presence
         if (weapon_Slot_Icon != null)
         {
             weapon_Slot_Icon.gameObject.SetActive(hasWeapon);
@@ -40,14 +40,15 @@ public class WeaponIventorySlotUI : MonoBehaviour
             // icon alpha only (keep icon colors neutral so sprite shows correctly)
             float alpha = (selected && hasWeapon) ? 1f : 0.5f;
             weapon_Slot_Icon.color = new Color(1f, 1f, 1f, alpha);
+        }
 
-            // Apply background (card) color based on selection
-            if (cardSlotImage != null)
-            {
-                Color bg = (selected && hasWeapon) ? selected_Card_Color : default_Card_Color;
-                bg.a = 0.5f; // keep background fully opaque (alpha controlled on icon)
-                cardSlotImage.color = bg;
-            }
+        // ALWAYS apply background (card) color depending on selection, even for empty slots
+        if (cardSlotImage != null)
+        {
+            Color bg = (selected) ? selected_Card_Color : default_Card_Color;
+            // keep background alpha as desired (0.5 used previously); adjust if needed
+            bg.a = 0.5f;
+            cardSlotImage.color = bg;
         }
 
         if (weapon_Slot_AllAmoCount != null)

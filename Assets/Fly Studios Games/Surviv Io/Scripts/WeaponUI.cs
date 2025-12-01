@@ -59,6 +59,19 @@ public GameObject weaponCurrentAmoPanel;
 				TryApplyPendingToIndex(_selectedIndex);
 			}
 		}
+
+		// NEW: ensure first slot is selected and highlighted at startup if nothing selected yet
+		// (keeps behavior above when starting weapon exists)
+		if (_selectedIndex < 0)
+		{
+			// make sure inventory size is set and there is at least one slot
+			EnsureInventorySize();
+			if (weaponIventorySlotUIs != null && weaponIventorySlotUIs.Count > 0)
+			{
+				SelectSlotIndex(0);
+			}
+		}
+
 		if (weaponCurrentAmoPanel != null) weaponCurrentAmoPanel.SetActive(false);
 	}
 
@@ -214,7 +227,19 @@ public GameObject weaponCurrentAmoPanel;
 		}
 
 		var init = ComputeInitialAmmo(data);
-		AddWeaponInternal(data, init.mag, init.reserve, select, preferIndex: FindFirstEmpty());
+
+		// NEW: prefer the currently selected slot if it's empty (player intentionally selected it)
+		int prefer = FindFirstEmpty();
+		if (select && _selectedIndex >= 0 && _selectedIndex < _entries.Count)
+		{
+			var sel = _entries[_selectedIndex];
+			if (sel == null || sel.data == null)
+			{
+				prefer = _selectedIndex; // place directly into the selected empty cell
+			}
+		}
+
+		AddWeaponInternal(data, init.mag, init.reserve, select, preferIndex: prefer);
 	}
 
 	private void AddWeaponInternal(WeaponData data, int mag, int reserve, bool select, int preferIndex)
@@ -244,7 +269,7 @@ public GameObject weaponCurrentAmoPanel;
 
 		var entry = _entries[idx];
 
-		// If slot is empty -> switch to hands (unequip) and mark no selection
+		// If slot is empty -> select that slot and equip hands (unequip weapon)
 		if (entry == null || entry.data == null)
 		{
 			// save current selected ammo back into its entry as before
@@ -259,10 +284,11 @@ public GameObject weaponCurrentAmoPanel;
 				}
 			}
 
-			// clear selection and equip hands
-			_selectedIndex = -1;
+			// Mark this empty slot as selected (so it will be colored) and equip hands
+			_selectedIndex = idx;
 			if (weaponController != null)
 				weaponController.EquipWeapon(null); // equips melee / hands
+
 			RefreshUI();
 			return;
 		}
