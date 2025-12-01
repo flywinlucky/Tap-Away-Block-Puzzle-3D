@@ -19,6 +19,7 @@ public class LootOnAparerAnim : MonoBehaviour
     public float popDuration = 0.25f;
 
     private Vector3 _centerPos;
+    private Vector3 _initialLocalScale;
 
     void OnEnable()
     {
@@ -31,11 +32,15 @@ public class LootOnAparerAnim : MonoBehaviour
 
         _centerPos = transform.position;
 
+        // Cache scale curent înainte de a-l reseta temporar
+        _initialLocalScale = transform.localScale;
+
         // Start from center (optional scale pop)
         if (scalePop)
         {
+            // pornim de la zero dar ținem valoarea inițială pentru final
             transform.localScale = Vector3.zero;
-            transform.DOScale(popScale, popDuration).SetEase(Ease.OutBack);
+            transform.DOScale(_initialLocalScale * popScale, popDuration).SetEase(Ease.OutBack);
         }
 
         Vector2 rnd = Random.insideUnitCircle * disperseRadius;

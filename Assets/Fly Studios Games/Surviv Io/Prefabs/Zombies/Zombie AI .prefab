@@ -537,13 +537,11 @@ MonoBehaviour:
   shakeFadeOut: 1
   dropPoints:
   - loot: {fileID: 4803374122690042658, guid: 4ba2ba69b6f7d7b4eb9c80e2ee5b5070, type: 3}
-    dropChance: 50
+    dropChance: 30
   - loot: {fileID: 581750519569543780, guid: fb7245a4d3af69f4ba161525230eac32, type: 3}
-    dropChance: 50
+    dropChance: 35
   - loot: {fileID: 6800950226956316993, guid: 2426679b78a9ee746b57c761e8967b38, type: 3}
-    dropChance: 50
-  - loot: {fileID: 1368834902747691933, guid: bd299ca938aa1c34d8a8420531047f08, type: 3}
-    dropChance: 50
+    dropChance: 35
   - loot: {fileID: 4246196868038949898, guid: f7d66a38e96912a4e8079a4e2b16ba8e, type: 3}
     dropChance: 35
   - loot: {fileID: 3924023499356873703, guid: e43433a832a6ec14c9b0f513cdd70cbd, type: 3}
@@ -606,7 +604,7 @@ MonoBehaviour:
     dropChance: 5
   - loot: {fileID: 3471290755857791140, guid: e9d8f9b431d625a469b236f881d326f2, type: 3}
     dropChance: 5
-  dropChancePercent: 40
+  dropChancePercent: 30
   minItemsToDrop: 1
   maxItemsToDrop: 2
   uniqueItems: 1

@@ -122,36 +122,83 @@ MonoBehaviour:
   shakeRandomness: 90
   shakeFadeOut: 1
   dropPoints:
-  - loot: {fileID: 736881361856268245, guid: ce53de7bb43dfc649ac42514011fe0d2, type: 3}
-    dropChance: 70
-  - loot: {fileID: 406338143524972180, guid: c65ba9c2d6c5e6b4ebb6064050ec1236, type: 3}
-    dropChance: 70
-  - loot: {fileID: 8581165416599102933, guid: 702b142eac8a1a54c9d899fe7f043913, type: 3}
-    dropChance: 70
-  - loot: {fileID: 6650053470691294884, guid: ce59588dbce351143aba95ceea6e7c7f, type: 3}
-    dropChance: 70
+  - loot: {fileID: 4803374122690042658, guid: 4ba2ba69b6f7d7b4eb9c80e2ee5b5070, type: 3}
+    dropChance: 35
+  - loot: {fileID: 581750519569543780, guid: fb7245a4d3af69f4ba161525230eac32, type: 3}
+    dropChance: 35
+  - loot: {fileID: 6800950226956316993, guid: 2426679b78a9ee746b57c761e8967b38, type: 3}
+    dropChance: 35
+  - loot: {fileID: 4246196868038949898, guid: f7d66a38e96912a4e8079a4e2b16ba8e, type: 3}
+    dropChance: 35
+  - loot: {fileID: 3924023499356873703, guid: e43433a832a6ec14c9b0f513cdd70cbd, type: 3}
+    dropChance: 15
+  - loot: {fileID: 7519696681368067483, guid: 57bb9be94a6f72043895dcbcb50f3536, type: 3}
+    dropChance: 10
+  - loot: {fileID: 5179473887446450198, guid: 7db741592c9ddd849b0f51546a12b6f6, type: 3}
+    dropChance: 5
+  - loot: {fileID: 7811536799092909832, guid: 9092347fff5481f46ba4dcbd9ebf6f20, type: 3}
+    dropChance: 35
+  - loot: {fileID: 5469680345180702114, guid: dd6d6ae90b754c947bd4313310d8dee6, type: 3}
+    dropChance: 15
+  - loot: {fileID: 3771061087911443101, guid: 8eb00f497f554774f8dda6ec4f19ee5c, type: 3}
+    dropChance: 10
+  - loot: {fileID: 1261990234687898234, guid: 625988376ffa20e42ab8376d61f34baa, type: 3}
+    dropChance: 5
   - loot: {fileID: 8189550061833491261, guid: 4c619ffd097a45a4b8830cc978334c41, type: 3}
-    dropChance: 50
+    dropChance: 5
   - loot: {fileID: 29005415660039173, guid: a66589369da264e42966e4ea507ed078, type: 3}
-    dropChance: 50
+    dropChance: 5
   - loot: {fileID: 1893462148848150694, guid: 09d6750014ee2b640b84db1a7cbcc917, type: 3}
-    dropChance: 50
+    dropChance: 5
   - loot: {fileID: 1616791533258014836, guid: 351a656822505b744bd369b9063adb34, type: 3}
-    dropChance: 50
+    dropChance: 5
   - loot: {fileID: 4270498670861992490, guid: 5f0881313204db7449b9a0642f9d16c3, type: 3}
-    dropChance: 50
+    dropChance: 5
   - loot: {fileID: 7359828878712376367, guid: 32c2cd2ca8ddd1e4db38ffdf029c99bc, type: 3}
-    dropChance: 50
+    dropChance: 5
   - loot: {fileID: 7760823089104285967, guid: 9b7bbfa4d2bd2b14492c4be0fcd2f082, type: 3}
-    dropChance: 50
+    dropChance: 5
   - loot: {fileID: 7563365144214377407, guid: a78239c3f173d9c44bad4a43bf1dd783, type: 3}
-    dropChance: 50
-  dropChancePercent: 100
+    dropChance: 5
+  - loot: {fileID: 5812160974335722342, guid: aa56d0546121f0d46a753945406fd9de, type: 3}
+    dropChance: 5
+  - loot: {fileID: 1073042342018701713, guid: bff365c50d02605429de0c88f1ab9101, type: 3}
+    dropChance: 5
+  - loot: {fileID: 6892785993811741895, guid: dc26c32e14d402f41b2a08c975aa3d76, type: 3}
+    dropChance: 5
+  - loot: {fileID: 8203824240872103556, guid: b4c3146cf72b1a6439fa64870f627590, type: 3}
+    dropChance: 5
+  - loot: {fileID: 3099838930457719468, guid: b3341bd1758fba6429d3640d960e1e93, type: 3}
+    dropChance: 5
+  - loot: {fileID: 5934599139563535888, guid: 7a2d515a09773434e907a048c74fb94d, type: 3}
+    dropChance: 5
+  - loot: {fileID: 2233802049666363157, guid: 9456b091dc286aa429bd33027efad2c0, type: 3}
+    dropChance: 5
+  - loot: {fileID: 217585722416533058, guid: 84279b20e40a73a49b5b86bdf0502901, type: 3}
+    dropChance: 5
+  - loot: {fileID: 1107003905721746957, guid: 4e26d333df9e5244ca4bf340f26389ba, type: 3}
+    dropChance: 5
+  - loot: {fileID: 575159534637379969, guid: 94f2268026a776747893bf3d950bd1c1, type: 3}
+    dropChance: 5
+  - loot: {fileID: 435505924593427388, guid: 68253b5e3e809d5449ca263c04d56233, type: 3}
+    dropChance: 5
+  - loot: {fileID: 3665937819485610957, guid: 9853fff100f55b545b54ba243258f8a8, type: 3}
+    dropChance: 5
+  - loot: {fileID: 4047779020588945181, guid: ea68012e96e09f14fabbe8bcad28ecea, type: 3}
+    dropChance: 5
+  - loot: {fileID: 8650159015918713721, guid: fd5aea6a7f7736142bb7ec30b3383a7d, type: 3}
+    dropChance: 5
+  - loot: {fileID: 3471290755857791140, guid: e9d8f9b431d625a469b236f881d326f2, type: 3}
+    dropChance: 5
+  dropChancePercent: 50
   minItemsToDrop: 1
   maxItemsToDrop: 3
   uniqueItems: 1
   hitSound: {fileID: 8300000, guid: 5b053b9ece51ce943a2d41da73fe7059, type: 3}
   deathSound: {fileID: 8300000, guid: 5d75419bfc360f143a80da9c31d74e68, type: 3}
+  useDeathScaleAnimation: 1
+  deathScaleDuration: 0.2
+  deathScaleEase: 26
 --- !u!61 &5051953204725485054
 BoxCollider2D:
   m_ObjectHideFlags: 0
