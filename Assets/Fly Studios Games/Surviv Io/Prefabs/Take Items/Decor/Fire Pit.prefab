@@ -119,7 +119,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2.01
+  m_Radius: 1.2
 --- !u!114 &3220373315816967128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +145,9 @@ MonoBehaviour:
   uniqueItems: 1
   hitSound: {fileID: 8300000, guid: 00873b174d895644d8d8c472bb8a52fc, type: 3}
   deathSound: {fileID: 8300000, guid: b681a55cff7f04d4884c49a64bcade53, type: 3}
+  useDeathScaleAnimation: 1
+  deathScaleDuration: 0.2
+  deathScaleEase: 26
 --- !u!50 &3220373315816967129
 Rigidbody2D:
   serializedVersion: 4
