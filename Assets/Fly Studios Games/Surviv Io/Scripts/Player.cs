@@ -242,19 +242,6 @@ public class Player : MonoBehaviour
             ExitWater();
     }
 
-    // Water enter/exit for 3D physics (in case of 3D colliders)
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other != null && other.CompareTag("Water"))
-            EnterWater();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other != null && other.CompareTag("Water"))
-            ExitWater();
-    }
-
     private void EnterWater()
     {
         if (_inWater) return;

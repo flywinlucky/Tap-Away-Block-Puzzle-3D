@@ -19,7 +19,7 @@ public class ZombieManager : MonoBehaviour
     public float preparationDuration = 35f;
     public float breatherDuration = 15f;
     [Header("Spawn & Scaling")]
-    public int spawnCountIncrementPerWave = 3;
+    public int spawnCountIncrementPerWave = 15;
     public float baseZombieHealth = 20f;
     public float zombieHealthAddPerWave = 20f;
     public float baseZombieAttackDamage = 5f;
@@ -35,13 +35,13 @@ public class ZombieManager : MonoBehaviour
     private bool _combatStarted = false;
 
     [Header("Setări Valuri (Waves)")]
-    public int initialCount = 4;
-    public float spawnDistance = 12f;
-    public float timeBetweenWaves = 10f;
+    public int initialCount;
+    public float spawnDistance;
+    public float timeBetweenWaves;
 
     [Header("Tactică de Încercuire")]
-    public float surroundRadius = 3.5f; // Cât de larg e cercul în jurul playerului
-    public float updateRate = 0.5f;     // Cât de des recalculăm pozițiile (optimizare)
+    public float surroundRadius; // Cât de larg e cercul în jurul playerului
+    public float updateRate;     // Cât de des recalculăm pozițiile (optimizare)
 
     [Header("Dynamic Formation")]
     public float breatheAmplitude = 0.25f;      // % expansion around base (surroundRadius)
@@ -77,7 +77,6 @@ public class ZombieManager : MonoBehaviour
     {
         if (player == null) player = FindObjectOfType<Player>();
         StartCoroutine(UpdateTacticsRoutine());
-        // SpawnWave(initialCount); // REMOVED: nu mai spawnăm înainte de faza de pregătire
         BeginPreparationPhase();      // wave 1 health aplicat când începe faza Combat
     }
 
@@ -173,7 +172,7 @@ public class ZombieManager : MonoBehaviour
 
     private int ComputeSpawnCountForWave(int wave)
     {
-        return Mathf.Max(1, initialCount + (wave - 1) * spawnCountIncrementPerWave);
+        return Mathf.Max(1, initialCount + (wave - 1) * spawnCountIncrementPerWave * 3);
     }
 
     private float ComputeZombieAttackDamage(int wave)

@@ -94,12 +94,9 @@ public class WeaponControler : MonoBehaviour
 		_weaponAudioSource.spatialBlend = 0f; // 2D
 		_weaponAudioSource.volume = 1f;      // full original volume
 
-		// în lipsa unei asignări externe, încercăm să deducem muzzle din prefab
-		// 1) copil numit "Muzzle"
 		var found = _equippedVisual.transform.Find("Muzzle");
 		if (found != null) muzzle = found;
 
-		// 2) componentă WeaponSpawnBulletPoint din prefab (fallback)
 		if (muzzle == null)
 		{
 			var spawner = _equippedVisual.GetComponentInChildren<WeaponSpawnBulletPoint>();

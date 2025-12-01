@@ -36,22 +36,6 @@ public class WeaponPickUp : MonoBehaviour
         HidePrompt(other.gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        ShowPrompt(other.gameObject);
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-            ApplyPickup(other.gameObject);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        HidePrompt(other.gameObject);
-    }
-
     private void OnDisable()
     {
         // ascundem promptul dacă pickup-ul dispare/este dezactivat
