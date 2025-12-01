@@ -9,8 +9,6 @@ public class ZombieAI : MonoBehaviour
 {
     [Header("Setări Urmărire")]
     public float stopDistance = 1.5f;    // Distanța la care se oprește lângă țintă
-    public float attackInterval = 1.0f;  // Cât de des atacă (secunde)
-
     [Header("Movement Variance")]
     public Vector2 speedRange = new Vector2(2.2f, 3.6f);
     public Vector2 accelRange = new Vector2(8f, 14f);
@@ -30,7 +28,7 @@ public class ZombieAI : MonoBehaviour
     public float swimmingSpeed = 2.5f;
 
     [Header("Wave Scaling")]
-    public float attackDamage = 10f; // set by ZombieManager per wave
+    public float attackDamage; // set by ZombieManager per wave
     public int currentWave = 1;
     public DestroyableEntity _destroyable; // referință la componentul de health
 
@@ -38,11 +36,11 @@ public class ZombieAI : MonoBehaviour
     // replaced multiple hands with a single hand transform + collider
     public Transform HandPosition;
     public CircleCollider2D handColider2D;
-    public float attackCooldown = 0.35f;
-    public float activeHitDuration = 0.12f;
+    public float attackCooldown;
+    public float activeHitDuration;
     [Tooltip("Mică distanță de punch pe axa X pentru feedback.")]
-    public float punchDistance = 0.15f;
-    public float punchDuration = 0.1f;
+    public float punchDistance;
+    public float punchDuration;
     public LayerMask hitMask = ~0;
     public AudioClip meleeHitSound;
 
@@ -227,7 +225,7 @@ public class ZombieAI : MonoBehaviour
     public void ApplyWaveStats(int waveNumber)
     {
         currentWave = waveNumber;
-        attackDamage = waveNumber*10/1;
+        attackDamage = waveNumber*3;
         if (_destroyable == null)
             _destroyable = GetComponent<DestroyableEntity>();
         if (_destroyable != null)

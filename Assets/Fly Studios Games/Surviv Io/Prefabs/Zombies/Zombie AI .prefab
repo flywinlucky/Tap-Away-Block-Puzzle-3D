@@ -474,8 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe9c3e5e159e3745be9c0b1f87dff9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopDistance: 2.3
-  attackInterval: 0.5
+  stopDistance: 3
   speedRange: {x: 1.5, y: 6}
   accelRange: {x: 5, y: 18}
   angularSpeedRange: {x: 110, y: 220}
@@ -488,15 +487,15 @@ MonoBehaviour:
   lungeSpeedMultiplier: 2
   isSwiming: {fileID: 1335309259077269309}
   swimmingSpeed: 2
-  attackDamage: 21
+  attackDamage: 0
   currentWave: 1
   _destroyable: {fileID: 1335309259063538246}
   HandPosition: {fileID: 1335309258073304414}
   handColider2D: {fileID: 1335309258073304412}
-  attackCooldown: 0.35
-  activeHitDuration: 0.12
-  punchDistance: 0.15
-  punchDuration: 0.1
+  attackCooldown: 1.5
+  activeHitDuration: 0.5
+  punchDistance: 0.2
+  punchDuration: 0.2
   hitMask:
     serializedVersion: 2
     m_Bits: 55
@@ -521,13 +520,13 @@ MonoBehaviour:
   shakeFadeOut: 1
   dropPoints:
   - loot: {fileID: 4803374122690042658, guid: 4ba2ba69b6f7d7b4eb9c80e2ee5b5070, type: 3}
-    dropChance: 30
+    dropChance: 25
   - loot: {fileID: 581750519569543780, guid: fb7245a4d3af69f4ba161525230eac32, type: 3}
-    dropChance: 35
+    dropChance: 25
   - loot: {fileID: 6800950226956316993, guid: 2426679b78a9ee746b57c761e8967b38, type: 3}
-    dropChance: 35
+    dropChance: 25
   - loot: {fileID: 4246196868038949898, guid: f7d66a38e96912a4e8079a4e2b16ba8e, type: 3}
-    dropChance: 35
+    dropChance: 25
   - loot: {fileID: 3924023499356873703, guid: e43433a832a6ec14c9b0f513cdd70cbd, type: 3}
     dropChance: 15
   - loot: {fileID: 7519696681368067483, guid: 57bb9be94a6f72043895dcbcb50f3536, type: 3}
@@ -535,7 +534,7 @@ MonoBehaviour:
   - loot: {fileID: 5179473887446450198, guid: 7db741592c9ddd849b0f51546a12b6f6, type: 3}
     dropChance: 5
   - loot: {fileID: 7811536799092909832, guid: 9092347fff5481f46ba4dcbd9ebf6f20, type: 3}
-    dropChance: 35
+    dropChance: 30
   - loot: {fileID: 5469680345180702114, guid: dd6d6ae90b754c947bd4313310d8dee6, type: 3}
     dropChance: 15
   - loot: {fileID: 3771061087911443101, guid: 8eb00f497f554774f8dda6ec4f19ee5c, type: 3}
@@ -588,6 +587,14 @@ MonoBehaviour:
     dropChance: 5
   - loot: {fileID: 3471290755857791140, guid: e9d8f9b431d625a469b236f881d326f2, type: 3}
     dropChance: 5
+  - loot: {fileID: 736881361856268245, guid: ce53de7bb43dfc649ac42514011fe0d2, type: 3}
+    dropChance: 30
+  - loot: {fileID: 406338143524972180, guid: c65ba9c2d6c5e6b4ebb6064050ec1236, type: 3}
+    dropChance: 25
+  - loot: {fileID: 8581165416599102933, guid: 702b142eac8a1a54c9d899fe7f043913, type: 3}
+    dropChance: 20
+  - loot: {fileID: 6650053470691294884, guid: ce59588dbce351143aba95ceea6e7c7f, type: 3}
+    dropChance: 15
   dropChancePercent: 30
   minItemsToDrop: 1
   maxItemsToDrop: 2

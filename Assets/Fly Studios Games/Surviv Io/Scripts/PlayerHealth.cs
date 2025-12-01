@@ -1,6 +1,8 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -12,6 +14,25 @@ public class PlayerHealth : MonoBehaviour
 	public float maxArmor = 100f; // Maximum armor the player can have
 	private float _currentArmor = 0f; // Player starts with no armor
 	private float _damageReductionPercentage = 0f; // Current damage reduction percentage
+
+	[Header("Vignette Overlay (UI)")]
+	[Tooltip("Image used as fullscreen vignette. If null the script will try to find one in children named 'Vignette'.")]
+	public Image vignetteImage;
+	[Tooltip("Default vignette color (black) and alpha (0..1).")]
+	public Color defaultVignetteColor = new Color(0f, 0f, 0f, 0.5f);
+	[Tooltip("Damage vignette color (red). Alpha used as base and scaled by low-health factor.")]
+	public Color damageVignetteColor = new Color(1f, 0f, 0f, 0.7f);
+	[Tooltip("Heal / armor vignette color (white).")]
+	public Color healVignetteColor = new Color(1f, 1f, 1f, 0.7f);
+	[Tooltip("How long the vignette fades back to default.")]
+	public float vignetteFadeDuration = 0.6f;
+	[Tooltip("How long the vignette holds at full intensity before fading.")]
+	public float vignetteHoldDuration = 0.18f;
+
+	// internal
+	private Tween _vignetteTween;
+	private enum VignetteState { None, Damage, Heal }
+	private VignetteState _currentVignette = VignetteState.None;
 
 	// Event invocat când health sau armor se schimbă: (currentHealth, maxHealth, currentArmor, maxArmor)
 	public event Action<float, float, float, float> OnStatsChanged;
@@ -29,6 +50,28 @@ public class PlayerHealth : MonoBehaviour
 
 		// Trigger the stats changed event to update any listeners (e.g., UI)
 		OnStatsChanged?.Invoke(_currentHealth, maxHealth, _currentArmor, maxArmor);
+
+		// Ensure vignette image initialized
+		if (vignetteImage == null)
+		{
+			// try to find by name or first child Image
+			var found = GetComponentInChildren<Image>(true);
+			if (found != null && string.Equals(found.gameObject.name, "Vignette", StringComparison.InvariantCultureIgnoreCase))
+				vignetteImage = found;
+			else
+			{
+				// fallback: first Image child
+				Image[] imgs = GetComponentsInChildren<Image>(true);
+				if (imgs != null && imgs.Length > 0)
+					vignetteImage = imgs[0];
+			}
+		}
+
+		if (vignetteImage != null)
+		{
+			// set default immediately (no tween)
+			vignetteImage.color = defaultVignetteColor;
+		}
 	}
 
 	// Apply damage reduction from equipment
@@ -48,6 +91,9 @@ public class PlayerHealth : MonoBehaviour
 		Debug.Log($"Armor added: {amount}. Previous Armor: {previousArmor}, Current Armor: {_currentArmor}");
 
 		OnStatsChanged?.Invoke(_currentHealth, maxHealth, _currentArmor, maxArmor);
+
+		// show heal/armor vignette when gaining armor
+		ApplyHealVignette();
 	}
 
 	// Set the player's armor to a new maximum value and apply damage reduction
@@ -57,9 +103,10 @@ public class PlayerHealth : MonoBehaviour
 		_currentArmor = maxArmor; // Set current armor to the new maximum
 		ApplyDamageReduction(maxArmorValue); // Apply damage reduction based on the new armor
 
-		Debug.Log($"Armor set to max: {maxArmor}, Current Armor: {_currentArmor}, Damage Reduction: {_damageReductionPercentage}%");
-
 		OnStatsChanged?.Invoke(_currentHealth, maxHealth, _currentArmor, maxArmor);
+
+		// show heal/armor vignette when equipping armor
+		ApplyHealVignette();
 	}
 
 	[Button]
@@ -84,9 +131,11 @@ public class PlayerHealth : MonoBehaviour
 			_currentHealth = Mathf.Max(0f, _currentHealth - reducedDamage);
 		}
 
-		Debug.Log($"Damage taken: {amount}. Reduced Damage: {reducedDamage}. Current Health: {_currentHealth}, Current Armor: {_currentArmor}");
-
+		// update UI listeners
 		OnStatsChanged?.Invoke(_currentHealth, maxHealth, _currentArmor, maxArmor);
+
+		// play vignette damage effect
+		ApplyDamageVignette();
 
 		if (_currentHealth <= 0f)
 		{
@@ -103,8 +152,55 @@ public class PlayerHealth : MonoBehaviour
 		float previousHealth = _currentHealth;
 		_currentHealth = Mathf.Min(maxHealth, _currentHealth + amount);
 
-		Debug.Log($"Healed: {amount}. Previous Health: {previousHealth}, Current Health: {_currentHealth}");
-
 		OnStatsChanged?.Invoke(_currentHealth, maxHealth, _currentArmor, maxArmor);
+
+		// Apply heal vignette (white flash)
+		ApplyHealVignette();
+	}
+
+	// --- Vignette helpers ---
+
+	private void ApplyDamageVignette()
+	{
+		if (vignetteImage == null) return;
+
+		// compute extra intensity when health is low (after damage)
+		float healthPct = maxHealth > 0f ? Mathf.Clamp01(_currentHealth / maxHealth) : 0f;
+		float lowHealthFactor = 1f - healthPct; // 0..1
+		float extra = Mathf.Lerp(0f, 0.25f, lowHealthFactor); // small boost up to +0.25 alpha
+
+		Color target = damageVignetteColor;
+		target.a = Mathf.Clamp01(damageVignetteColor.a + extra);
+
+		ApplyVignette(target, VignetteState.Damage);
+	}
+
+	private void ApplyHealVignette()
+	{
+		if (vignetteImage == null) return;
+
+		Color target = healVignetteColor;
+		ApplyVignette(target, VignetteState.Heal);
+	}
+
+	private void ApplyVignette(Color targetColor, VignetteState newState)
+	{
+		// Cancel previous tween to avoid stacking issues
+		if (_vignetteTween != null && _vignetteTween.IsActive())
+		{
+			_vignetteTween.Kill();
+			_vignetteTween = null;
+		}
+
+		_currentVignette = newState;
+
+		// Immediately set to target color so effect is visible at once
+		vignetteImage.color = targetColor;
+
+		// Sequence: hold at target briefly, then tween color back to default
+		Sequence seq = DOTween.Sequence();
+		seq.AppendInterval(vignetteHoldDuration);
+		seq.Append(vignetteImage.DOColor(defaultVignetteColor, vignetteFadeDuration).SetEase(Ease.OutQuad));
+		_vignetteTween = seq.OnComplete(() => { _currentVignette = VignetteState.None; });
 	}
 }

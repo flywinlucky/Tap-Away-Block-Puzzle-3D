@@ -32,7 +32,6 @@ public class ZombieManager : MonoBehaviour
     private WavePhase _phase = WavePhase.Preparation;
     private float _phaseEndTime;
     private int _waveNumber = 1;
-    private bool _combatStarted = false;
 
     [Header("Setări Valuri (Waves)")]
     public int initialCount;
@@ -104,7 +103,6 @@ public class ZombieManager : MonoBehaviour
     private void BeginPreparationPhase()
     {
         _phase = WavePhase.Preparation;
-        _combatStarted = false;
         _phaseEndTime = Time.time + preparationDuration;
         UpdateWaveText($"Wave {_waveNumber} incoming in: {Mathf.CeilToInt(preparationDuration)}s");
     }
@@ -125,7 +123,6 @@ public class ZombieManager : MonoBehaviour
     private void BeginCombatPhase()
     {
         _phase = WavePhase.Combat;
-        _combatStarted = true;
         _phaseEndTime = Time.time + maxCombatDuration;
         SpawnWave(ComputeSpawnCountForWave(_waveNumber));
         UpdateWaveText($"Wave {_waveNumber} started! Zombies: {activeZombies.Count}");
