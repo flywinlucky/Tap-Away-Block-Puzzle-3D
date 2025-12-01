@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class ZombieAI : MonoBehaviour
@@ -33,6 +34,18 @@ public class ZombieAI : MonoBehaviour
     public int currentWave = 1;
     public DestroyableEntity _destroyable; // referință la componentul de health
 
+    [Header("Melee Settings (Hands-like)")]
+    // replaced multiple hands with a single hand transform + collider
+    public Transform HandPosition;
+    public CircleCollider2D handColider2D;
+    public float attackCooldown = 0.35f;
+    public float activeHitDuration = 0.12f;
+    [Tooltip("Mică distanță de punch pe axa X pentru feedback.")]
+    public float punchDistance = 0.15f;
+    public float punchDuration = 0.1f;
+    public LayerMask hitMask = ~0;
+    public AudioClip meleeHitSound;
+
     private NavMeshAgent _agent;
     private Transform _player;
     private float _nextAttackTime;
@@ -46,6 +59,12 @@ public class ZombieAI : MonoBehaviour
     private bool _inWater = false;
     private float _prevSpeed; // speed before entering water
 
+    private Tween _punchTween;
+    private Coroutine _scanRoutine;
+    private HashSet<PlayerHealth> _hitThisAttack = new HashSet<PlayerHealth>();
+    private bool _meleeActive = false;
+    private Vector3 _handInitialLocalPos;
+
     private void Awake()
     {
         // Cache DestroyableEntity early (Instantiate -> ApplyWaveStats happens before Start)
@@ -55,20 +74,19 @@ public class ZombieAI : MonoBehaviour
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
-        
-        // Adăugăm NavMeshAgent dacă lipsește (pentru siguranță)
         if (_agent == null) _agent = gameObject.AddComponent<NavMeshAgent>();
 
-        // --- CONFIGURARE OBLIGATORIE PENTRU 2D ---
-        // NavMeshAgent este nativ 3D, așa că trebuie să îi interzicem să rotească axele X/Y
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
 
         if (_destroyable == null) _destroyable = GetComponent<DestroyableEntity>();
 
         FindPlayer();
-        // If manager did not call InitializeVariance yet (e.g. placed manually in scene)
         if (_baseSpeed <= 0f) InitializeVariance();
+
+        // cache hand initial local pos if present
+        if (HandPosition != null)
+            _handInitialLocalPos = HandPosition.localPosition;
     }
 
     public void InitializeVariance()
@@ -150,7 +168,11 @@ public class ZombieAI : MonoBehaviour
         {
             // Dacă e foarte aproape de player, se oprește și atacă
             if (!_agent.isStopped) _agent.isStopped = true;
-            TryAttack();
+
+            // compute simple local sign to punch toward player
+            float localX = transform.InverseTransformPoint(_player.position).x;
+            bool flipped = localX < 0f;
+            MeleeAttack(flipped);
         }
         else
         {
@@ -218,21 +240,128 @@ public class ZombieAI : MonoBehaviour
         }
     }
 
-    void TryAttack()
+    // NEW: Melee attack using single HandPosition animation and area check via handColider2D
+    private void MeleeAttack(bool flipped)
     {
         if (Time.time < _nextAttackTime) return;
-        _nextAttackTime = Time.time + attackInterval;
-        // Damage player if health component exists
-        if (_player != null)
+        _nextAttackTime = Time.time + attackCooldown;
+
+        _meleeActive = true;
+        _hitThisAttack.Clear();
+
+        // Kill any previous punch tween
+        if (_punchTween != null && _punchTween.IsActive())
+            _punchTween.Kill();
+
+        float dir = flipped ? -1f : 1f;
+
+        // Build sequence: push out then back for hands (or fallback to whole transform)
+        Sequence seq = DOTween.Sequence();
+
+        if (HandPosition != null)
         {
-            var ph = _player.GetComponentInChildren<PlayerHealth>();
+            Vector3 start = _handInitialLocalPos;
+            Vector3 target = start + new Vector3(dir * punchDistance, 0f, 0f);
+            // push out then back
+            seq.Append(HandPosition.DOLocalMove(target, punchDuration * 0.5f).SetEase(Ease.OutQuad));
+            seq.Append(HandPosition.DOLocalMove(start, punchDuration * 0.5f).SetEase(Ease.InQuad));
+        }
+        else
+        {
+            // fallback to whole transform
+            Vector3 startPos = transform.localPosition;
+            Vector3 punchTarget = startPos + new Vector3(dir * punchDistance, 0f, 0f);
+            seq.Append(transform.DOLocalMove(punchTarget, punchDuration * 0.5f).SetEase(Ease.OutQuad));
+            seq.Append(transform.DOLocalMove(startPos, punchDuration * 0.5f).SetEase(Ease.InQuad));
+        }
+
+        _punchTween = seq;
+
+        // start scanning only using handColider2D area
+        if (_scanRoutine != null) StopCoroutine(_scanRoutine);
+        _scanRoutine = StartCoroutine(ScanDuringActiveWindow());
+
+        // End attack window after duration
+        Invoke(nameof(EndMeleeWindow), activeHitDuration);
+    }
+
+    private IEnumerator ScanDuringActiveWindow()
+    {
+        float endTime = Time.time + activeHitDuration;
+        while (_meleeActive && Time.time < endTime)
+        {
+            PerformAreaScan(); // uses only handColider2D
+            yield return null;
+        }
+    }
+
+    // simplified: damage comes only from what overlaps the configured handColider2D
+    private void PerformAreaScan()
+    {
+        if (handColider2D == null) return;
+
+        Vector3 center = handColider2D.transform.position;
+        float radius = handColider2D.radius * Mathf.Abs(handColider2D.transform.lossyScale.x);
+        if (radius <= 0f) radius = 0.2f;
+
+        Collider2D[] cols = Physics2D.OverlapCircleAll(center, radius, hitMask);
+        if (cols == null || cols.Length == 0) return;
+
+        for (int i = 0; i < cols.Length; i++)
+        {
+            var c = cols[i];
+            // avoid hitting self collider
+            if (c == handColider2D) continue;
+
+            PlayerHealth ph = c.GetComponentInParent<PlayerHealth>();
+            if (ph == null) ph = c.GetComponentInChildren<PlayerHealth>();
+
             if (ph != null)
             {
+                if (_hitThisAttack.Contains(ph)) continue;
+                _hitThisAttack.Add(ph);
                 ph.TakeDamage(attackDamage);
+                PlayMeleeHitSound();
             }
         }
-        // ...existing debug...
-        Debug.Log($"[ZombieAi] Attacked for {attackDamage} dmg (Wave). Time: {Time.time}");
+    }
+
+    private void EndMeleeWindow()
+    {
+        _meleeActive = false;
+        if (_scanRoutine != null)
+        {
+            StopCoroutine(_scanRoutine);
+            _scanRoutine = null;
+        }
+        // restore hand position exactly
+        if (HandPosition != null) HandPosition.localPosition = _handInitialLocalPos;
+    }
+
+    private void PlayMeleeHitSound()
+    {
+        if (meleeHitSound == null) return;
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.Play2DSound(meleeHitSound);
+        else
+            AudioSource.PlayClipAtPoint(meleeHitSound, Vector3.zero);
+    }
+
+    private void EnterWater()
+    {
+        if (_inWater) return;
+        _inWater = true;
+        _prevSpeed = _agent != null ? _agent.speed : swimmingSpeed;
+        if (_agent != null) _agent.speed = swimmingSpeed;
+        if (isSwiming != null) isSwiming.SetBool("isSwiming", true);
+    }
+
+    private void ExitWater()
+    {
+        if (!_inWater) return;
+        _inWater = false;
+        if (_agent != null) _agent.speed = _prevSpeed > 0f ? _prevSpeed : _baseSpeed;
+        if (isSwiming != null) isSwiming.SetBool("isSwiming", false);
     }
 
     // Când zombiul este distrus (moare), anunțăm Managerul să îl scoată din listă
@@ -265,29 +394,20 @@ public class ZombieAI : MonoBehaviour
     {
         if (other != null && other.CompareTag("Water")) ExitWater();
     }
-    private void OnTriggerEnter(Collider other)
+
+    // Also support staying in the trigger (continuous contact)
+    // REMOVED: calls to TryContactAttack — melee handled via handColider2D during MeleeAttack
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (other != null && other.CompareTag("Water")) EnterWater();
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other != null && other.CompareTag("Water")) ExitWater();
+        if (other == null) return;
+        if (other.CompareTag("Water")) { ExitWater(); return; }
+        // no direct contact damage here — damage is applied from PerformAreaScan using handColider2D
     }
 
-    private void EnterWater()
+    private void OnTriggerStay(Collider other)
     {
-        if (_inWater) return;
-        _inWater = true;
-        _prevSpeed = _agent != null ? _agent.speed : swimmingSpeed;
-        if (_agent != null) _agent.speed = swimmingSpeed;
-        if (isSwiming != null) isSwiming.SetBool("isSwiming", true);
-    }
-
-    private void ExitWater()
-    {
-        if (!_inWater) return;
-        _inWater = false;
-        if (_agent != null) _agent.speed = _prevSpeed > 0f ? _prevSpeed : _baseSpeed;
-        if (isSwiming != null) isSwiming.SetBool("isSwiming", false);
+        if (other == null) return;
+        if (other.CompareTag("Water")) { ExitWater(); return; }
+        // no direct contact damage here — damage is applied from PerformAreaScan using handColider2D
     }
 }

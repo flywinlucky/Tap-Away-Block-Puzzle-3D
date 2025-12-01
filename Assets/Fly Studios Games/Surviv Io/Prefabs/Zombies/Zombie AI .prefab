@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1335309258073304414}
   - component: {fileID: 1335309258073304412}
-  - component: {fileID: 1335309258073304415}
   m_Layer: 0
   m_Name: Hands Root
   m_TagString: Untagged
@@ -51,31 +50,6 @@ CircleCollider2D:
   m_Offset: {x: 0.00000025495225, y: 0.2}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &1335309258073304415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335309258073304409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce62b9598795f4c4691c81b37566a4a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LeftHandPosition: {fileID: 1335309259592973225}
-  RightHandPosition: {fileID: 1335309259734238829}
-  handColider2D: {fileID: 1335309258073304412}
-  meleeDamage: 1
-  attackCooldown: 0.35
-  activeHitDuration: 0.12
-  punchDistance: 0.15
-  punchDuration: 0.1
-  hitMask:
-    serializedVersion: 2
-    m_Bits: 55
-  useBothHandsForScan: 0
-  hitSound: {fileID: 8300000, guid: bdaf8e110a3486b44b9b39569d748e53, type: 3}
 --- !u!1 &1335309258114536108
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,23 +474,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe9c3e5e159e3745be9c0b1f87dff9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopDistance: 1
-  attackInterval: 1
+  stopDistance: 2.3
+  attackInterval: 0.5
   speedRange: {x: 1.5, y: 6}
   accelRange: {x: 5, y: 18}
   angularSpeedRange: {x: 110, y: 220}
-  pathUpdateIntervalRange: {x: 0.35, y: 0.9}
-  staggerChance: 0.08
-  lungeChance: 0.05
-  staggerDurationRange: {x: 0.4, y: 1}
+  pathUpdateIntervalRange: {x: 0.35, y: 1}
+  staggerChance: 5
+  lungeChance: 5
+  staggerDurationRange: {x: 0.5, y: 1}
   lungeDurationRange: {x: 0.25, y: 0.45}
-  staggerSpeedMultiplier: 1.21
-  lungeSpeedMultiplier: 2.21
+  staggerSpeedMultiplier: 1
+  lungeSpeedMultiplier: 2
   isSwiming: {fileID: 1335309259077269309}
   swimmingSpeed: 2
-  attackDamage: 10
+  attackDamage: 21
   currentWave: 1
   _destroyable: {fileID: 1335309259063538246}
+  HandPosition: {fileID: 1335309258073304414}
+  handColider2D: {fileID: 1335309258073304412}
+  attackCooldown: 0.35
+  activeHitDuration: 0.12
+  punchDistance: 0.15
+  punchDuration: 0.1
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 55
+  meleeHitSound: {fileID: 8300000, guid: 7b2c1d66118b9114fa02607fb1ee6a8c, type: 3}
 --- !u!114 &1335309259063538246
 MonoBehaviour:
   m_ObjectHideFlags: 0
