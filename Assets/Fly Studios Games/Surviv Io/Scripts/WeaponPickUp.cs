@@ -10,6 +10,9 @@ public class WeaponPickUp : MonoBehaviour
     public SpriteRenderer item_color;
     public SpriteRenderer armor_icon;
 
+    // NEW: player currently inside trigger (used for stable input handling)
+    private GameObject _playerInRange;
+
     private void Start()
     {
         // setăm iconița și culoarea din WeaponData
@@ -20,20 +23,34 @@ public class WeaponPickUp : MonoBehaviour
         }
     }
 
+    // NEW: centralized input check so pressing F reliably picks up when in trigger
+    private void Update()
+    {
+        if (_playerInRange != null && Input.GetKeyDown(KeyCode.F))
+        {
+            ApplyPickup(_playerInRange);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         ShowPrompt(other.gameObject);
+        // mark as in-range only if it looks like a player (has WeaponControler/PlayerUI)
+        if (_playerInRange == null && other != null && other.GetComponentInChildren<WeaponControler>() != null)
+            _playerInRange = other.gameObject;
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            ApplyPickup(other.gameObject);
+        // removed direct ApplyPickup call to avoid missed input while moving
+        ShowPrompt(other.gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         HidePrompt(other.gameObject);
+        if (_playerInRange != null && other != null && other.gameObject == _playerInRange)
+            _playerInRange = null;
     }
 
     private void OnDisable()
@@ -44,6 +61,7 @@ public class WeaponPickUp : MonoBehaviour
             _currentPlayerUI.HideFtoSellect();
             _currentPlayerUI = null;
         }
+        _playerInRange = null; // ensure cleanup
     }
 
     private void ShowPrompt(GameObject other)
@@ -89,5 +107,8 @@ public class WeaponPickUp : MonoBehaviour
 
         if (playerUI != null) playerUI.HideFtoSellect();
         Destroy(gameObject);
+
+        // clear tracked player to avoid double pickup
+        if (_playerInRange == other) _playerInRange = null;
     }
 }
