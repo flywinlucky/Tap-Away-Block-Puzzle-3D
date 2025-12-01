@@ -172,7 +172,7 @@ public class ZombieManager : MonoBehaviour
 
     private int ComputeSpawnCountForWave(int wave)
     {
-        return Mathf.Max(1, initialCount + (wave - 1) * spawnCountIncrementPerWave * 3);
+        return Mathf.Max(1, initialCount + (wave - 1) * spawnCountIncrementPerWave * 4);
     }
 
     private float ComputeZombieAttackDamage(int wave)

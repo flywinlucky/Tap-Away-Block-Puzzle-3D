@@ -125,6 +125,14 @@ public class ZombieAI : MonoBehaviour
             return;
         }
 
+        // Ensure agent exists and is valid on navmesh before using it
+        if (_agent == null) _agent = GetComponent<NavMeshAgent>();
+        if (_agent == null || !_agent.isOnNavMesh || !_agent.isActiveAndEnabled)
+        {
+            // Agent not ready — skip movement/attack logic this frame to avoid errors
+            return;
+        }
+
         // 1. Rotație Vizuală spre Player (Face Target)
         // Chiar dacă merge spre un punct lateral, vrem să se uite la jucător
         Vector2 dir = _player.position - transform.position;
@@ -163,11 +171,23 @@ public class ZombieAI : MonoBehaviour
     // Această funcție este apelată constant de ZombieManager pentru a actualiza poziția de încercuire
     public void SetTacticalTarget(Vector3 pos)
     {
+        // Lazily ensure we have an agent reference
+        if (_agent == null) _agent = GetComponent<NavMeshAgent>();
+
+        // Guard: only operate if agent exists, active and placed on NavMesh
+        if (_agent == null || !_agent.isOnNavMesh || !_agent.isActiveAndEnabled || !gameObject.activeInHierarchy)
+            return;
+
         _targetPosition = pos;
-        // Optional immediate refresh if far off (avoid big drift)
-        if (!_agent.isStopped && (pos - _agent.destination).sqrMagnitude > 4f)
+
+        // Only call SetDestination if the new target differs sufficiently to justify path recalculation
+        if (!_agent.isStopped)
         {
-            _agent.SetDestination(_targetPosition);
+            Vector3 currentDest = _agent.hasPath ? _agent.destination : _agent.transform.position;
+            if ((currentDest - pos).sqrMagnitude > 4f) // threshold to avoid thrash
+            {
+                _agent.SetDestination(_targetPosition);
+            }
         }
     }
 
