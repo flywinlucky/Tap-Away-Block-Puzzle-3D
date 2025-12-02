@@ -20,7 +20,7 @@ MonoBehaviour:
   weapon_reload_sound: {fileID: 0}
   weapon_switch_sound: {fileID: 8300000, guid: 0229069bbbb7f0148a041a11850489d9, type: 3}
   bulletPrefab: {fileID: 1938297612736354981, guid: a54eb1c62382a0344b4b9cc9ef05de32, type: 3}
-  bulletSpeed: 38
+  bulletSpeed: 35
   magazineSize: 15
   reloadTime: 1.2
   fireRate: 0.14
@@ -28,4 +28,4 @@ MonoBehaviour:
   range: 100
   automatic: 0
   maxReserveAmmo: 250
-  startingReserveAmmo: 120
+  startingReserveAmmo: 60
