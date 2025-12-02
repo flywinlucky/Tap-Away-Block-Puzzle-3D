@@ -42,6 +42,11 @@ public class PlayerHealth : MonoBehaviour
 	public float CurrentArmor => _currentArmor;
 	public float MaxArmor => maxArmor;
 
+	[Header("Game Over")]
+	[Tooltip("Assign a UI GameObject (e.g. a full-screen panel) to show on player death.")]
+	public GameObject gameOverPopup;
+	private bool _isDead = false;
+
 	private void Awake()
 	{
 		// Initialize health and armor to their maximum values
@@ -72,6 +77,10 @@ public class PlayerHealth : MonoBehaviour
 			// set default immediately (no tween)
 			vignetteImage.color = defaultVignetteColor;
 		}
+
+		// Ensure game over popup is hidden at start (safe if null)
+		if (gameOverPopup != null)
+			gameOverPopup.SetActive(false);
 	}
 
 	// Apply damage reduction from equipment
@@ -137,8 +146,10 @@ public class PlayerHealth : MonoBehaviour
 		// play vignette damage effect
 		ApplyDamageVignette();
 
-		if (_currentHealth <= 0f)
+		if (_currentHealth <= 0f && !_isDead)
 		{
+			_isDead = true;
+			ShowGameOverPopup();
 			// gestionare moarte (poți extinde)
 			Destroy(gameObject);
 		}
@@ -202,5 +213,12 @@ public class PlayerHealth : MonoBehaviour
 		seq.AppendInterval(vignetteHoldDuration);
 		seq.Append(vignetteImage.DOColor(defaultVignetteColor, vignetteFadeDuration).SetEase(Ease.OutQuad));
 		_vignetteTween = seq.OnComplete(() => { _currentVignette = VignetteState.None; });
+	}
+
+	// NEW helper: shows the assigned game-over popup (no-op if null)
+	private void ShowGameOverPopup()
+	{
+		if (gameOverPopup == null) return;
+		gameOverPopup.SetActive(true);
 	}
 }
