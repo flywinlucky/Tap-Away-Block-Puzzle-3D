@@ -1797,7 +1797,7 @@ MonoBehaviour:
   player: {fileID: 1039426371}
   zombiePrefab: {fileID: 1335309259063538240, guid: 23218f50598fa994e8aa4f94c9253e7c, type: 3}
   WaveCountAndTimer: {fileID: 1381335029}
-  preparationDuration: 35
+  preparationDuration: 20
   breatherDuration: 0
   spawnCountIncrementPerWave: 3
   baseZombieHealth: 50
