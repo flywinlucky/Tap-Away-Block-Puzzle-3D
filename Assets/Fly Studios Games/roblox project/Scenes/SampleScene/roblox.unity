@@ -347,7 +347,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -399,9 +399,9 @@ MonoBehaviour:
   mouseSensitivity: 3
   rotationSmoothTime: 0.12
   pitchLimits: {x: -40, y: 85}
-  distance: 4
-  minDistance: 1
-  maxDistance: 15
+  distance: 4.5
+  minDistance: 1.5
+  maxDistance: 7
   zoomSpeed: 5
   collisionLayers:
     serializedVersion: 2
