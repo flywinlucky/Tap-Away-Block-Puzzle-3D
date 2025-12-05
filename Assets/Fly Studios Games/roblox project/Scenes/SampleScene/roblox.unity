@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 262727589}
   - component: {fileID: 262727588}
   - component: {fileID: 262727587}
+  - component: {fileID: 262727590}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -379,6 +380,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &262727590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262727586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f531d0f4f5c5ff144ae46abea77b7790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &841207112
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,6 +543,7 @@ GameObject:
   - component: {fileID: 2067015724}
   - component: {fileID: 2067015728}
   - component: {fileID: 2067015727}
+  - component: {fileID: 2067015729}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -544,7 +558,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067015722}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -596,7 +610,7 @@ Transform:
   m_GameObject: {fileID: 2067015722}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.6, z: 0}
-  m_LocalScale: {x: 0.62877, y: 1.1387631, z: 0.62877}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -634,6 +648,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2067015729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067015722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b2bfe3c618ece4fb600c2c9ceac9bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &102286805372138514
 MonoBehaviour:
   m_ObjectHideFlags: 0
