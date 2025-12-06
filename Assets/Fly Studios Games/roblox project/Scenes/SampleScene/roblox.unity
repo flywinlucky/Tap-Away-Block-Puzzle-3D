@@ -520,6 +520,7 @@ MonoBehaviour:
   groundCheckRadius: 0.25
   groundCheckOffset: {x: 0, y: -0.1, z: 0}
   raycastPosition: {fileID: 2051727420}
+  animator: {fileID: 855895893053387346}
 --- !u!4 &708171130
 Transform:
   m_ObjectHideFlags: 0

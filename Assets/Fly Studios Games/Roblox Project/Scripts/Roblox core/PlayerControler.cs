@@ -20,6 +20,10 @@ public class PlayerControler : MonoBehaviour
     public Vector3 groundCheckOffset = new Vector3(0, -0.1f, 0); // Pozitia sferei fata de picioare
     public Transform raycastPosition;  // Punctul care va fi folosit pentru verificarea solului (setezi in inspector)
 
+    // Animation
+    [Header("Animation")]
+    public Animator animator; // seteaza in Inspector sau va fi gasit automat in Start
+
     // Private variables
     private CharacterController cc;
     private Transform camTransform;
@@ -39,11 +43,25 @@ public class PlayerControler : MonoBehaviour
         {
             Debug.LogError("Lipsa MainCamera!");
         }
+
+        // Daca animatorul nu e setat in Inspector, cautam in copii
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+            if (animator == null)
+            {
+                Debug.LogWarning("Animator not assigned on PlayerControler and none found in children.");
+            }
+        }
     }
 
     void Update()
     {
         CheckGround(); // Verificam solul manual
+
+        // trimitem starea de grounded catre Animator (folosit pentru a reveni din Jump)
+        if (animator != null) animator.SetBool("isGrounded", isGroundedCustom);
+
         HandleMovement();
         HandleGravityAndJump();
     }
@@ -81,6 +99,14 @@ public class PlayerControler : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+            // Play run animation
+            if (animator != null) animator.SetBool("run", true);
+        }
+        else
+        {
+            // Stop run animation
+            if (animator != null) animator.SetBool("run", false);
         }
 
         cc.Move(currentHorizontalVelocity * Time.deltaTime);
@@ -98,6 +124,13 @@ public class PlayerControler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGroundedCustom)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+            // Declansam trigger-ul de jump si dezactivam run in animator (daca exista)
+            if (animator != null)
+            {
+                animator.SetTrigger("jump");
+                animator.SetBool("run", false);
+            }
         }
 
         // Aplicam gravitatia constant
