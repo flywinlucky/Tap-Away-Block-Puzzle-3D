@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Fly Studios Games/Roblox Project/Scenes/SampleScene/roblox.unity
-    guid: e8f49065d28c3a84ca8ca24ac6eaf3b1
+    path: Assets/Fly Studios Games/Cube Escape 3D/Demo Scene/Cube Escape 3D Demo.unity
+    guid: b119ecabad69b4d4a8a574be6e16411b
   m_configObjects: {}

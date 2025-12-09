@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Water
+  - GoldBlock
+  - WinLevel
+  - KillZone
+  - ItemPower
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -12,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Obstacle
-  - Ground
+  - KillZone
+  - 
   - 
   - 
   - 
