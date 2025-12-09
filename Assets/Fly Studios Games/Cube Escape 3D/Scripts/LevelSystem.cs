@@ -31,8 +31,20 @@ namespace CubeEscape3D
 
             if (initializeOnStart)
             {
-                currentLevelIndex = PlayerPrefs.GetInt("Levels_Levels_System", currentLevelIndex);
+                currentLevelIndex = PlayerPrefs.GetInt("Levels_Levels_System", 0);
                 randomizeLevelsAfterLastLevel = PlayerPrefs.GetInt("Random_bool_LS", randomizeLevelsAfterLastLevel ? 1 : 0) == 1;
+
+                // Clamp index to valid range (start from 0 if out of range)
+                if (levelPrefabs != null && levelPrefabs.Length > 0)
+                {
+                    if (currentLevelIndex < 0 || currentLevelIndex >= levelPrefabs.Length)
+                        currentLevelIndex = 0;
+                }
+                else
+                {
+                    Debug.LogWarning("LevelPrefabs array is empty.");
+                }
+
                 GenerateNextLevel();
             }
         }
@@ -49,39 +61,63 @@ namespace CubeEscape3D
 
         public void NextLevel()
         {
+            // Increase index and persist it, then load the next level
             currentLevelIndex++;
             PlayerPrefs.SetInt("Levels_Levels_System", currentLevelIndex);
+
+            GenerateNextLevel();
         }
 
 
         public void GenerateNextLevel()
         {
+            // If array invalid, bail out
+            if (levelPrefabs == null || levelPrefabs.Length == 0)
+            {
+                Debug.LogWarning("No level prefabs assigned.");
+                return;
+            }
+
+            // If we're in random mode -> pick a random level (avoid same as last)
             if (randomizeLevelsAfterLastLevel)
             {
-                Destroy(instantiatedCurrentLevel);
+                if (instantiatedCurrentLevel != null)
+                    Destroy(instantiatedCurrentLevel);
 
                 int randomIndex;
                 do
                 {
                     randomIndex = Random.Range(0, levelPrefabs.Length);
-                } while (randomIndex == lastLevelIndex);
+                } while (randomIndex == lastLevelIndex && levelPrefabs.Length > 1);
+
                 lastLevelIndex = randomIndex;
                 currentLevelIndex = randomIndex;
 
                 instantiatedCurrentLevel = Instantiate(levelPrefabs[randomIndex], instantiateInParent);
+                currentLeveltext.text = "Level " + (currentLevelIndex + 1).ToString();
             }
             else
             {
+                // If we've gone past the last level, enable random mode and pick a random one
                 if (currentLevelIndex >= levelPrefabs.Length)
                 {
-                    currentLevelIndex = 0;
+                    currentLevelIndex = 0; // optional: reset or keep as-is; we switch to random mode now
                     randomizeLevelsAfterLastLevel = true;
                     PlayerPrefs.SetInt("Random_bool_LS", randomizeLevelsAfterLastLevel ? 1 : 0);
+
+                    // Now call GenerateNextLevel again to enter random branch
+                    GenerateNextLevel();
+                    return;
                 }
 
-                Destroy(instantiatedCurrentLevel);
+                if (instantiatedCurrentLevel != null)
+                    Destroy(instantiatedCurrentLevel);
+
                 instantiatedCurrentLevel = Instantiate(levelPrefabs[currentLevelIndex], instantiateInParent);
-                currentLeveltext.text = "Level " + currentLevelIndex.ToString();
+                currentLeveltext.text = "Level " + (currentLevelIndex + 1).ToString();
+
+                // Remember last level index for future random phase
+                lastLevelIndex = currentLevelIndex;
             }
         }
 
