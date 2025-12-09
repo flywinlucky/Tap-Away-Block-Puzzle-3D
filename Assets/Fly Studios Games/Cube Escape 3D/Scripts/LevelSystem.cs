@@ -49,16 +49,6 @@ namespace CubeEscape3D
             }
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GenerateNextLevel();
-            }
-        }
-
-
-
         public void NextLevel()
         {
             // Increase index and persist it, then load the next level
