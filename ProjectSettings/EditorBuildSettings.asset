@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Fly Studios Games/Cube Escape 3D/Demo Scene/Cube Escape 3D Demo.unity
     guid: b119ecabad69b4d4a8a574be6e16411b
   m_configObjects: {}

@@ -134,8 +134,6 @@ namespace CubeEscape3D
                 this.newCube.SetVector(roundedPosition);
                 MainCubeManager.Instance.ResetPosition(newCube.transform);
 
-                CameraShake.Instance.CallCameraShake(0.1f, 0.1f);
-
                 allCubePositions.Add(roundedPosition);
 
                 Instantiate(vfx, roundedPosition, Quaternion.identity);
@@ -193,7 +191,6 @@ namespace CubeEscape3D
                     cube.transform.SetParent(null);
                 }
 
-                CameraShake.Instance.CallCameraShake(0.2f, 0.2f);
                 brokenScreenPanel.SetBool("BrokenScreen", true);
                 onlyOnceGameOver = true;
                 onGameLose?.Invoke();
