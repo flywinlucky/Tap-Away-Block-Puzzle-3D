@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using YG;
+//using YG;
 
 public class YGInitialize : MonoBehaviour
 {
     private void Start()
     {
-        YG2.GameReadyAPI();
+        //YG2.GameReadyAPI();
         Debug.Log("Game is ready.");
 
         ChangeLanguage("en");
@@ -14,6 +14,6 @@ public class YGInitialize : MonoBehaviour
     public void ChangeLanguage(string prefixLanguage)
     {
         Debug.Log("INTER YG : Language changed to " + prefixLanguage);
-        YG2.SwitchLanguage(prefixLanguage);
+        //YG2.SwitchLanguage(prefixLanguage);
     }
 }
