@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_StandardTriplanar
+  m_Name: Custom_StandardTriplanar 3
   m_Shader: {fileID: 4800000, guid: bc6e7f9508c29c544bfa485eebdd3546, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -30,5 +30,5 @@ Material:
     - _Metallic: 0.15
     - _Tiling: 0.4
     m_Colors:
-    - _Color: {r: 0.745283, g: 0.08788714, b: 0.20840976, a: 1}
+    - _Color: {r: 0.08627451, g: 0.5038501, b: 0.74509805, a: 1}
   m_BuildTextureStacks: []
