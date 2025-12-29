@@ -55,12 +55,16 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    void Update()
+void Update()
     {
-        CheckGround(); // Verificam solul manual
+        CheckGround();
 
-        // trimitem starea de grounded catre Animator (folosit pentru a reveni din Jump)
-        if (animator != null) animator.SetBool("isGrounded", isGroundedCustom);
+        if (animator != null) 
+        {
+            animator.SetBool("isGrounded", isGroundedCustom);
+            // Trimitem viteza verticală pentru a ști dacă urcăm sau cădem (opțional, dar util)
+            animator.SetFloat("verticalVelocity", velocity.y);
+        }
 
         HandleMovement();
         HandleGravityAndJump();
@@ -74,7 +78,7 @@ public class PlayerControler : MonoBehaviour
         isGroundedCustom = Physics.CheckSphere(spherePosition, groundCheckRadius, groundLayer);
     }
 
-    void HandleMovement()
+void HandleMovement()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -91,8 +95,6 @@ public class PlayerControler : MonoBehaviour
         Vector3 targetVelocity = targetDirection * walkSpeed;
 
         float currentAccel = (targetDirection.magnitude > 0) ? acceleration : deceleration;
-
-        // Folosim MoveTowards pentru oprire instanta (stil Roblox)
         currentHorizontalVelocity = Vector3.MoveTowards(currentHorizontalVelocity, targetVelocity, currentAccel * Time.deltaTime);
 
         if (targetDirection.magnitude > 0.1f)
@@ -100,43 +102,37 @@ public class PlayerControler : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
-            // Play run animation
-            if (animator != null) animator.SetBool("run", true);
+            // SETARE RUN: Doar dacă suntem pe sol!
+            if (animator != null) animator.SetBool("run", isGroundedCustom);
         }
         else
         {
-            // Stop run animation
             if (animator != null) animator.SetBool("run", false);
         }
 
         cc.Move(currentHorizontalVelocity * Time.deltaTime);
     }
 
-    void HandleGravityAndJump()
+  void HandleGravityAndJump()
     {
-        // Resetam gravitatia daca suntem pe jos (folosind verificarea noastra custom)
         if (isGroundedCustom && velocity.y < 0)
         {
-            velocity.y = -2f; // O forta mica in jos ca sa stam lipiti
+            velocity.y = -2f;
         }
 
-        // SĂRITURA
         if (Input.GetKeyDown(KeyCode.Space) && isGroundedCustom)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
-            // Declansam trigger-ul de jump si dezactivam run in animator (daca exista)
             if (animator != null)
             {
-                animator.SetTrigger("jump");
+                // Resetăm run-ul imediat când sărim
                 animator.SetBool("run", false);
+                animator.SetTrigger("jump");
             }
         }
 
-        // Aplicam gravitatia constant
         velocity.y += gravity * Time.deltaTime;
-
-        // Miscare verticala
         cc.Move(velocity * Time.deltaTime);
     }
 
