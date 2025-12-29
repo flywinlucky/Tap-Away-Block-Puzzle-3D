@@ -13,7 +13,7 @@ public class CameraControler : MonoBehaviour
 
     [Header("Zoom Settings")]
     public float distance = 5.0f;
-    public float minDistance = 0.5f; // Distanța la care intră în FPS
+    public float minDistance = 0.5f; 
     public float maxDistance = 15.0f;
     public float zoomSpeed = 5.0f;
 
@@ -21,68 +21,82 @@ public class CameraControler : MonoBehaviour
     public LayerMask collisionLayers;
     public float wallOffset = 0.2f;
 
+    [Header("UI")]
+    public GameObject fakeCursorUI; // Imaginea de cursor din centrul ecranului
+
     private Vector3 currentRotation;
     private Vector3 rotationSmoothVelocity;
     private float currentDistance;
     
-    // Variabilă publică să știe și Player-ul dacă suntem FPS
     [HideInInspector] public bool isFPS = false;
 
     void Start()
     {
         currentDistance = distance;
         currentRotation = transform.eulerAngles;
-        // Cursorul în Roblox e vizibil dar blocat deseori sau ascuns în FPS
-        // Pentru început, îl lăsăm vizibil dar îl centrăm dacă e FPS
     }
 
     void LateUpdate()
     {
         if (!target) return;
 
-        // 1. INPUT - Rotire (În FPS se rotește mereu, în TPS doar cu Click Dreapta ca în Roblox)
-        if (Input.GetMouseButton(1) || isFPS) 
+        // 1. ZOOM - Calculăm distanța mai întâi pentru a ști dacă suntem în FPS
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        distance -= scroll * zoomSpeed;
+        distance = Mathf.Clamp(distance, 0, maxDistance);
+        isFPS = (distance <= minDistance);
+
+        // 2. INPUT ROTIRE & CURSOR LOGIC
+        if (isFPS)
         {
+            // --- MOD FPS: Stil Roblox (Centrat și activ) ---
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
             currentRotation.y += mouseX;
             currentRotation.x -= mouseY;
-            currentRotation.x = Mathf.Clamp(currentRotation.x, pitchLimits.x, pitchLimits.y);
 
-            // În mod FPS, blocăm cursorul în centru
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false; // Îl ascundem pe cel de sistem ca să nu aibă lag
+            if (fakeCursorUI != null) fakeCursorUI.SetActive(true); // Îl activăm pe cel UI (fără lag)
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            // --- MOD TPS: Drag to Move (Cum era înainte) ---
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+            currentRotation.y += mouseX;
+            currentRotation.x -= mouseY;
+
+            Cursor.lockState = CursorLockMode.None; // Cursorul e liber
+            Cursor.visible = true;
+            if (fakeCursorUI != null) fakeCursorUI.SetActive(false);
         }
         else
         {
-            // În mod TPS, când nu ținem click dreapta, eliberăm mouse-ul
+            // --- MOD TPS: Liber (Nu rotim camera) ---
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            if (fakeCursorUI != null) fakeCursorUI.SetActive(false);
         }
 
-        // 2. ZOOM
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        distance -= scroll * zoomSpeed;
-        distance = Mathf.Clamp(distance, 0, maxDistance); // Permitem 0 pentru FPS
-
-        // Detectăm dacă suntem în modul FPS
-        isFPS = (distance <= minDistance);
+        currentRotation.x = Mathf.Clamp(currentRotation.x, pitchLimits.x, pitchLimits.y);
 
         // 3. CALCULEAZĂ POZIȚIA
         Quaternion rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, 0);
         Vector3 trueTargetPosition = target.position + targetOffset;
         
-        // Dacă suntem FPS, camera stă fix în targetOffset
         Vector3 desiredPosition = isFPS ? trueTargetPosition : trueTargetPosition - (rotation * Vector3.forward * distance);
 
-        // 4. WALL CLIP (doar dacă nu suntem FPS)
+        // 4. WALL CLIP (doar în modul Third Person)
         if (!isFPS)
         {
             RaycastHit hit;
             if (Physics.Linecast(trueTargetPosition, desiredPosition, out hit, collisionLayers))
             {
-                currentDistance = Vector3.Distance(trueTargetPosition, hit.point) - wallOffset;
-                if (currentDistance < minDistance) isFPS = true; // Forțăm FPS dacă peretele e prea aproape
-                desiredPosition = trueTargetPosition - (rotation * Vector3.forward * currentDistance);
+                float tempDistance = Vector3.Distance(trueTargetPosition, hit.point) - wallOffset;
+                desiredPosition = trueTargetPosition - (rotation * Vector3.forward * tempDistance);
             }
         }
 
