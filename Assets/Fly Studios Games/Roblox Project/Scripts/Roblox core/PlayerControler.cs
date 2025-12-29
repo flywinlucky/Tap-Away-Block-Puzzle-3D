@@ -30,7 +30,7 @@ public class PlayerControler : MonoBehaviour
     private Vector3 velocity;           // Gravitatie
     private Vector3 currentHorizontalVelocity;
     private bool isGroundedCustom;      // Variabila noastra, nu a Unity-ului
-
+public CameraControler camScript;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -79,40 +79,49 @@ void Update()
     }
 
 void HandleMovement()
+{
+    float h = Input.GetAxisRaw("Horizontal");
+    float v = Input.GetAxisRaw("Vertical");
+
+    Vector3 camForward = camTransform.forward;
+    Vector3 camRight = camTransform.right;
+
+    camForward.y = 0;
+    camRight.y = 0;
+    camForward.Normalize();
+    camRight.Normalize();
+
+    Vector3 targetDirection = (camForward * v + camRight * h).normalized;
+    
+    // --- LOGICA STIL ROBLOX ---
+    if (camScript != null && camScript.isFPS)
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        // În FPS, jucătorul se rotește mereu după camera pe axa Y
+        Vector3 lookDir = camTransform.forward;
+        lookDir.y = 0;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), turnSpeed * Time.deltaTime);
+    }
+    else if (targetDirection.magnitude > 0.1f)
+    {
+        // În TPS, se rotește doar când ne mișcăm
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+    }
+    // --------------------------
 
-        Vector3 camForward = camTransform.forward;
-        Vector3 camRight = camTransform.right;
+    Vector3 targetVelocity = targetDirection * walkSpeed;
+    float currentAccel = (targetDirection.magnitude > 0) ? acceleration : deceleration;
+    currentHorizontalVelocity = Vector3.MoveTowards(currentHorizontalVelocity, targetVelocity, currentAccel * Time.deltaTime);
 
-        camForward.y = 0;
-        camRight.y = 0;
-        camForward.Normalize();
-        camRight.Normalize();
-
-        Vector3 targetDirection = (camForward * v + camRight * h).normalized;
-        Vector3 targetVelocity = targetDirection * walkSpeed;
-
-        float currentAccel = (targetDirection.magnitude > 0) ? acceleration : deceleration;
-        currentHorizontalVelocity = Vector3.MoveTowards(currentHorizontalVelocity, targetVelocity, currentAccel * Time.deltaTime);
-
-        if (targetDirection.magnitude > 0.1f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-
-            // SETARE RUN: Doar dacă suntem pe sol!
-            if (animator != null) animator.SetBool("run", isGroundedCustom);
-        }
-        else
-        {
-            if (animator != null) animator.SetBool("run", false);
-        }
-
-        cc.Move(currentHorizontalVelocity * Time.deltaTime);
+    // Animații
+    if (animator != null)
+    {
+        bool isMoving = targetDirection.magnitude > 0.1f;
+        animator.SetBool("run", isMoving && isGroundedCustom);
     }
 
+    cc.Move(currentHorizontalVelocity * Time.deltaTime);
+}
   void HandleGravityAndJump()
     {
         if (isGroundedCustom && velocity.y < 0)
