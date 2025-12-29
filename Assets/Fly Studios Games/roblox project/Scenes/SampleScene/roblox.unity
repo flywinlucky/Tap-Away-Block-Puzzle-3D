@@ -509,12 +509,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b2bfe3c618ece4fb600c2c9ceac9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 8
+  walkSpeed: 7
   jumpHeight: 1.6
   gravity: -20
   turnSpeed: 10
-  acceleration: 50
-  deceleration: 50
+  acceleration: 40
+  deceleration: 40
   groundLayer:
     serializedVersion: 2
     m_Bits: 192
