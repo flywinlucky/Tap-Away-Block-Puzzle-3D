@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 16924367}
   - component: {fileID: 16924366}
   - component: {fileID: 16924369}
+  - component: {fileID: 16924370}
   m_Layer: 7
   m_Name: Ground
   m_TagString: Simple Step
@@ -161,7 +162,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b66f3423f6a33da4e97a6b12281ac7c0, type: 2}
+  - {fileID: 2100000, guid: 4d80648d6f5c7054c9202815d1145e47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,6 +220,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 0.83798623, z: 10}
   m_Center: {x: 0, y: -0.41899312, z: 0}
+--- !u!114 &16924370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16924364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.08627451, g: 0.5019608, b: 0.74509805, a: 1}
 --- !u!1 &34607871
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +286,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a5adeaa936c96c74985e877b54d3893a, type: 2}
+  - {fileID: 2100000, guid: 4d80648d6f5c7054c9202815d1145e47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -342,6 +356,7 @@ GameObject:
   - component: {fileID: 115875390}
   - component: {fileID: 115875389}
   - component: {fileID: 115875388}
+  - component: {fileID: 115875392}
   m_Layer: 6
   m_Name: Cube (12)
   m_TagString: Simple Step
@@ -427,6 +442,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &115875392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115875387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.08627451, g: 0.74509805, b: 0.62352943, a: 1}
 --- !u!1 &262727586
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,6 +637,7 @@ GameObject:
   - component: {fileID: 276839038}
   - component: {fileID: 276839037}
   - component: {fileID: 276839036}
+  - component: {fileID: 276839040}
   m_Layer: 6
   m_Name: Cube (10)
   m_TagString: Simple Step
@@ -694,6 +723,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &276839040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276839035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.74509805, g: 0.21304914, b: 0.08627451, a: 1}
 --- !u!1 &306852796
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,6 +748,7 @@ GameObject:
   - component: {fileID: 306852799}
   - component: {fileID: 306852798}
   - component: {fileID: 306852797}
+  - component: {fileID: 306852801}
   m_Layer: 6
   m_Name: Cube (9)
   m_TagString: Simple Step
@@ -791,6 +834,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &306852801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306852796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.74509805, g: 0.21304914, b: 0.08627451, a: 1}
 --- !u!1 &329449149
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +859,7 @@ GameObject:
   - component: {fileID: 329449152}
   - component: {fileID: 329449151}
   - component: {fileID: 329449150}
+  - component: {fileID: 329449154}
   m_Layer: 6
   m_Name: Cube (11)
   m_TagString: Simple Step
@@ -888,6 +945,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &329449154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329449149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.08627451, g: 0.74509805, b: 0.62352943, a: 1}
 --- !u!1 &446371259
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +971,7 @@ GameObject:
   - component: {fileID: 446371262}
   - component: {fileID: 446371261}
   - component: {fileID: 446371260}
+  - component: {fileID: 446371265}
   m_Layer: 6
   m_Name: Cube (14)
   m_TagString: Untagged
@@ -933,7 +1004,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &446371262
 MeshRenderer:
@@ -1000,6 +1071,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &446371265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446371259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.74509805, g: 0.08627451, b: 0.22754155, a: 1}
 --- !u!1 &567571332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,6 +1995,7 @@ GameObject:
   - component: {fileID: 1099173539}
   - component: {fileID: 1099173538}
   - component: {fileID: 1099173537}
+  - component: {fileID: 1099173541}
   m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Simple Step
@@ -1996,6 +2081,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &1099173541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099173536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.08627451, g: 0.74509805, b: 0.62352943, a: 1}
 --- !u!1 &1099848357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,6 +2107,7 @@ GameObject:
   - component: {fileID: 1099848360}
   - component: {fileID: 1099848359}
   - component: {fileID: 1099848358}
+  - component: {fileID: 1099848363}
   m_Layer: 6
   m_Name: Cube (15)
   m_TagString: Untagged
@@ -2041,7 +2140,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1099848360
 MeshRenderer:
@@ -2108,6 +2207,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1099848363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099848357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.6569544, g: 0.74509805, b: 0.08627451, a: 1}
 --- !u!1 &1151391194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,7 +2273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a5adeaa936c96c74985e877b54d3893a, type: 2}
+  - {fileID: 2100000, guid: 4d80648d6f5c7054c9202815d1145e47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2449,6 +2561,7 @@ GameObject:
   - component: {fileID: 1346811188}
   - component: {fileID: 1346811187}
   - component: {fileID: 1346811186}
+  - component: {fileID: 1346811190}
   m_Layer: 6
   m_Name: Cube (7)
   m_TagString: Simple Step
@@ -2534,6 +2647,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1346811190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346811185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.08627451, g: 0.74509805, b: 0.62352943, a: 1}
 --- !u!1 &1419111944
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2672,7 @@ GameObject:
   - component: {fileID: 1419111947}
   - component: {fileID: 1419111946}
   - component: {fileID: 1419111945}
+  - component: {fileID: 1419111949}
   m_Layer: 6
   m_Name: Cube (8)
   m_TagString: Simple Step
@@ -2631,6 +2758,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1419111949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419111944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.74509805, g: 0.21304914, b: 0.08627451, a: 1}
 --- !u!1 &1719207529
 GameObject:
   m_ObjectHideFlags: 0
@@ -2807,7 +2947,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b53d458aba586ca46a0a828fbe08d463, type: 2}
+  - {fileID: 2100000, guid: 4d80648d6f5c7054c9202815d1145e47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2904,7 +3044,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b53d458aba586ca46a0a828fbe08d463, type: 2}
+  - {fileID: 2100000, guid: 4d80648d6f5c7054c9202815d1145e47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2992,6 +3132,7 @@ GameObject:
   - component: {fileID: 2082849420}
   - component: {fileID: 2082849419}
   - component: {fileID: 2082849418}
+  - component: {fileID: 2082849422}
   m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Simple Step
@@ -3077,6 +3218,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2082849422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082849417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755413b122c14de4ba3184fe09828475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myLocalColor: {r: 0.08627451, g: 0.74509805, b: 0.62352943, a: 1}
 --- !u!1 &2092933683
 GameObject:
   m_ObjectHideFlags: 0
