@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(CharacterController))]
+// Replace CharacterController with Rigidbody + CapsuleCollider
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class PlayerControler : MonoBehaviour
 {
 	[Header("Roblox Settings")]
@@ -28,15 +30,25 @@ public class PlayerControler : MonoBehaviour
     public SoundFootsteps footsteps;
 
     // Private variables
-    private CharacterController cc;
+    // private CharacterController cc;
+    private Rigidbody rb;
+    private CapsuleCollider capsule;
     private Transform camTransform;
-    private Vector3 velocity;           // Gravitatie
+    private Vector3 velocity;           // Gravitatie (vertical only now)
     private Vector3 currentHorizontalVelocity;
     private bool isGroundedCustom;      // Variabila noastra, nu a Unity-ului
-public CameraControler camScript;
+    private bool jumpRequested;
+    public CameraControler camScript;
+
     void Start()
     {
-        cc = GetComponent<CharacterController>();
+        // cc = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        capsule = GetComponent<CapsuleCollider>();
+        rb.useGravity = false; // custom gravity
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         if (Camera.main != null)
         {
@@ -74,12 +86,13 @@ public CameraControler camScript;
         if (animator != null) 
         {
             animator.SetBool("isGrounded", isGroundedCustom);
-            // Trimitem viteza verticală pentru a ști dacă urcăm sau cădem (opțional, dar util)
-            animator.SetFloat("verticalVelocity", velocity.y);
+            // Folosim viteza verticală din Rigidbody
+            float vy = rb != null ? rb.velocity.y : velocity.y;
+            animator.SetFloat("verticalVelocity", vy);
         }
 
         HandleMovement();
-        HandleGravityAndJump();
+        HandleGravityAndJump(); // now only captures jump and handles animator
 
         if (footsteps != null)
         {
@@ -137,29 +150,49 @@ void HandleMovement()
         animator.SetBool("run", isMoving && isGroundedCustom);
     }
 
-    cc.Move(currentHorizontalVelocity * Time.deltaTime);
+    // cc.Move(currentHorizontalVelocity * Time.deltaTime); // removed, applied in FixedUpdate via rb.velocity
 }
   void HandleGravityAndJump()
     {
-        if (isGroundedCustom && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
-
+        // Capture jump in Update; physics applied in FixedUpdate
         if (Input.GetKeyDown(KeyCode.Space) && isGroundedCustom)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            jumpRequested = true;
 
             if (animator != null)
             {
-                // Resetăm run-ul imediat când sărim
                 animator.SetBool("run", false);
                 animator.SetTrigger("jump");
             }
         }
+        // No cc.Move or gravity integration here anymore
+    }
 
-        velocity.y += gravity * Time.deltaTime;
-        cc.Move(velocity * Time.deltaTime);
+    void FixedUpdate()
+    {
+        if (rb == null) return;
+
+        Vector3 vel = rb.velocity;
+
+        // Horizontal from computed acceleration
+        vel.x = currentHorizontalVelocity.x;
+        vel.z = currentHorizontalVelocity.z;
+
+        // Stick-to-ground
+        if (isGroundedCustom && vel.y < 0f)
+            vel.y = -2f;
+
+        // Jump
+        if (jumpRequested && isGroundedCustom)
+        {
+            vel.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        // Gravity
+        vel.y += gravity * Time.fixedDeltaTime;
+
+        rb.velocity = vel;
+        jumpRequested = false;
     }
 
     // Asta deseneaza sfera in Editor ca sa vezi daca atinge pamantul (Gizmos)
