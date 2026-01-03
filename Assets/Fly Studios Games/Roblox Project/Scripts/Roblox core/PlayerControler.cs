@@ -24,6 +24,9 @@ public class PlayerControler : MonoBehaviour
     [Header("Animation")]
     public Animator animator; // seteaza in Inspector sau va fi gasit automat in Start
 
+    [Header("Audio")]
+    public SoundFootsteps footsteps;
+
     // Private variables
     private CharacterController cc;
     private Transform camTransform;
@@ -53,9 +56,18 @@ public CameraControler camScript;
                 Debug.LogWarning("Animator not assigned on PlayerControler and none found in children.");
             }
         }
+
+        if (footsteps == null)
+        {
+            footsteps = GetComponent<SoundFootsteps>();
+        }
+        if (footsteps != null)
+        {
+            footsteps.referenceWalkSpeed = walkSpeed;
+        }
     }
 
-void Update()
+    void Update()
     {
         CheckGround();
 
@@ -68,6 +80,11 @@ void Update()
 
         HandleMovement();
         HandleGravityAndJump();
+
+        if (footsteps != null)
+        {
+            footsteps.UpdateFootsteps(isGroundedCustom, currentHorizontalVelocity);
+        }
     }
 
     // Functie personalizata pentru a detecta solul

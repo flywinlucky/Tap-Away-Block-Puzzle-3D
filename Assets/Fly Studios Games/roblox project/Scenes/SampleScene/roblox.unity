@@ -1076,8 +1076,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567571332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.75, y: 0.5, z: -7.25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.75, y: -0.358, z: -7.25}
+  m_LocalScale: {x: 1, y: 0.784, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1265,9 +1265,11 @@ GameObject:
   - component: {fileID: 708171126}
   - component: {fileID: 708171125}
   - component: {fileID: 708171131}
+  - component: {fileID: 708171133}
+  - component: {fileID: 708171132}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1315,6 +1317,7 @@ MonoBehaviour:
   groundCheckOffset: {x: 0, y: -0.1, z: 0}
   raycastPosition: {fileID: 2051727420}
   animator: {fileID: 5866666021915947919}
+  footsteps: {fileID: 0}
   camScript: {fileID: 262727590}
 --- !u!4 &708171130
 Transform:
@@ -1358,6 +1361,177 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &708171132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708171124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6819360a69d3b6642a4945a192590008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categories:
+  - name: Deep Water
+    tag: Deep Water
+    set:
+      clips:
+      - {fileID: 8300000, guid: 0fa64fa691f04e843ba8124fa90ff3d8, type: 3}
+      - {fileID: 8300000, guid: 0df8d538a16b0d04eb985757ce8642e7, type: 3}
+      - {fileID: 8300000, guid: a362c9027e544054a85198e98f57aa82, type: 3}
+      - {fileID: 8300000, guid: 256c1fc048c6fd144b701c7247b7253f, type: 3}
+      - {fileID: 8300000, guid: a53ab483bccd8394287471ead3d5a392, type: 3}
+      volumeMin: 0.8
+      volumeMax: 1
+      pitchMin: 0.95
+      pitchMax: 1.05
+  - name: Grass
+    tag: Grass
+    set:
+      clips:
+      - {fileID: 8300000, guid: 0b46bb00c4780f24f9220b774484d7f7, type: 3}
+      - {fileID: 8300000, guid: 747e9b3f1f14a89499e44622d0b0d928, type: 3}
+      - {fileID: 8300000, guid: 51118bf191375364bb94036841016166, type: 3}
+      - {fileID: 8300000, guid: 83ba031a600f3044c820c86491a1e5f5, type: 3}
+      - {fileID: 8300000, guid: 79ae262e94fdef14494fb5c7f16d80d6, type: 3}
+      volumeMin: 0.8
+      volumeMax: 1
+      pitchMin: 0.95
+      pitchMax: 1.05
+  - name: Ground
+    tag: Ground
+    set:
+      clips:
+      - {fileID: 8300000, guid: 9c11e1335bbdf3144b213573683af425, type: 3}
+      - {fileID: 8300000, guid: 56137d4d8bb8ddc4aba7047e3cdbcdce, type: 3}
+      - {fileID: 8300000, guid: 485b6a86d1fa3a94d9919f33d93d3511, type: 3}
+      - {fileID: 8300000, guid: bafb6a94c03f4fe4fafb0c6d2e7a90f1, type: 3}
+      - {fileID: 8300000, guid: a091974e433753745a9d04d3e5550b13, type: 3}
+      volumeMin: 0.8
+      volumeMax: 1
+      pitchMin: 0.95
+      pitchMax: 1.05
+  - name: Steps Simple
+    tag: Steps Simple
+    set:
+      clips:
+      - {fileID: 8300000, guid: 8dc0e0af32aeb7f488fa675ed9151370, type: 3}
+      - {fileID: 8300000, guid: 073a2e135b552d8408ebbd3f21019b92, type: 3}
+      - {fileID: 8300000, guid: f6ec22a35c911634f98824b203250b27, type: 3}
+      - {fileID: 8300000, guid: f67d6ac820deb0e42b67e892ab745a07, type: 3}
+      - {fileID: 8300000, guid: 8d2971c3f89d6714f8189994386c0570, type: 3}
+      volumeMin: 0.8
+      volumeMax: 1
+      pitchMin: 0.95
+      pitchMax: 1.05
+  fallbackCategoryIndex: 0
+  surfaceMask:
+    serializedVersion: 2
+    m_Bits: 247
+  raycastLength: 1.5
+  raycastOffset: {x: 0, y: 0.1, z: 0}
+  stepIntervalMin: 0.3
+  stepIntervalMax: 0.6
+  referenceWalkSpeed: 16
+  minMoveSpeed: 0.2
+--- !u!82 &708171133
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708171124}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &728953548
 GameObject:
   m_ObjectHideFlags: 0
