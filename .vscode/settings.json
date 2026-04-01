@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Tap Away Block Puzzle 3D.sln"
+    "dotnet.defaultSolution": "Tap-Away-Block-Puzzle-3D.sln"
 }
