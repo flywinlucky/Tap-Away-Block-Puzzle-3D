@@ -27,6 +27,13 @@ public class LevelData : ScriptableObject
     [HideInInspector]
     public int seed = 0;
 
+    [HideInInspector]
+    [Range(0.25f, 1f)]
+    public float fillRatio = 1f;
+
+    [HideInInspector]
+    public bool adaptiveDensity = true;
+
     // Make this field serialized so Unity stores it inside the asset
     [SerializeField]
     [HideInInspector]
@@ -34,11 +41,45 @@ public class LevelData : ScriptableObject
 
     private const int MinGridSize = 2;
     private const int MaxGridSize = 10;
+    private const int MaxGenerateAttempts = 8;
 
     public List<BlockData> GetBlocks() => blocks ?? (blocks = new List<BlockData>());
 
     public int GetGridLength() => Mathf.Clamp(customGridLength, MinGridSize, MaxGridSize);
     public int GetGridHeight() => Mathf.Clamp(customGridHeight, MinGridSize, MaxGridSize);
+
+    public float GetEffectiveFillRatio()
+    {
+        float ratio = Mathf.Clamp(fillRatio, 0.25f, 1f);
+        if (!adaptiveDensity)
+        {
+            return ratio;
+        }
+
+        int volume = GetGridLength() * GetGridHeight() * GetGridLength();
+
+        // Keep large levels responsive while preserving smaller levels near full density.
+        if (volume >= 700)
+        {
+            ratio = Mathf.Min(ratio, 0.45f);
+        }
+        else if (volume >= 500)
+        {
+            ratio = Mathf.Min(ratio, 0.55f);
+        }
+        else if (volume >= 300)
+        {
+            ratio = Mathf.Min(ratio, 0.7f);
+        }
+
+        return ratio;
+    }
+
+    public int GetEstimatedBlockCount()
+    {
+        int volume = GetGridLength() * GetGridHeight() * GetGridLength();
+        return Mathf.Clamp(Mathf.RoundToInt(volume * GetEffectiveFillRatio()), 1, volume);
+    }
 
     /// <summary>
     /// Punctul de intrare pentru generarea nivelului.
@@ -47,7 +88,10 @@ public class LevelData : ScriptableObject
     {
         try
         {
-            GenerateSolvableLevel();
+            if (!GenerateSolvableLevelWithRetries())
+            {
+                Debug.LogError("Level generation failed after all retries.");
+            }
         }
         catch (System.Exception ex)
         {
@@ -59,21 +103,40 @@ public class LevelData : ScriptableObject
     /// Algoritm nou care construiește o soluție de la primul la ultimul bloc, prevenind ciclurile.
     /// Funcționează prin a găsi mai întâi blocurile care pot ieși, apoi pe cele care se pot muta în spațiile eliberate.
     /// </summary>
-    private void GenerateSolvableLevel()
+    private bool GenerateSolvableLevelWithRetries()
     {
-        blocks = new List<BlockData>();
-        Random.InitState(seed);
+        int baseSeed = seed;
+
+        for (int attempt = 0; attempt < MaxGenerateAttempts; attempt++)
+        {
+            int attemptSeed = baseSeed + (attempt * 7919);
+            if (TryGenerateSolvableLevel(attemptSeed, out List<BlockData> generated))
+            {
+                blocks = generated;
+                Debug.Log("Level generated: " + blocks.Count + " blocks. Attempt " + (attempt + 1) + ".");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool TryGenerateSolvableLevel(int attemptSeed, out List<BlockData> generatedBlocks)
+    {
+        generatedBlocks = new List<BlockData>();
+        Random.InitState(attemptSeed);
+
         int gridLength = GetGridLength();
         int gridHeight = GetGridHeight();
 
         if (gridLength <= 0 || gridHeight <= 0)
         {
             Debug.LogWarning("Invalid grid dimensions for generation.");
-            return;
+            return false;
         }
 
-        // 1. Creăm un bloc pentru fiecare celulă din grilă
-        List<BlockData> generatedBlocks = new List<BlockData>();
+        // 1. Build all candidate cells in the grid.
+        List<Vector3Int> allPositions = new List<Vector3Int>();
         int offsetLength = gridLength / 2;
         int offsetHeight = gridHeight / 2;
         for (int x = -offsetLength; x < gridLength - offsetLength; x++)
@@ -82,57 +145,62 @@ public class LevelData : ScriptableObject
             {
                 for (int z = -offsetLength; z < gridLength - offsetLength; z++)
                 {
-                    generatedBlocks.Add(new BlockData { position = new Vector3Int(x, y, z) });
+                    allPositions.Add(new Vector3Int(x, y, z));
                 }
             }
         }
 
-        // 2. Pregătim structurile de date pentru algoritmul "forward"
-        List<BlockData> remainingBlocks = new List<BlockData>(generatedBlocks);
-        HashSet<Vector3Int> clearedPositions = new HashSet<Vector3Int>(); // Poziții considerate "libere" pentru mișcare
+        // 2. Keep only a target amount for adaptive density.
+        int targetBlockCount = Mathf.Clamp(GetEstimatedBlockCount(), 1, allPositions.Count);
+        List<Vector3Int> chosenPositions = allPositions.OrderBy(_ => Random.value).Take(targetBlockCount).ToList();
 
-        // 3. Atribuim direcții în "pase", construind calea de rezolvare
-        // Acest lucru previne ciclurile, deoarece un bloc poate fi eliberat doar pe baza blocurilor eliberate în pasele ANTERIOARE.
+        for (int i = 0; i < chosenPositions.Count; i++)
+        {
+            generatedBlocks.Add(new BlockData { position = chosenPositions[i] });
+        }
+
+        // 3. Prepare structures for forward solvable assignment.
+        List<BlockData> remainingBlocks = new List<BlockData>(generatedBlocks);
+        HashSet<Vector3Int> clearedPositions = new HashSet<Vector3Int>();
+
+        // 4. Assign directions in passes. A block is movable if there is a clear path to exit.
         while (remainingBlocks.Count > 0)
         {
             List<BlockData> blocksClearedThisPass = new List<BlockData>();
-            
-            // Amestecăm blocurile pentru a asigura că soluția nu este mereu aceeași
-            remainingBlocks = remainingBlocks.OrderBy(b => Random.value).ToList();
+            List<BlockData> orderedRemaining = remainingBlocks.OrderBy(_ => Random.value).ToList();
+            HashSet<Vector3Int> blockedByRemaining = new HashSet<Vector3Int>(remainingBlocks.Select(b => b.position));
 
-            // Faza 1: Găsim TOATE blocurile care pot fi eliberate în acest pas, pe baza stării anterioare
-            foreach (var currentBlock in remainingBlocks)
+            foreach (var currentBlock in orderedRemaining)
             {
-                // Căutăm o direcție în care blocul poate fi mișcat (spre exterior sau spre o poziție deja eliberată)
-                MoveDirection? possibleDirection = FindForwardPath(currentBlock.position, clearedPositions, gridLength, gridHeight);
+                blockedByRemaining.Remove(currentBlock.position);
+                MoveDirection? possibleDirection = FindForwardPath(
+                    currentBlock.position,
+                    blockedByRemaining,
+                    clearedPositions,
+                    gridLength,
+                    gridHeight);
+                blockedByRemaining.Add(currentBlock.position);
 
                 if (possibleDirection.HasValue)
                 {
-                    // Atribuim temporar direcția și adăugăm blocul la lista pentru acest pas
                     currentBlock.direction = possibleDirection.Value;
                     blocksClearedThisPass.Add(currentBlock);
                 }
             }
 
-
             if (blocksClearedThisPass.Count == 0 && remainingBlocks.Count > 0)
             {
-                // Acest caz nu ar trebui să se întâmple cu noua logică, dar rămâne ca o siguranță.
-                Debug.LogError($"Failed to generate a solvable level. A deadlock was detected with {remainingBlocks.Count} blocks left. This indicates a flaw in the generation logic.");
-                break; // Ieșim pentru a preveni o buclă infinită
+                return false;
             }
-            
-            // Faza 2: Validăm și actualizăm starea pentru toate blocurile găsite în acest pas
+
             foreach (var block in blocksClearedThisPass)
             {
                 clearedPositions.Add(block.position);
                 remainingBlocks.Remove(block);
             }
-            
         }
 
-
-        // 4. Setăm rotațiile vizuale aleatorii pentru estetică
+        // 5. Add stable random visual rotations.
         foreach (var block in generatedBlocks)
         {
             block.randomVisualRotation = Quaternion.Euler(
@@ -142,37 +210,38 @@ public class LevelData : ScriptableObject
             );
         }
 
-        this.blocks = generatedBlocks;
-        Debug.Log($"Level successfully generated – {blocks.Count} blocks placed. Dimensions: {gridLength}x{gridHeight}.");
+        return true;
     }
     
     /// <summary>
     /// Caută o cale de mișcare "înainte". O cale este validă dacă duce în afara grilei sau într-o locație deja eliberată.
     /// </summary>
-    private MoveDirection? FindForwardPath(Vector3Int blockPos, HashSet<Vector3Int> clearedPositions, int gridLength, int gridHeight)
+    private MoveDirection? FindForwardPath(
+        Vector3Int blockPos,
+        HashSet<Vector3Int> blockedByRemaining,
+        HashSet<Vector3Int> clearedPositions,
+        int gridLength,
+        int gridHeight)
     {
-        var shuffledDirections = System.Enum.GetValues(typeof(MoveDirection))
-                                            .Cast<MoveDirection>()
-                                            .OrderBy(d => Random.value);
+        var directions = System.Enum.GetValues(typeof(MoveDirection))
+                                    .Cast<MoveDirection>()
+                                    .OrderBy(_ => Random.value);
 
-        foreach (var dir in shuffledDirections)
+        foreach (var dir in directions)
         {
-            Vector3Int targetPos = blockPos + GetVectorFromEnum(dir);
-
-            // O cale este validă dacă duce în afara grilei (spre ieșire)
-            if (!IsInBounds(targetPos, gridLength, gridHeight))
+            if (HasClearPathToExit(blockPos, dir, blockedByRemaining, gridLength, gridHeight))
             {
                 return dir;
             }
 
-            // Sau dacă duce într-o poziție care a fost deja eliberată de un alt bloc
+            Vector3Int targetPos = blockPos + GetVectorFromEnum(dir);
             if (clearedPositions.Contains(targetPos))
             {
                 return dir;
             }
         }
-    
-        return null; // Nicio cale de mișcare găsită în acest pas
+
+        return null;
     }
 
     #region Helper Functions
@@ -194,6 +263,29 @@ public class LevelData : ScriptableObject
         return pos.x >= minX && pos.x < maxX &&
                pos.y >= minY && pos.y < maxY &&
                pos.z >= minZ && pos.z < maxZ;
+    }
+
+    private bool HasClearPathToExit(
+        Vector3Int origin,
+        MoveDirection direction,
+        HashSet<Vector3Int> blockedByRemaining,
+        int gridLength,
+        int gridHeight)
+    {
+        Vector3Int dir = GetVectorFromEnum(direction);
+        Vector3Int cursor = origin + dir;
+
+        while (IsInBounds(cursor, gridLength, gridHeight))
+        {
+            if (blockedByRemaining.Contains(cursor))
+            {
+                return false;
+            }
+
+            cursor += dir;
+        }
+
+        return true;
     }
     
     private MoveDirection GetOppositeDirection(MoveDirection dir)

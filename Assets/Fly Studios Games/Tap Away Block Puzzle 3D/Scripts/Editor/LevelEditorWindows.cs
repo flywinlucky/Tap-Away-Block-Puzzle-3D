@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -9,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class LevelEditorWindow : EditorWindow
 {
     private const string LevelEditorScenePath = "Assets/Fly Studios Games/Tap Away Block Puzzle 3D/Scenes/Level Editor.unity";
-    private const string GameScenePath = "Assets/Fly Studios Games/Tap Away Block Puzzle 3D/Scenes/Game Scene.unity";
     private const string SceneRootName = "LevelEditorSceneRoot";
 
     private const string PrefsBlockPrefabPathKey = "LevelEditor.BlockPrefabPath";
@@ -19,13 +19,15 @@ public class LevelEditorWindow : EditorWindow
     private const string PrefsAutoSaveAssetKey = "LevelEditor.AutoSaveAsset";
     private const string PrefsAutoSavePrefabKey = "LevelEditor.AutoSavePrefab";
     private const string PrefsSceneSyncIntervalKey = "LevelEditor.SceneSyncInterval";
+    private const string PrefsAdvancedFoldoutKey = "LevelEditor.ShowAdvanced";
 
-    private const double AutoSaveDelaySeconds = 0.7d;
+    private const double AutoSaveDelaySeconds = 0.65d;
 
     private LevelData _currentLevel;
     private GameObject _blockPrefab;
-    private List<LevelData> _allLevels = new List<LevelData>();
+    private readonly List<LevelData> _allLevels = new List<LevelData>();
     private Vector2 _levelsScroll;
+    private string _levelSearch = string.Empty;
 
     private float _gridUnitSize = 0.5f;
     private bool _autoOpenEditorScene = true;
@@ -33,6 +35,7 @@ public class LevelEditorWindow : EditorWindow
     private bool _autoSaveLevelAsset = true;
     private bool _autoSavePrefabSnapshot = true;
     private float _sceneSyncIntervalSeconds = 0.25f;
+    private bool _showAdvanced;
 
     private bool _isDirty;
     private double _nextAutoSaveTime;
@@ -48,7 +51,7 @@ public class LevelEditorWindow : EditorWindow
     private readonly List<GameObject> _previewInstances = new List<GameObject>();
     private bool _previewNeedsRebuild = true;
     private Vector2 _previewOrbit = new Vector2(135f, 25f);
-    private float _previewDistance = 12f;
+    private float _previewDistance = 14f;
 
     [MenuItem("Tools/Tap Away Block Puzzle 3D/Level Editor")]
     public static void ShowWindow()
@@ -109,11 +112,6 @@ public class LevelEditorWindow : EditorWindow
             }
         }
 
-        if (_editorSceneOpen && !EditorApplication.isPlayingOrWillChangePlaymode)
-        {
-            CloseEditorScene(true);
-        }
-
         DisposePreview();
         SavePrefs();
     }
@@ -135,122 +133,246 @@ public class LevelEditorWindow : EditorWindow
             return;
         }
 
-        DrawToolbar();
+        DrawTopBar();
 
         EditorGUILayout.BeginHorizontal();
-        DrawLevelListPanel();
-        DrawMainPanel();
+        DrawLevelSidebar();
+        DrawWorkspace();
         EditorGUILayout.EndHorizontal();
     }
 
-    private void DrawToolbar()
+    private void DrawTopBar()
     {
         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
 
-        if (GUILayout.Button("New Level", EditorStyles.toolbarButton))
+        if (GUILayout.Button("New", EditorStyles.toolbarButton, GUILayout.Width(42f)))
         {
             CreateNewLevelAsset();
         }
 
         GUI.enabled = _currentLevel != null;
-        if (GUILayout.Button("Save", EditorStyles.toolbarButton))
+        if (GUILayout.Button("Save", EditorStyles.toolbarButton, GUILayout.Width(42f)))
         {
             SaveChangesInternal(true);
         }
 
-        if (GUILayout.Button("Generate", EditorStyles.toolbarButton))
+        if (GUILayout.Button("Generate", EditorStyles.toolbarButton, GUILayout.Width(62f)))
         {
             GenerateCurrentLevel(true);
         }
         GUI.enabled = true;
 
-        if (GUILayout.Button("Open Editor Scene", EditorStyles.toolbarButton))
+        GUILayout.Space(8f);
+
+        if (GUILayout.Button("Open Scene", EditorStyles.toolbarButton, GUILayout.Width(78f)))
         {
             OpenLevelInScene();
         }
 
-        if (GUILayout.Button("Focus Scene", EditorStyles.toolbarButton))
+        GUI.enabled = _editorSceneOpen;
+        if (GUILayout.Button("Focus", EditorStyles.toolbarButton, GUILayout.Width(46f)))
         {
             FocusSceneView();
         }
-
-        if (GUILayout.Button("Refresh", EditorStyles.toolbarButton))
-        {
-            RefreshLevelList();
-        }
+        GUI.enabled = true;
 
         GUILayout.FlexibleSpace();
+
+        string dirtyState = _isDirty ? "Dirty" : "Saved";
+        GUIStyle stateStyle = new GUIStyle(EditorStyles.miniLabel);
+        stateStyle.normal.textColor = _isDirty ? new Color(0.95f, 0.62f, 0.2f) : new Color(0.6f, 0.9f, 0.65f);
+        GUILayout.Label(dirtyState, stateStyle);
+
         EditorGUILayout.EndHorizontal();
     }
 
-    private void DrawLevelListPanel()
+    private void DrawLevelSidebar()
     {
-        EditorGUILayout.BeginVertical(GUILayout.Width(270f), GUILayout.ExpandHeight(true));
+        EditorGUILayout.BeginVertical(GUILayout.Width(250f), GUILayout.ExpandHeight(true));
+        EditorGUILayout.Space(4f);
+
         EditorGUILayout.LabelField("Levels", EditorStyles.boldLabel);
 
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("New", GUILayout.Width(80f)))
+        string newSearch = EditorGUILayout.TextField(_levelSearch, GUI.skin.FindStyle("ToolbarSeachTextField") ?? EditorStyles.textField);
+        if (newSearch != _levelSearch)
         {
-            CreateNewLevelAsset();
+            _levelSearch = newSearch;
         }
 
-        GUI.enabled = _currentLevel != null;
-        if (GUILayout.Button("Delete", GUILayout.Width(80f)))
+        if (GUILayout.Button("X", GUILayout.Width(22f)))
         {
-            DeleteCurrentLevelAsset();
+            _levelSearch = string.Empty;
+            GUI.FocusControl(string.Empty);
         }
-        GUI.enabled = true;
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.Space(4f);
 
         _levelsScroll = EditorGUILayout.BeginScrollView(_levelsScroll, GUILayout.ExpandHeight(true));
-        for (int i = 0; i < _allLevels.Count; i++)
+        List<LevelData> filtered = GetFilteredLevels();
+        for (int i = 0; i < filtered.Count; i++)
         {
-            LevelData level = _allLevels[i];
+            LevelData level = filtered[i];
             if (level == null)
             {
                 continue;
             }
 
             bool selected = level == _currentLevel;
-            bool pressed = GUILayout.Toggle(selected, level.name, "Button");
-            if (pressed && !selected)
+            if (GUILayout.Toggle(selected, level.name, "Button") && !selected)
             {
                 TryChangeSelection(level);
             }
         }
         EditorGUILayout.EndScrollView();
 
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Refresh"))
+        {
+            RefreshLevelList();
+        }
+
+        GUI.enabled = _currentLevel != null;
+        if (GUILayout.Button("Delete"))
+        {
+            DeleteCurrentLevelAsset();
+        }
+        GUI.enabled = true;
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.LabelField("Total: " + _allLevels.Count, EditorStyles.miniLabel);
         EditorGUILayout.EndVertical();
     }
 
-    private void DrawMainPanel()
+    private void DrawWorkspace()
     {
         EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+        EditorGUILayout.Space(4f);
 
-        EditorGUILayout.LabelField("Editor Settings", EditorStyles.boldLabel);
-        EditorGUILayout.Space(2f);
-
-        LevelData levelSelection = (LevelData)EditorGUILayout.ObjectField("Current Level", _currentLevel, typeof(LevelData), false);
-        if (levelSelection != _currentLevel)
+        if (_currentLevel == null)
         {
-            TryChangeSelection(levelSelection);
+            EditorGUILayout.HelpBox("Select or create a LevelData asset.", MessageType.Info);
+            DrawPreviewArea();
+            EditorGUILayout.EndVertical();
+            return;
         }
 
-        GameObject newPrefab = (GameObject)EditorGUILayout.ObjectField("Block Prefab", _blockPrefab, typeof(GameObject), false);
-        if (newPrefab != _blockPrefab)
+        DrawSelectionRow();
+        DrawPreviewArea();
+        DrawGenerationSection();
+        DrawWorkflowSection();
+        DrawAdvancedSection();
+
+        EditorGUILayout.EndVertical();
+    }
+
+    private void DrawSelectionRow()
+    {
+        EditorGUILayout.BeginHorizontal();
+        LevelData selection = (LevelData)EditorGUILayout.ObjectField("Current Level", _currentLevel, typeof(LevelData), false);
+        if (selection != _currentLevel)
         {
-            _blockPrefab = newPrefab;
+            TryChangeSelection(selection);
+        }
+
+        GameObject prefab = (GameObject)EditorGUILayout.ObjectField("Block", _blockPrefab, typeof(GameObject), false, GUILayout.MaxWidth(360f));
+        if (prefab != _blockPrefab)
+        {
+            _blockPrefab = prefab;
             SavePrefs();
             RequestPreviewRebuild();
-
             if (_editorSceneOpen)
             {
                 PopulateEditorSceneFromData();
             }
         }
+        EditorGUILayout.EndHorizontal();
+    }
 
+    private void DrawGenerationSection()
+    {
+        EditorGUILayout.Space(4f);
+        EditorGUILayout.LabelField("Generation", EditorStyles.boldLabel);
+
+        EditorGUI.BeginChangeCheck();
+        int newLength = EditorGUILayout.IntSlider("Grid Length", _currentLevel.customGridLength, 2, 10);
+        int newHeight = EditorGUILayout.IntSlider("Grid Height", _currentLevel.customGridHeight, 2, 10);
+        int newSeed = EditorGUILayout.IntField("Seed", _currentLevel.seed);
+        float newFill = EditorGUILayout.Slider("Density", _currentLevel.fillRatio, 0.25f, 1f);
+        bool newAdaptiveDensity = EditorGUILayout.Toggle("Adaptive Density", _currentLevel.adaptiveDensity);
+        if (EditorGUI.EndChangeCheck())
+        {
+            Undo.RecordObject(_currentLevel, "Modify level generation settings");
+            _currentLevel.customGridLength = newLength;
+            _currentLevel.customGridHeight = newHeight;
+            _currentLevel.seed = newSeed;
+            _currentLevel.fillRatio = newFill;
+            _currentLevel.adaptiveDensity = newAdaptiveDensity;
+
+            if (_autoGenerateOnSettingsChange)
+            {
+                GenerateCurrentLevel(false);
+            }
+            else
+            {
+                MarkLevelDirty();
+            }
+        }
+
+        int estimated = _currentLevel.GetEstimatedBlockCount();
+        EditorGUILayout.LabelField("Estimated Blocks: " + estimated, EditorStyles.miniBoldLabel);
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Regenerate", GUILayout.Height(26f)))
+        {
+            GenerateCurrentLevel(true);
+        }
+
+        GUI.enabled = _blockPrefab != null;
+        if (GUILayout.Button("Save Prefab Snapshot", GUILayout.Height(26f)))
+        {
+            SavePrefabSnapshotInternal(true);
+        }
+        GUI.enabled = true;
+        EditorGUILayout.EndHorizontal();
+    }
+
+    private void DrawWorkflowSection()
+    {
+        EditorGUILayout.Space(6f);
+        EditorGUILayout.LabelField("Workflow", EditorStyles.boldLabel);
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Push Data -> Scene", GUILayout.Height(22f)))
+        {
+            PopulateEditorSceneFromData();
+            FocusSceneView();
+        }
+
+        GUI.enabled = _editorSceneOpen;
+        if (GUILayout.Button("Pull Scene -> Data", GUILayout.Height(22f)))
+        {
+            PullSceneToDataNow();
+        }
+        GUI.enabled = true;
+        EditorGUILayout.EndHorizontal();
+
+        string syncState = _editorSceneOpen ? "Scene Sync: On" : "Scene Sync: Off";
+        EditorGUILayout.LabelField(syncState, EditorStyles.miniLabel);
+    }
+
+    private void DrawAdvancedSection()
+    {
+        EditorGUILayout.Space(8f);
+        _showAdvanced = EditorGUILayout.Foldout(_showAdvanced, "Advanced", true);
+
+        if (!_showAdvanced)
+        {
+            return;
+        }
+
+        EditorGUI.indentLevel++;
         EditorGUI.BeginChangeCheck();
         _gridUnitSize = Mathf.Max(0.05f, EditorGUILayout.FloatField("Grid Unit Size", _gridUnitSize));
         _autoOpenEditorScene = EditorGUILayout.Toggle("Auto Open Scene", _autoOpenEditorScene);
@@ -263,95 +385,26 @@ public class LevelEditorWindow : EditorWindow
             SavePrefs();
             RequestPreviewRebuild();
         }
-
-        EditorGUILayout.Space(8f);
-
-        if (_currentLevel == null)
-        {
-            EditorGUILayout.HelpBox("Select or create a level asset.", MessageType.Info);
-            DrawPreviewArea();
-            EditorGUILayout.EndVertical();
-            return;
-        }
-
-        DrawLevelControls();
-        DrawPreviewArea();
-
-        EditorGUILayout.EndVertical();
-    }
-
-    private void DrawLevelControls()
-    {
-        EditorGUILayout.LabelField("Level Generation", EditorStyles.boldLabel);
-
-        EditorGUI.BeginChangeCheck();
-        int newLength = EditorGUILayout.IntSlider("Grid Length", _currentLevel.customGridLength, 2, 10);
-        int newHeight = EditorGUILayout.IntSlider("Grid Height", _currentLevel.customGridHeight, 2, 10);
-        int newSeed = EditorGUILayout.IntField("Seed", _currentLevel.seed);
-        if (EditorGUI.EndChangeCheck())
-        {
-            Undo.RecordObject(_currentLevel, "Modify level generation settings");
-            _currentLevel.customGridLength = newLength;
-            _currentLevel.customGridHeight = newHeight;
-            _currentLevel.seed = newSeed;
-
-            if (_autoGenerateOnSettingsChange)
-            {
-                GenerateCurrentLevel(false);
-            }
-            else
-            {
-                MarkLevelDirty();
-            }
-        }
-
-        EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button("Generate Now", GUILayout.Height(28f)))
-        {
-            GenerateCurrentLevel(true);
-        }
-
-        GUI.enabled = _editorSceneOpen;
-        if (GUILayout.Button("Pull Scene -> Data", GUILayout.Height(28f)))
-        {
-            PullSceneToDataNow();
-        }
-        GUI.enabled = true;
-        EditorGUILayout.EndHorizontal();
-
-        EditorGUILayout.BeginHorizontal();
-        GUI.enabled = _editorSceneOpen;
-        if (GUILayout.Button("Push Data -> Scene", GUILayout.Height(24f)))
-        {
-            PopulateEditorSceneFromData();
-            FocusSceneView();
-        }
-        GUI.enabled = true;
-
-        GUI.enabled = _blockPrefab != null;
-        if (GUILayout.Button("Save Prefab Snapshot", GUILayout.Height(24f)))
-        {
-            SavePrefabSnapshotInternal(true);
-        }
-        GUI.enabled = true;
-        EditorGUILayout.EndHorizontal();
-
-        List<BlockData> blocks = _currentLevel.GetBlocks();
-        int blockCount = blocks != null ? blocks.Count : 0;
-        EditorGUILayout.HelpBox(
-            "Blocks: " + blockCount +
-            " | Scene Sync: " + (_editorSceneOpen ? "ON" : "OFF") +
-            " | Dirty: " + (_isDirty ? "YES" : "NO"),
-            MessageType.None);
+        EditorGUI.indentLevel--;
     }
 
     private void DrawPreviewArea()
     {
-        EditorGUILayout.Space(8f);
-        EditorGUILayout.LabelField("Live Preview", EditorStyles.boldLabel);
-
-        Rect previewRect = GUILayoutUtility.GetRect(10f, 280f, GUILayout.ExpandWidth(true));
+        EditorGUILayout.Space(6f);
+        EditorGUILayout.LabelField("Preview", EditorStyles.boldLabel);
+        Rect previewRect = GUILayoutUtility.GetRect(10f, 300f, GUILayout.ExpandWidth(true));
         DrawPreview(previewRect);
+    }
+
+    private List<LevelData> GetFilteredLevels()
+    {
+        if (string.IsNullOrWhiteSpace(_levelSearch))
+        {
+            return _allLevels;
+        }
+
+        string token = _levelSearch.Trim().ToLowerInvariant();
+        return _allLevels.Where(level => level != null && level.name.ToLowerInvariant().Contains(token)).ToList();
     }
 
     private void GenerateCurrentLevel(bool immediateSave)
@@ -465,7 +518,7 @@ public class LevelEditorWindow : EditorWindow
 
         if (_autoSavePrefabSnapshot)
         {
-            SavePrefabSnapshotInternal(manualSave);
+            SavePrefabSnapshotInternal(false);
         }
 
         if (manualSave)
@@ -712,28 +765,6 @@ public class LevelEditorWindow : EditorWindow
         FocusSceneView();
     }
 
-    private void CloseEditorScene(bool openGameScene)
-    {
-        if (!_editorSceneOpen)
-        {
-            return;
-        }
-
-        _editorSceneOpen = false;
-        _sceneRoot = null;
-        _lastSceneHash = 0;
-
-        if (!openGameScene)
-        {
-            return;
-        }
-
-        if (File.Exists(GameScenePath))
-        {
-            EditorSceneManager.OpenScene(GameScenePath, OpenSceneMode.Single);
-        }
-    }
-
     private void EnsureSceneRoot()
     {
         if (_sceneRoot != null)
@@ -805,9 +836,12 @@ public class LevelEditorWindow : EditorWindow
                 {
                     instance.AddComponent<BoxCollider>();
                 }
+
+                instance.transform.hasChanged = false;
             }
         }
 
+        _sceneRoot.transform.hasChanged = false;
         _lastSceneHash = ComputeLevelHash(CaptureBlocksFromSceneRoot());
         _suppressSceneSync = false;
         RequestPreviewRebuild();
@@ -824,6 +858,7 @@ public class LevelEditorWindow : EditorWindow
         ApplyBlocksToCurrentLevel(fromScene);
         _lastSceneHash = ComputeLevelHash(fromScene);
         MarkLevelDirty();
+        ResetSceneHierarchyChangedFlags();
     }
 
     private void EditorUpdate()
@@ -854,6 +889,11 @@ public class LevelEditorWindow : EditorWindow
             return;
         }
 
+        if (!HasSceneHierarchyChanged())
+        {
+            return;
+        }
+
         List<BlockData> sceneBlocks = CaptureBlocksFromSceneRoot();
         int currentSceneHash = ComputeLevelHash(sceneBlocks);
         if (currentSceneHash == _lastSceneHash)
@@ -862,10 +902,46 @@ public class LevelEditorWindow : EditorWindow
         }
 
         ApplyBlocksToCurrentLevel(sceneBlocks);
-
         _lastSceneHash = currentSceneHash;
         MarkLevelDirty();
         Repaint();
+    }
+
+    private bool HasSceneHierarchyChanged()
+    {
+        if (_sceneRoot == null)
+        {
+            return false;
+        }
+
+        if (_sceneRoot.transform.hasChanged)
+        {
+            return true;
+        }
+
+        for (int i = 0; i < _sceneRoot.transform.childCount; i++)
+        {
+            if (_sceneRoot.transform.GetChild(i).hasChanged)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void ResetSceneHierarchyChangedFlags()
+    {
+        if (_sceneRoot == null)
+        {
+            return;
+        }
+
+        _sceneRoot.transform.hasChanged = false;
+        for (int i = 0; i < _sceneRoot.transform.childCount; i++)
+        {
+            _sceneRoot.transform.GetChild(i).hasChanged = false;
+        }
     }
 
     private List<BlockData> CaptureBlocksFromSceneRoot()
@@ -885,14 +961,12 @@ public class LevelEditorWindow : EditorWindow
             Quaternion stable = GetStableLookRotation(direction);
             Quaternion randomVisual = Quaternion.Inverse(stable) * t.rotation;
 
-            BlockData data = new BlockData
+            captured.Add(new BlockData
             {
                 position = Vector3Int.RoundToInt(t.position / safeGrid),
                 direction = direction,
                 randomVisualRotation = randomVisual
-            };
-
-            captured.Add(data);
+            });
         }
 
         SortBlocks(captured);
@@ -921,17 +995,13 @@ public class LevelEditorWindow : EditorWindow
         }
 
         EditorUtility.SetDirty(_currentLevel);
+        ResetSceneHierarchyChangedFlags();
     }
 
     private void SyncLevelManagerReference()
     {
         LevelManager levelManager = FindObjectOfType<LevelManager>();
-        if (levelManager == null)
-        {
-            return;
-        }
-
-        if (levelManager.runCurrentLevel == _currentLevel)
+        if (levelManager == null || levelManager.runCurrentLevel == _currentLevel)
         {
             return;
         }
@@ -950,7 +1020,7 @@ public class LevelEditorWindow : EditorWindow
         }
 
         Bounds bounds = CalculateLevelBounds();
-        float size = Mathf.Max(2f, bounds.size.magnitude * 1.2f);
+        float size = Mathf.Max(2f, bounds.size.magnitude * 1.15f);
         sceneView.LookAt(bounds.center, Quaternion.Euler(30f, -35f, 0f), size, false, true);
     }
 
@@ -1000,9 +1070,9 @@ public class LevelEditorWindow : EditorWindow
         _previewUtility.cameraFieldOfView = 35f;
         _previewUtility.camera.nearClipPlane = 0.01f;
         _previewUtility.camera.farClipPlane = 1000f;
-        _previewUtility.lights[0].intensity = 1.2f;
+        _previewUtility.lights[0].intensity = 1.1f;
         _previewUtility.lights[0].transform.rotation = Quaternion.Euler(35f, 35f, 0f);
-        _previewUtility.lights[1].intensity = 1f;
+        _previewUtility.lights[1].intensity = 0.8f;
     }
 
     private void DisposePreview()
@@ -1122,7 +1192,7 @@ public class LevelEditorWindow : EditorWindow
         }
 
         Bounds bounds = CalculatePreviewBounds();
-        float minDistance = Mathf.Max(2f, bounds.extents.magnitude * 2.4f);
+        float minDistance = Mathf.Max(2f, bounds.extents.magnitude * 2.2f);
         float distance = Mathf.Max(minDistance, _previewDistance);
 
         Quaternion orbit = Quaternion.Euler(_previewOrbit.y, _previewOrbit.x, 0f);
@@ -1163,7 +1233,7 @@ public class LevelEditorWindow : EditorWindow
 
         if (e.type == EventType.ScrollWheel)
         {
-            _previewDistance = Mathf.Clamp(_previewDistance + e.delta.y * 0.4f, 2f, 250f);
+            _previewDistance = Mathf.Clamp(_previewDistance + e.delta.y * 0.4f, 2f, 260f);
             e.Use();
             Repaint();
         }
@@ -1217,6 +1287,7 @@ public class LevelEditorWindow : EditorWindow
         _autoSaveLevelAsset = EditorPrefs.GetBool(PrefsAutoSaveAssetKey, true);
         _autoSavePrefabSnapshot = EditorPrefs.GetBool(PrefsAutoSavePrefabKey, true);
         _sceneSyncIntervalSeconds = Mathf.Clamp(EditorPrefs.GetFloat(PrefsSceneSyncIntervalKey, 0.25f), 0.05f, 1f);
+        _showAdvanced = EditorPrefs.GetBool(PrefsAdvancedFoldoutKey, false);
     }
 
     private void SavePrefs()
@@ -1229,6 +1300,7 @@ public class LevelEditorWindow : EditorWindow
         EditorPrefs.SetBool(PrefsAutoSaveAssetKey, _autoSaveLevelAsset);
         EditorPrefs.SetBool(PrefsAutoSavePrefabKey, _autoSavePrefabSnapshot);
         EditorPrefs.SetFloat(PrefsSceneSyncIntervalKey, _sceneSyncIntervalSeconds);
+        EditorPrefs.SetBool(PrefsAdvancedFoldoutKey, _showAdvanced);
     }
 
     private int ComputeLevelHash(List<BlockData> blocks)
@@ -1271,13 +1343,22 @@ public class LevelEditorWindow : EditorWindow
         blocks.Sort((a, b) =>
         {
             int x = a.position.x.CompareTo(b.position.x);
-            if (x != 0) return x;
+            if (x != 0)
+            {
+                return x;
+            }
 
             int y = a.position.y.CompareTo(b.position.y);
-            if (y != 0) return y;
+            if (y != 0)
+            {
+                return y;
+            }
 
             int z = a.position.z.CompareTo(b.position.z);
-            if (z != 0) return z;
+            if (z != 0)
+            {
+                return z;
+            }
 
             return a.direction.CompareTo(b.direction);
         });

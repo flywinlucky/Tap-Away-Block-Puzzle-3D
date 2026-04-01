@@ -15,28 +15,30 @@ MonoBehaviour:
   customGridLength: 2
   customGridHeight: 2
   seed: 1
+  fillRatio: 1
+  adaptiveDensity: 1
   blocks:
-  - position: {x: -1, y: -1, z: -1}
-    direction: 3
-    randomVisualRotation: {x: 0, y: 0.00000006181724, z: 0.70710677, w: 0.70710677}
-  - position: {x: -1, y: -1, z: 0}
-    direction: 3
-    randomVisualRotation: {x: 0, y: -0.7071067, z: 0.7071067, w: 0}
-  - position: {x: -1, y: 0, z: -1}
-    direction: 2
-    randomVisualRotation: {x: 0.5, y: -0.49999994, z: 0.49999994, w: 0.5}
+  - position: {x: 0, y: 0, z: 0}
+    direction: 0
+    randomVisualRotation: {x: -0.49999997, y: -0.49999997, z: -0.49999997, w: 0.49999997}
   - position: {x: -1, y: 0, z: 0}
-    direction: 4
+    direction: 0
     randomVisualRotation: {x: -0.49999997, y: -0.49999997, z: -0.49999997, w: 0.49999997}
   - position: {x: 0, y: -1, z: -1}
     direction: 3
-    randomVisualRotation: {x: -0.00000003090862, y: -0.70710677, z: -0.70710677, w: 0.00000003090862}
-  - position: {x: 0, y: -1, z: 0}
-    direction: 0
+    randomVisualRotation: {x: -0.5, y: 0.49999994, z: -0.49999994, w: 0.5}
+  - position: {x: -1, y: 0, z: -1}
+    direction: 4
     randomVisualRotation: {x: -0.7071067, y: 0, z: 0, w: 0.7071067}
+  - position: {x: -1, y: -1, z: 0}
+    direction: 0
+    randomVisualRotation: {x: -0.49999997, y: -0.49999997, z: 0.49999997, w: -0.49999997}
+  - position: {x: 0, y: -1, z: 0}
+    direction: 3
+    randomVisualRotation: {x: 0, y: 0.7071067, z: 0.7071067, w: 0}
   - position: {x: 0, y: 0, z: -1}
-    direction: 5
-    randomVisualRotation: {x: 0, y: -0.7071067, z: -0.7071067, w: 0}
-  - position: {x: 0, y: 0, z: 0}
-    direction: 5
-    randomVisualRotation: {x: 0.49999997, y: -0.49999997, z: -0.49999997, w: 0.49999997}
+    direction: 2
+    randomVisualRotation: {x: 0.49999994, y: 0.5, z: -0.5, w: 0.49999994}
+  - position: {x: -1, y: -1, z: -1}
+    direction: 1
+    randomVisualRotation: {x: 0.70710677, y: -0.70710677, z: -0.00000003090862, w: 0.00000003090862}
