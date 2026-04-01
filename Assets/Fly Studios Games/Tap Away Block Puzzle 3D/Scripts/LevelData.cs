@@ -104,7 +104,7 @@ public class LevelData : ScriptableObject
             foreach (var currentBlock in remainingBlocks)
             {
                 // Căutăm o direcție în care blocul poate fi mișcat (spre exterior sau spre o poziție deja eliberată)
-                MoveDirection? possibleDirection = FindForwardPath(currentBlock.position, clearedPositions, gridLength);
+                MoveDirection? possibleDirection = FindForwardPath(currentBlock.position, clearedPositions, gridLength, gridHeight);
 
                 if (possibleDirection.HasValue)
                 {
@@ -149,7 +149,7 @@ public class LevelData : ScriptableObject
     /// <summary>
     /// Caută o cale de mișcare "înainte". O cale este validă dacă duce în afara grilei sau într-o locație deja eliberată.
     /// </summary>
-    private MoveDirection? FindForwardPath(Vector3Int blockPos, HashSet<Vector3Int> clearedPositions, int gridSize)
+    private MoveDirection? FindForwardPath(Vector3Int blockPos, HashSet<Vector3Int> clearedPositions, int gridLength, int gridHeight)
     {
         var shuffledDirections = System.Enum.GetValues(typeof(MoveDirection))
                                             .Cast<MoveDirection>()
@@ -160,7 +160,7 @@ public class LevelData : ScriptableObject
             Vector3Int targetPos = blockPos + GetVectorFromEnum(dir);
 
             // O cale este validă dacă duce în afara grilei (spre ieșire)
-            if (!IsInBounds(targetPos, gridSize))
+            if (!IsInBounds(targetPos, gridLength, gridHeight))
             {
                 return dir;
             }
@@ -177,16 +177,23 @@ public class LevelData : ScriptableObject
 
     #region Helper Functions
 
-    private bool IsInBounds(Vector3Int pos, int gridSize)
+    private bool IsInBounds(Vector3Int pos, int gridLength, int gridHeight)
     {
-        if (gridSize <= 0) return false;
-        int offset = gridSize / 2;
-        int min = -offset;
-        int max = gridSize - offset;
+        if (gridLength <= 0 || gridHeight <= 0) return false;
 
-        return pos.x >= min && pos.x < max &&
-               pos.y >= min && pos.y < max &&
-               pos.z >= min && pos.z < max;
+        int xzOffset = gridLength / 2;
+        int yOffset = gridHeight / 2;
+
+        int minX = -xzOffset;
+        int maxX = gridLength - xzOffset;
+        int minY = -yOffset;
+        int maxY = gridHeight - yOffset;
+        int minZ = -xzOffset;
+        int maxZ = gridLength - xzOffset;
+
+        return pos.x >= minX && pos.x < maxX &&
+               pos.y >= minY && pos.y < maxY &&
+               pos.z >= minZ && pos.z < maxZ;
     }
     
     private MoveDirection GetOppositeDirection(MoveDirection dir)
