@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Fly Studios Games/Unblock the Cube 3D/Scenes/SampleScene.unity
+    path: Assets/Fly Studios Games/Tap Away Block Puzzle 3D/Scenes/Game Scene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Fly Studios Games/Tap Away Block Puzzle 3D/Scenes/Level Editor.unity
+    guid: 0799047da9533d8488b5cb7b5b8427e8
   m_configObjects: {}
